@@ -52,8 +52,23 @@ export default function Home() {
             <span className="scribble">yes, on purpose.</span>
           </p>
           <p className="presented rv">
-            Presented by <b>Inspire Columbia</b> — the team behind TEDxCongaree
-            Vista.
+            Presented by{" "}
+            <a
+              href="https://inspirecolumbia.org"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <b>Inspire Columbia</b>
+            </a>{" "}
+            — the team behind{" "}
+            <a
+              href="https://tedxcongareevista.com"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              TEDxCongaree Vista
+            </a>
+            .
           </p>
 
           <div className="meta-row">
@@ -100,7 +115,7 @@ export default function Home() {
           </h2>
           <div className="about-grid">
             <div className="about-lead rv">
-              Screwup Nights is a live storytelling show where real people take
+              SCrewUp Nights is a live storytelling show where real people take
               the mic and walk us through their most spectacular flops — the
               launches that tanked, the relationships that imploded, the
               decisions that looked great until they very much didn&rsquo;t.
@@ -235,7 +250,7 @@ export default function Home() {
             </div>
           </div>
           <div className="become rv">
-            <a href="#rsvp">Become a sponsor →</a>
+            <a href="mailto:info@inspirecolumbia.org">Become a sponsor →</a>
           </div>
         </div>
       </section>
@@ -253,8 +268,23 @@ export default function Home() {
               everything would go according to plan. We regret the error.
               <br />
               <br />
-              Presented by <b>Inspire Columbia</b>, the team behind TEDxCongaree
-              Vista.
+              Presented by{" "}
+              <a
+                href="https://inspirecolumbia.org"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <b>Inspire Columbia</b>
+              </a>
+              , the team behind{" "}
+              <a
+                href="https://tedxcongareevista.com"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                TEDxCongaree Vista
+              </a>
+              .
               <br />
               Columbia, SC · Sept 4, 2026 · $15 · made with mistakes
             </div>
