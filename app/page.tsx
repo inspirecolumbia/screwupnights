@@ -79,7 +79,7 @@ export default function Home() {
               />
               <div className="k">When</div>
               <div className="v">
-                Sept 4<small>Friday · 2026 · doors 7pm</small>
+                Sept 2<small>Wednesday · 2026 · doors 7pm</small>
               </div>
             </div>
             <div className="meta-card paste rv" style={rot("1.5deg")}>
@@ -286,7 +286,6 @@ export default function Home() {
               </a>
               .
               <br />
-              Columbia, SC · Sept 4, 2026 · $15 · made with mistakes
             </div>
           </div>
         </div>
