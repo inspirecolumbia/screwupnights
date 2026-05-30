@@ -5,6 +5,12 @@
   --red: #e63946;
   --hi: #ffd23f;
   --shadow: rgba(29, 53, 87, 0.22);
+  /* Next.js injects real values at runtime via html class; fallbacks keep the IDE happy */
+  --font-anton: sans-serif;
+  --font-marker: cursive;
+  --font-serif: serif;
+  --font-mono: monospace;
+  --r: 0deg;
 }
 
 * {
@@ -174,7 +180,7 @@ header {
 .hero-title .nightsbox {
   background: var(--red);
   color: var(--paper);
-  -webkit-text-stroke: 0;
+  -webkit-text-stroke-width: 0;
   padding: 0 14px;
   box-shadow: 5px 6px 0 var(--shadow);
   display: inline-block;
