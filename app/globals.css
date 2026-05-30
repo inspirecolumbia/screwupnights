@@ -5,11 +5,6 @@
   --red: #e63946;
   --hi: #ffd23f;
   --shadow: rgba(29, 53, 87, 0.22);
-  /* Next.js injects real values at runtime via html class; fallbacks keep the IDE happy */
-  --font-anton: sans-serif;
-  --font-marker: cursive;
-  --font-serif: serif;
-  --font-mono: monospace;
   --r: 0deg;
 }
 
