@@ -1,4 +1,5 @@
 import type { CSSProperties } from "react";
+import Image from "next/image";
 import RsvpForm from "./rsvp-form";
 import ScrollReveal from "./scroll-reveal";
 
@@ -259,9 +260,13 @@ export default function Home() {
         <div className="wrap">
           <div className="foot">
             <div className="big rv">
-              Screw<span>up</span>
-              <br />
-              Nights<span>.</span>
+              <Image
+                src="/InspireWhiteLogo.png"
+                alt="Screwupnights"
+                width={220}
+                height={80}
+                style={{ objectFit: "contain" }}
+              />
             </div>
             <div className="errata rv">
               <b>ERRATA:</b> An earlier version of this life implied that
