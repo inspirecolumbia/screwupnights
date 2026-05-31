@@ -9,20 +9,23 @@ const rot = (deg: string) => ({ "--r": deg }) as CSSProperties;
 const tickerItems = [
   "Failure is data",
   "Bring your worst",
-  "Sept 4 2026",
+  "Sept 2 2026",
   "Columbia, SC",
   "A celebration of screwing up",
 ];
 
+// Render the phrase set twice per group so the track is wide enough to span
+// large monitors without artificial spacing; the two identical groups keep the
+// -50% loop seamless.
 function TickerGroup() {
   return (
-    <>
-      {tickerItems.map((item, i) => (
+    <div className="ticker-group">
+      {[...tickerItems, ...tickerItems].map((item, i) => (
         <span key={i}>
           {item} <span className="dot">●</span>
         </span>
       ))}
-    </>
+    </div>
   );
 }
 
@@ -30,7 +33,7 @@ export default function Home() {
   return (
     <>
       <div className="ticker">
-        <div>
+        <div className="ticker-track">
           <TickerGroup />
           <TickerGroup />
         </div>

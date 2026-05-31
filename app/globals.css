@@ -113,13 +113,22 @@ a {
   overflow: hidden;
   border-bottom: 2px solid var(--ink);
 }
-.ticker > div {
-  display: inline-block;
-  padding: 9px 0;
+.ticker-track {
+  display: flex;
+  width: max-content;
   animation: scroll 26s linear infinite;
+}
+/* Two identical groups make up the track; the -50% keyframe lands exactly on
+   the boundary between them for a seamless loop. Phrases keep their natural
+   spacing — each group repeats the set so it stays wide enough on big screens. */
+.ticker-group {
+  display: flex;
+  flex: 0 0 auto;
+  padding: 9px 0;
 }
 .ticker span {
   padding: 0 26px;
+  white-space: nowrap;
 }
 .ticker .dot {
   color: var(--red);
