@@ -1,10 +1,10 @@
 :root {
-  --paper: #f5f0e8;
-  --paper-2: #ece4d6;
-  --ink: #1d3557;
-  --red: #e63946;
-  --hi: #ffd23f;
-  --shadow: rgba(29, 53, 87, 0.22);
+  --paper: #f1ead9;
+  --paper-2: #e6dcc4;
+  --ink: #2a1a3e;
+  --red: #e5267d;
+  --hi: #c6e23a;
+  --shadow: rgba(42, 26, 62, 0.24);
   --r: 0deg;
 }
 
@@ -54,7 +54,7 @@ a {
   position: absolute;
   width: 110px;
   height: 34px;
-  background: rgba(255, 210, 63, 0.55);
+  background: rgba(198, 226, 58, 0.5);
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
   border-left: 1px dashed rgba(0, 0, 0, 0.12);
   border-right: 1px dashed rgba(0, 0, 0, 0.12);
