@@ -482,6 +482,10 @@ textarea {
   transition:
     transform 0.08s,
     box-shadow 0.08s;
+  /* also rendered as an <a> mailto link — keep it looking like the button */
+  display: block;
+  text-align: center;
+  text-decoration: none;
 }
 .btn:hover {
   transform: translate(-2px, -2px);

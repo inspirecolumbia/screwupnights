@@ -3,6 +3,7 @@
 import { useState } from "react";
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const RSVP_TO = "info@inspirecolumbia.org";
 
 export default function RsvpForm() {
   const [name, setName] = useState("");
@@ -14,14 +15,48 @@ export default function RsvpForm() {
   });
   const [submitted, setSubmitted] = useState(false);
 
-  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault();
+  // Build the prefilled mailto link from the current form values.
+  function buildMailto() {
+    const subject = `Screwup Nights RSVP — ${name.trim()}`;
+    const body = [
+      `Name: ${name.trim()}`,
+      `Email: ${email.trim()}`,
+      "",
+      "My worst screwup:",
+      screwup.trim() || "(declined to share — no pressure)",
+      "",
+      "Count me in for Screwup Nights — Sept 2, 2026, Columbia, SC.",
+    ].join("\n");
+    return `mailto:${RSVP_TO}?subject=${encodeURIComponent(
+      subject,
+    )}&body=${encodeURIComponent(body)}`;
+  }
+
+  // Returns true when valid; otherwise records which fields are in error.
+  function validate() {
     const next = {
       name: name.trim().length === 0,
       email: !EMAIL_RE.test(email.trim()),
     };
     setErrors(next);
-    if (!next.name && !next.email) {
+    return !next.name && !next.email;
+  }
+
+  // Clicking the mailto button: block navigation if invalid, else let the
+  // browser hand off to the mail client and show the confirmation.
+  function handleClick(e: React.MouseEvent<HTMLAnchorElement>) {
+    if (!validate()) {
+      e.preventDefault();
+      return;
+    }
+    setSubmitted(true);
+  }
+
+  // Pressing Enter inside a field: validate, then open the mail client.
+  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    if (validate()) {
+      window.location.href = buildMailto();
       setSubmitted(true);
     }
   }
@@ -37,8 +72,9 @@ export default function RsvpForm() {
         <div className="success show" id="success">
           <span className="stamp">You&rsquo;re in!</span>
           <p>
-            Confirmation sent (probably). See you September 4th — bring the worst
-            version of a good story.
+            Your email&rsquo;s ready to send — hit send in your mail app and
+            we&rsquo;ll see you September 2nd. Bring the worst version of a good
+            story.
           </p>
         </div>
       ) : (
@@ -98,9 +134,9 @@ export default function RsvpForm() {
             />
           </div>
 
-          <button type="submit" className="btn">
+          <a className="btn" href={buildMailto()} onClick={handleClick}>
             Count me in →
-          </button>
+          </a>
         </div>
       )}
     </form>
