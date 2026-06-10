@@ -1,6 +1,5 @@
 import type { CSSProperties } from "react";
 import Image from "next/image";
-import RsvpForm from "./rsvp-form";
 import ScrollReveal from "./scroll-reveal";
 
 // Helper for the prototype's per-element rotation custom property (`--r`).
@@ -210,11 +209,28 @@ export default function Home() {
               </ul>
             </div>
 
-            <RsvpForm />
+            <div className="paste rv cta-card">
+              <span
+                className="tape"
+                style={{ top: "-15px", right: "30px", transform: "rotate(5deg)" }}
+              />
+              <a
+                className="btn"
+                href="https://www.zeffy.com/en-US/ticketing/screwup-nights-september--2026"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Buy tickets →
+              </a>
+              <a className="btn alt" href="mailto:screwupnights@inspirecolumbia.org">
+                Contact us
+              </a>
+            </div>
           </div>
         </div>
       </section>
 
+      {/* Sponsors section — hidden until we have sponsors. Uncomment to restore.
       <section className="sponsors">
         <div className="wrap">
           <div className="kicker rv" style={{ textAlign: "center" }}>
@@ -258,6 +274,7 @@ export default function Home() {
           </div>
         </div>
       </section>
+      */}
 
       <footer>
         <div className="wrap">
