@@ -49,6 +49,41 @@ a {
   position: relative;
 }
 
+/* ---------- margin shapes ---------- */
+/* Pinned to the viewport (not a specific section) so the shapes stay
+   visible across the whole page height as you scroll, instead of
+   scrolling away with any one section. */
+.margin-shapes {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+}
+.margin-shapes-col {
+  /* Clamp the gutter itself so shape reach is bounded by a fixed-ish width,
+     not by however wide the leftover margin happens to be on huge screens —
+     and never wider than the margin actually available. */
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: min(calc((100vw - 1080px) / 2), clamp(180px, 12vw, 320px));
+  overflow: hidden;
+}
+.margin-shapes-col.left {
+  left: 0;
+}
+.margin-shapes-col.right {
+  right: 0;
+}
+.margin-shape {
+  position: absolute;
+}
+@media (max-width: 1300px) {
+  .margin-shapes {
+    display: none;
+  }
+}
+
 /* ---------- shared zine bits ---------- */
 .tape {
   position: absolute;
@@ -103,6 +138,8 @@ a {
 
 /* ---------- top ticker ---------- */
 .ticker {
+  position: relative;
+  z-index: 10;
   background: var(--ink);
   color: var(--paper);
   font-family: var(--font-mono), monospace;
@@ -162,6 +199,17 @@ header {
   position: relative;
   margin: 26px 0 10px;
   line-height: 0.82;
+}
+.hero-title .hero-logo {
+  display: block;
+  width: clamp(200px, 38.75vw, 472px);
+  height: auto;
+}
+@media (max-width: 640px) {
+  .hero-title .hero-logo {
+    /* 1.5x the base clamp so the logo reads bigger on phones specifically. */
+    width: clamp(300px, 58.125vw, 400px);
+  }
 }
 .hero-title .l1 {
   font-family: var(--font-anton), sans-serif;
@@ -249,6 +297,7 @@ header {
   flex: 1;
   min-width: 190px;
   position: relative;
+  text-decoration: none;
 }
 .meta-card .k {
   font-size: 11px;

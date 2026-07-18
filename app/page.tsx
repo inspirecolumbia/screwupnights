@@ -1,6 +1,7 @@
 import type { CSSProperties } from "react";
 import Image from "next/image";
 import ScrollReveal from "./scroll-reveal";
+import MarginShapes from "./margin-shapes";
 
 // Helper for the prototype's per-element rotation custom property (`--r`).
 const rot = (deg: string) => ({ "--r": deg }) as CSSProperties;
@@ -31,6 +32,7 @@ function TickerGroup() {
 export default function Home() {
   return (
     <>
+      <MarginShapes />
       <div className="ticker">
         <div className="ticker-track">
           <TickerGroup />
@@ -42,12 +44,15 @@ export default function Home() {
         <div className="wrap">
           <span className="vol rv">Vol. 01 — Live &amp; in person</span>
           <h1 className="hero-title">
-            <span className="l1 rv" style={rot("-1deg")}>
-              Screwup
-            </span>
-            <span className="l2 rv">
-              <span className="nightsbox">Nights</span>
-            </span>
+            <Image
+              className="hero-logo rv"
+              src="/ScrewupPurple.png"
+              alt="Screwup Nights"
+              width={757}
+              height={592}
+              preload
+              style={rot("-1deg")}
+            />
           </h1>
           <p className="hero-sub rv">
             A celebration of <span className="struck">success</span>{" "}
@@ -82,7 +87,7 @@ export default function Home() {
               />
               <div className="k">When</div>
               <div className="v">
-                Sept 2<small>Wednesday · 2026 · doors 7pm</small>
+                Sept 2<small>Wednesday · 2026 · doors 7:30 pm</small>
               </div>
             </div>
             <div className="meta-card paste rv" style={rot("1.5deg")}>
@@ -95,7 +100,13 @@ export default function Home() {
                 Columbia<small>South Carolina · venue TBA</small>
               </div>
             </div>
-            <div className="meta-card paste rv" style={rot("-1deg")}>
+            <a
+              className="meta-card paste rv"
+              href="https://www.zeffy.com/en-US/ticketing/screwup-nights-september--2026"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={rot("-1deg")}
+            >
               <span
                 className="tape"
                 style={{ top: "-14px", left: "40%", transform: "rotate(-3deg)" }}
@@ -104,7 +115,7 @@ export default function Home() {
               <div className="v">
                 $15<small>limited spots · dignity not included</small>
               </div>
-            </div>
+            </a>
           </div>
         </div>
       </header>
@@ -118,7 +129,7 @@ export default function Home() {
           </h2>
           <div className="about-grid">
             <div className="about-lead rv">
-              SCrewUp Nights is a live storytelling show where real people take
+              ScrewUp Nights is a live storytelling show where real people take
               the mic and walk us through their most spectacular flops — the
               launches that tanked, the relationships that imploded, the
               decisions that looked great until they very much didn&rsquo;t.
@@ -204,8 +215,7 @@ export default function Home() {
               <div className="free">$15 a seat · spots are limited →</div>
               <ul>
                 <li>One unforgettable evening of glorious mistakes</li>
-                <li>Snacks, drinks, and zero judgment</li>
-                <li>Limited seating — when it&rsquo;s gone, it&rsquo;s gone</li>
+                <li>Snacks included and drinks available</li>
               </ul>
             </div>
 
