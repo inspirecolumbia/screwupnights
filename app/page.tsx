@@ -56,7 +56,7 @@ export default function Home() {
           </h1>
           <p className="hero-sub rv">
             A celebration of <span className="struck">success</span>{" "}
-            <b>failure</b> — and everything it quietly taught us.{" "}
+            <b>failure</b> and everything it quietly taught us.{" "}
             <span className="scribble">yes, on purpose.</span>
           </p>
           <p className="presented rv">
@@ -97,7 +97,7 @@ export default function Home() {
               />
               <div className="k">Where</div>
               <div className="v">
-                Columbia<small>South Carolina · venue TBA</small>
+                TLC Sports Bar<small>Columbia, South Carolina</small>
               </div>
             </div>
             <a
@@ -130,7 +130,7 @@ export default function Home() {
           <div className="about-grid">
             <div className="about-lead rv">
               ScrewUp Nights is a live storytelling show where real people take
-              the mic and walk us through their most spectacular flops — the
+              the mic and walk us through their most spectacular flops: the
               launches that tanked, the relationships that imploded, the
               decisions that looked great until they very much didn&rsquo;t.
             </div>
@@ -138,13 +138,13 @@ export default function Home() {
               <p>
                 It&rsquo;s part stand-up, part post-mortem. Speakers get the
                 stage to be honest, funny, and a little vulnerable about the
-                times things went sideways — and what they&rsquo;d actually do
+                times things went sideways and what they&rsquo;d actually do
                 differently.
               </p>
               <p>
                 Because failure isn&rsquo;t the opposite of learning. It&rsquo;s
-                the whole curriculum. We just don&rsquo;t usually talk about it
-                out loud.
+                actually the best kind of learning. We just don&rsquo;t
+                usually talk about it out loud.
               </p>
             </div>
           </div>
@@ -162,8 +162,7 @@ export default function Home() {
               <div className="n">02</div>
               <h4>Actual laughs</h4>
               <p>
-                Comedy is the spoonful of sugar. We promise you&rsquo;ll laugh —
-                probably at us.
+                Our speakers had to learn to laugh at themselves as they overcame their fails. Now you can laugh at them too.
               </p>
             </div>
             <div className="mini paste rv" style={rot("1deg")}>
@@ -196,7 +195,7 @@ export default function Home() {
               won&rsquo;t work.
             </q>
             <div className="by">
-              — stolen for the occasion, with apologies to Edison
+              — Thomas Edison
             </div>
           </div>
         </div>
