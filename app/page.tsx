@@ -56,7 +56,7 @@ export default function Home() {
           </h1>
           <p className="hero-sub rv">
             A celebration of <span className="struck">success</span>{" "}
-            <b>failure</b> — and everything it quietly taught us.{" "}
+            <b>failure</b> and everything it quietly taught us.{" "}
             <span className="scribble">yes, on purpose.</span>
           </p>
           <p className="presented rv">
@@ -97,7 +97,7 @@ export default function Home() {
               />
               <div className="k">Where</div>
               <div className="v">
-                Columbia<small>South Carolina · venue TBA</small>
+                TLC Sports Bar<small>Columbia, South Carolina</small>
               </div>
             </div>
             <a
@@ -111,6 +111,29 @@ export default function Home() {
                 className="tape"
                 style={{ top: "-14px", left: "40%", transform: "rotate(-3deg)" }}
               />
+              <svg
+                width="34"
+                height="34"
+                viewBox="0 0 34 34"
+                fill="none"
+                style={{ position: "absolute", top: "10px", right: "14px", transform: "rotate(-3deg)" }}
+                aria-hidden="true"
+              >
+                <path
+                  d="M6 27C7 15 14 8 26 7"
+                  stroke="var(--red)"
+                  strokeWidth="2.5"
+                  strokeLinecap="round"
+                />
+                <path
+                  d="M19 2C22 3 24.5 5 26 7C24 11.5 21 13 18 14.5"
+                  stroke="var(--red)"
+                  strokeWidth="2.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  fill="none"
+                />
+              </svg>
               <div className="k">Tickets</div>
               <div className="v">
                 $15<small>limited spots · dignity not included</small>
@@ -130,7 +153,7 @@ export default function Home() {
           <div className="about-grid">
             <div className="about-lead rv">
               ScrewUp Nights is a live storytelling show where real people take
-              the mic and walk us through their most spectacular flops — the
+              the mic and walk us through their most spectacular flops: the
               launches that tanked, the relationships that imploded, the
               decisions that looked great until they very much didn&rsquo;t.
             </div>
@@ -138,13 +161,13 @@ export default function Home() {
               <p>
                 It&rsquo;s part stand-up, part post-mortem. Speakers get the
                 stage to be honest, funny, and a little vulnerable about the
-                times things went sideways — and what they&rsquo;d actually do
+                times things went sideways and what they&rsquo;d actually do
                 differently.
               </p>
               <p>
                 Because failure isn&rsquo;t the opposite of learning. It&rsquo;s
-                the whole curriculum. We just don&rsquo;t usually talk about it
-                out loud.
+                actually the best kind of learning. We just don&rsquo;t
+                usually talk about it out loud.
               </p>
             </div>
           </div>
@@ -162,8 +185,7 @@ export default function Home() {
               <div className="n">02</div>
               <h4>Actual laughs</h4>
               <p>
-                Comedy is the spoonful of sugar. We promise you&rsquo;ll laugh —
-                probably at us.
+                Our speakers had to learn to laugh at themselves as they overcame their fails. Now you can laugh at them too.
               </p>
             </div>
             <div className="mini paste rv" style={rot("1deg")}>
@@ -181,22 +203,6 @@ export default function Home() {
                 A room full of people who&rsquo;ve also blown it. Wildly
                 underrated medicine.
               </p>
-            </div>
-          </div>
-
-          <div className="pull rv">
-            <span
-              className="stamp"
-              style={{ position: "absolute", top: "-18px", left: "30px" }}
-            >
-              draft
-            </span>
-            <q>
-              I have not failed. I&rsquo;ve just found 10,000 ways that
-              won&rsquo;t work.
-            </q>
-            <div className="by">
-              — stolen for the occasion, with apologies to Edison
             </div>
           </div>
         </div>
@@ -221,14 +227,14 @@ export default function Home() {
 
             <div className="paste rv cta-card">
               <span
-                className="tape"
-                style={{ top: "-15px", right: "30px", transform: "rotate(5deg)" }}
+                  className="tape"
+                  style={{ top: "-15px", right: "30px", transform: "rotate(5deg)" }}
               />
               <a
-                className="btn"
-                href="https://www.zeffy.com/en-US/ticketing/screwup-nights-september--2026"
-                target="_blank"
-                rel="noopener noreferrer"
+                  className="btn"
+                  href="https://www.zeffy.com/en-US/ticketing/screwup-nights-september--2026"
+                  target="_blank"
+                  rel="noopener noreferrer"
               >
                 Buy tickets →
               </a>
@@ -237,6 +243,28 @@ export default function Home() {
               </a>
             </div>
           </div>
+        </div>
+      </section>
+
+      <section>
+        <div className="wrap">
+          <div className="pull rv">
+            <span
+              className="stamp"
+              style={{ position: "absolute", top: "-18px", left: "30px" }}
+            >
+              draft
+            </span>
+            <q>
+              I have not failed. I&rsquo;ve just found 10,000 ways that
+              won&rsquo;t work.
+            </q>
+            <div className="by">
+              — Thomas Edison
+            </div>
+          </div>
+
+
         </div>
       </section>
 
