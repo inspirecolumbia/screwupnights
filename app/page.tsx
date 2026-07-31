@@ -111,6 +111,29 @@ export default function Home() {
                 className="tape"
                 style={{ top: "-14px", left: "40%", transform: "rotate(-3deg)" }}
               />
+              <svg
+                width="34"
+                height="34"
+                viewBox="0 0 34 34"
+                fill="none"
+                style={{ position: "absolute", top: "10px", right: "14px", transform: "rotate(-3deg)" }}
+                aria-hidden="true"
+              >
+                <path
+                  d="M6 27C7 15 14 8 26 7"
+                  stroke="var(--red)"
+                  strokeWidth="2.5"
+                  strokeLinecap="round"
+                />
+                <path
+                  d="M19 2C22 3 24.5 5 26 7C24 11.5 21 13 18 14.5"
+                  stroke="var(--red)"
+                  strokeWidth="2.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  fill="none"
+                />
+              </svg>
               <div className="k">Tickets</div>
               <div className="v">
                 $15<small>limited spots · dignity not included</small>
@@ -182,22 +205,6 @@ export default function Home() {
               </p>
             </div>
           </div>
-
-          <div className="pull rv">
-            <span
-              className="stamp"
-              style={{ position: "absolute", top: "-18px", left: "30px" }}
-            >
-              draft
-            </span>
-            <q>
-              I have not failed. I&rsquo;ve just found 10,000 ways that
-              won&rsquo;t work.
-            </q>
-            <div className="by">
-              — Thomas Edison
-            </div>
-          </div>
         </div>
       </section>
 
@@ -220,14 +227,14 @@ export default function Home() {
 
             <div className="paste rv cta-card">
               <span
-                className="tape"
-                style={{ top: "-15px", right: "30px", transform: "rotate(5deg)" }}
+                  className="tape"
+                  style={{ top: "-15px", right: "30px", transform: "rotate(5deg)" }}
               />
               <a
-                className="btn"
-                href="https://www.zeffy.com/en-US/ticketing/screwup-nights-september--2026"
-                target="_blank"
-                rel="noopener noreferrer"
+                  className="btn"
+                  href="https://www.zeffy.com/en-US/ticketing/screwup-nights-september--2026"
+                  target="_blank"
+                  rel="noopener noreferrer"
               >
                 Buy tickets →
               </a>
@@ -236,6 +243,28 @@ export default function Home() {
               </a>
             </div>
           </div>
+        </div>
+      </section>
+
+      <section>
+        <div className="wrap">
+          <div className="pull rv">
+            <span
+              className="stamp"
+              style={{ position: "absolute", top: "-18px", left: "30px" }}
+            >
+              draft
+            </span>
+            <q>
+              I have not failed. I&rsquo;ve just found 10,000 ways that
+              won&rsquo;t work.
+            </q>
+            <div className="by">
+              — Thomas Edison
+            </div>
+          </div>
+
+
         </div>
       </section>
 
