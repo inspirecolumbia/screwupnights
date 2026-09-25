@@ -1,0 +1,20 @@
+name: Validate main promotion
+
+on:
+  pull_request:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  validate-source:
+    name: Validate promotion source
+    runs-on: ubuntu-latest
+    steps:
+      - name: Require dev as the source branch
+        if: github.head_ref != 'dev'
+        run: |
+          echo "::error::Pull requests into main must come from the dev branch."
+          exit 1
