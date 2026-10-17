@@ -39,7 +39,7 @@ const permanentMarker = Permanent_Marker({
 export const metadata: Metadata = {
   title: "Screwup Nights — A celebration of failure",
   description:
-    "A live storytelling show where real people take the mic and walk us through their most spectacular flops — and what they learned. Sept 4, 2026 · Columbia, SC · $15.",
+    "A live storytelling show where real people take the mic and walk us through their most spectacular flops — and what they learned. Columbia, SC · Presented by Inspire Columbia.",
 };
 
 export default function RootLayout({
