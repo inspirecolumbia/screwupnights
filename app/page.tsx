@@ -1,272 +1,345 @@
-import type { CSSProperties } from "react";
 import Image from "next/image";
-import ScrollReveal from "./scroll-reveal";
-import MarginShapes from "./margin-shapes";
+import Silhouette from "./silhouette";
 
-// Helper for the prototype's per-element rotation custom property (`--r`).
-const rot = (deg: string) => ({ "--r": deg }) as CSSProperties;
+type ShowState = "on-sale" | "none";
 
-const tickerItems = [
-  "Failure is data",
-  "Bring your worst",
-  "Sept 2 2026",
-  "Columbia, SC",
-  "A celebration of screwing up",
+// Single source of truth for show details. Everything on the page that
+// mentions a date, venue or price reads from here.
+// PROTOTYPE: the Vol. 02 date, times and ticket link are placeholders, not a
+// confirmed show. Preview either state with ?show=on-sale or ?show=none.
+const EVENT = {
+  state: "on-sale" as ShowState,
+  volume: "Vol. 02",
+  start: "2026-11-12T20:00:00-05:00",
+  doors: "2026-11-12T19:30:00-05:00",
+  venue: "TLC Sports Bar",
+  city: "Columbia",
+  price: "$15",
+  ticketUrl: "https://www.zeffy.com/",
+  email: "screwupnights@inspirecolumbia.org",
+  // The night the photos are from.
+  past: { label: "Night 01", when: "Sept 2026", venue: "TLC Sports Bar" },
+};
+
+const TZ = "America/New_York";
+const fmt = (iso: string, opts: Intl.DateTimeFormatOptions) =>
+  new Intl.DateTimeFormat("en-US", { timeZone: TZ, ...opts }).format(
+    new Date(iso),
+  );
+
+const NAV = [
+  { href: "#about", label: "About" },
+  { href: "#next-night", label: "Next night" },
+  { href: "#photos", label: "Photos" },
+  { href: "#speakers", label: "Speakers" },
 ];
 
-// Render the phrase set twice per group so the track is wide enough to span
-// large monitors without artificial spacing; the two identical groups keep the
-// -50% loop seamless.
-function TickerGroup() {
-  return (
-    <div className="ticker-group">
-      {[...tickerItems, ...tickerItems].map((item, i) => (
-        <span key={i}>
-          {item} <span className="dot">●</span>
-        </span>
-      ))}
-    </div>
-  );
-}
+const PILLARS = [
+  ["Real stories", "No sanitized LinkedIn versions."],
+  ["Actual laughs", "They laugh at themselves. You can too."],
+  ["Useful lessons", "Steal them for your next screwup."],
+  ["Good company", "A room full of people who've blown it."],
+];
 
-export default function Home() {
+const PHOTOS = [
+  {
+    src: "/proto/n01-face-you-make.jpg",
+    alt: "A speaker with a microphone on stage under a row of pennant flags, audience in the foreground.",
+    caption: "The face you make",
+  },
+  {
+    src: "/proto/n01-mid-confession.jpg",
+    alt: "A speaker telling her story on the lit outdoor stage at night.",
+    caption: "Mid-story",
+  },
+  {
+    src: "/proto/n01-on-the-mic.jpg",
+    alt: "A speaker in a blue shirt mid-sentence on the microphone.",
+    caption: "On the mic",
+  },
+  {
+    src: "/proto/n01-patio-dusk.jpg",
+    alt: "The audience seated on the TLC Sports Bar patio at dusk, under string lights.",
+    caption: "The crowd",
+  },
+];
+
+const LINEUP = [
+  { hair: "short", teaser: "The launch that tanked" },
+  { hair: "long", teaser: "The idea that seemed great" },
+  { hair: "bun", teaser: "The plan that imploded" },
+  { hair: "crop", teaser: "The one we can't say yet" },
+] as const;
+
+export default async function Home({
+  searchParams,
+}: {
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+}) {
+  const { show } = await searchParams;
+  const state: ShowState =
+    show === "on-sale" || show === "none" ? show : EVENT.state;
+  const onSale = state === "on-sale";
+
+  const weekday = fmt(EVENT.start, { weekday: "long" });
+  const month = fmt(EVENT.start, { month: "short" });
+  const day = fmt(EVENT.start, { day: "numeric" });
+  const doorsTime = fmt(EVENT.doors, { hour: "numeric", minute: "2-digit" });
+  const mailingList = `mailto:${EVENT.email}?subject=${encodeURIComponent(
+    "Add me to the ScrewUp Nights mailing list",
+  )}`;
+  const cta = onSale
+    ? { href: "#next-night", label: `Get tickets — ${EVENT.price}` }
+    : { href: mailingList, label: "Join the list" };
+
   return (
     <>
-      <MarginShapes />
-      <div className="ticker">
-        <div className="ticker-track">
-          <TickerGroup />
-          <TickerGroup />
-        </div>
-      </div>
+      <a className="skip" href="#main">
+        Skip to content
+      </a>
 
-      <header>
-        <div className="wrap">
-          <span className="vol rv">Vol. 01 — Live &amp; in person</span>
-          <h1 className="hero-title">
+      <header className="topbar">
+        <nav className="wrap topbar-inner" aria-label="Main">
+          <a className="topbar-logo" href="#top">
             <Image
-              className="hero-logo rv"
               src="/ScrewupPurple.png"
-              alt="Screwup Nights"
+              alt="ScrewUp Nights home"
               width={757}
               height={592}
-              preload
-              style={rot("-1deg")}
+              sizes="52px"
             />
-          </h1>
-          <p className="hero-sub rv">
-            A celebration of <span className="struck">success</span>{" "}
-            <b>failure</b> and everything it quietly taught us.{" "}
-            <span className="scribble">yes, on purpose.</span>
-          </p>
-          <p className="presented rv">
-            Presented by{" "}
-            <a
-              href="https://inspirecolumbia.org"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <b>Inspire Columbia</b>
-            </a>{" "}
-            — the team behind{" "}
-            <a
-              href="https://tedxcongareevista.com"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              TEDxCongaree Vista
-            </a>
-            .
-          </p>
-
-          <div className="meta-row">
-            <div className="meta-card paste rv" style={rot("-1.5deg")}>
-              <span
-                className="tape"
-                style={{ top: "-14px", left: "24px", transform: "rotate(-5deg)" }}
-              />
-              <div className="k">When</div>
-              <div className="v">
-                Sept 2<small>Wednesday · 2026 · doors 7:30 pm</small>
-              </div>
-            </div>
-            <div className="meta-card paste rv" style={rot("1.5deg")}>
-              <span
-                className="tape"
-                style={{ top: "-14px", right: "24px", transform: "rotate(6deg)" }}
-              />
-              <div className="k">Where</div>
-              <div className="v">
-                TLC Sports Bar<small>Columbia, South Carolina</small>
-              </div>
-            </div>
-            <a
-              className="meta-card paste rv"
-              href="https://www.zeffy.com/en-US/ticketing/screwup-nights-september--2026"
-              target="_blank"
-              rel="noopener noreferrer"
-              style={rot("-1deg")}
-            >
-              <span
-                className="tape"
-                style={{ top: "-14px", left: "40%", transform: "rotate(-3deg)" }}
-              />
-              <svg
-                width="34"
-                height="34"
-                viewBox="0 0 34 34"
-                fill="none"
-                style={{ position: "absolute", top: "10px", right: "14px", transform: "rotate(-3deg)" }}
-                aria-hidden="true"
-              >
-                <path
-                  d="M6 27C7 15 14 8 26 7"
-                  stroke="var(--red)"
-                  strokeWidth="2.5"
-                  strokeLinecap="round"
-                />
-                <path
-                  d="M19 2C22 3 24.5 5 26 7C24 11.5 21 13 18 14.5"
-                  stroke="var(--red)"
-                  strokeWidth="2.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  fill="none"
-                />
-              </svg>
-              <div className="k">Tickets</div>
-              <div className="v">
-                $15<small>limited spots · dignity not included</small>
-              </div>
-            </a>
-          </div>
-        </div>
+          </a>
+          <ul className="nav-links">
+            {NAV.map((n) => (
+              <li key={n.href}>
+                <a href={n.href}>{n.label}</a>
+              </li>
+            ))}
+          </ul>
+          <a className="pill pill-pink nav-cta" href={cta.href}>
+            {cta.label}
+          </a>
+          {/* Mobile: a native disclosure, so it works by keyboard without JS. */}
+          <details className="menu">
+            <summary>Menu</summary>
+            <ul>
+              {NAV.map((n) => (
+                <li key={n.href}>
+                  <a href={n.href}>{n.label}</a>
+                </li>
+              ))}
+              <li>
+                <a href={cta.href}>{cta.label}</a>
+              </li>
+            </ul>
+          </details>
+        </nav>
       </header>
 
-      <section className="about">
-        <div className="wrap">
-          <div className="kicker rv">The premise</div>
-          <h2 className="sec-title rv">
-            Every win is built on a<br />
-            <em>landfill</em> of failures.
-          </h2>
-          <div className="about-grid">
-            <div className="about-lead rv">
-              ScrewUp Nights is a live storytelling show where real people take
-              the mic and walk us through their most spectacular flops: the
-              launches that tanked, the relationships that imploded, the
-              decisions that looked great until they very much didn&rsquo;t.
-            </div>
-            <div className="about-body rv">
+      <main id="main" tabIndex={-1}>
+        <section className="hero" id="top" aria-labelledby="hero-title">
+          <Image
+            className="hero-bg"
+            src="/proto/n01-bar-crowd.jpg"
+            alt="The Night 01 audience gathered by the bar at TLC Sports Bar, listening to a story."
+            fill
+            preload
+            sizes="100vw"
+          />
+          <div className="hero-shade" aria-hidden="true" />
+          <div className="wrap hero-inner">
+            <p className="mono hero-stamp">
+              {EVENT.past.label} · {EVENT.past.when} · {EVENT.past.venue}
+            </p>
+            <p className="mono lime">{`Live storytelling · ${EVENT.city}, SC`}</p>
+            <h1 id="hero-title" className="display hero-title">
+              Failure,
+              <br />
+              <em className="lime">live on</em> stage.
+            </h1>
+            <div className="hero-foot">
               <p>
-                It&rsquo;s part stand-up, part post-mortem. Speakers get the
-                stage to be honest, funny, and a little vulnerable about the
-                times things went sideways and what they&rsquo;d actually do
+                Real people take the mic and walk us through their most
+                spectacular flops — and what they&rsquo;d actually do
                 differently.
               </p>
-              <p>
-                Because failure isn&rsquo;t the opposite of learning. It&rsquo;s
-                actually the best kind of learning. We just don&rsquo;t
-                usually talk about it out loud.
-              </p>
+              <p className="mono">Presented by Inspire Columbia</p>
             </div>
           </div>
+        </section>
 
-          <div className="cards">
-            <div className="mini paste rv" style={rot("-1deg")}>
-              <div className="n">01</div>
-              <h4>Real stories</h4>
-              <p>
-                No sanitized LinkedIn versions. The actual, embarrassing,
-                instructive truth.
-              </p>
-            </div>
-            <div className="mini paste rv" style={rot("1deg")}>
-              <div className="n">02</div>
-              <h4>Actual laughs</h4>
-              <p>
-                Our speakers had to learn to laugh at themselves as they overcame their fails. Now you can laugh at them too.
-              </p>
-            </div>
-            <div className="mini paste rv" style={rot("1deg")}>
-              <div className="n">03</div>
-              <h4>Useful lessons</h4>
-              <p>
-                Every story lands on something you can steal for your own next
-                screwup.
-              </p>
-            </div>
-            <div className="mini paste rv" style={rot("-1deg")}>
-              <div className="n">04</div>
-              <h4>Good company</h4>
-              <p>
-                A room full of people who&rsquo;ve also blown it. Wildly
-                underrated medicine.
-              </p>
+        <section className="next" id="next-night" aria-labelledby="next-title">
+          <div className="wrap">
+            <p className="mono label">Next screwup night</p>
+            <div className="ticket">
+              <div className="ticket-main">
+                <p className="ticket-date" aria-hidden="true">
+                  <span>{onSale ? month : "Date"}</span>
+                  {onSale ? day : "TBA"}
+                </p>
+                <div className="ticket-body">
+                  <p className="mono">
+                    {onSale
+                      ? `${EVENT.volume} · ${weekday} · placeholder date`
+                      : `${EVENT.volume} · date coming soon`}
+                  </p>
+                  <h2 id="next-title" className="display ticket-title">
+                    {`ScrewUp Nights ${EVENT.volume}`}
+                  </h2>
+                  <ul className="ticket-facts">
+                    <li>{`${EVENT.venue}, ${EVENT.city}`}</li>
+                    {onSale && (
+                      <li>
+                        <time dateTime={EVENT.start}>
+                          {`${weekday}, ${month} ${day}`}
+                        </time>
+                        {` · Doors ${doorsTime}`}
+                      </li>
+                    )}
+                    <li>Snacks included</li>
+                  </ul>
+                </div>
+              </div>
+              <div className="ticket-stub">
+                <p className="mono">{onSale ? "Admit one" : "Be first in line"}</p>
+                {onSale ? (
+                  <>
+                    <p className="display stub-price">{EVENT.price}</p>
+                    <p className="small">limited spots · dignity not included</p>
+                    <a
+                      className="pill pill-pink"
+                      href={EVENT.ticketUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      Buy tickets →
+                      <span className="sr-only"> (opens in a new tab)</span>
+                    </a>
+                  </>
+                ) : (
+                  <>
+                    <p className="small">
+                      The list hears about the date before tickets go on sale.
+                    </p>
+                    <a className="pill pill-pink" href={mailingList}>
+                      Join the mailing list →
+                    </a>
+                  </>
+                )}
+              </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      <section className="rsvp" id="rsvp">
-        <div className="wrap">
-          <div className="rsvp-grid">
-            <div className="rsvp-copy rv">
-              <div className="kicker">Save your seat</div>
-              <h3>
-                Come fail
-                <br />
-                in public.
-              </h3>
-              <div className="free">$15 a seat · spots are limited →</div>
-              <ul>
-                <li>One unforgettable evening of glorious mistakes</li>
-                <li>Snacks included and drinks available</li>
-              </ul>
+        <section className="about" id="about" aria-labelledby="about-title">
+          <div className="wrap">
+            <div className="about-grid">
+              <h2 id="about-title" className="display about-title">
+                Every win is built on a <em className="pink">landfill</em> of
+                failures.
+              </h2>
+              <div className="about-copy">
+                <p className="lead">
+                  ScrewUp Nights is a live storytelling show about the launches
+                  that tanked, the relationships that imploded, and the
+                  decisions that looked great until they very much
+                  didn&rsquo;t.
+                </p>
+                <p>
+                  It&rsquo;s part stand-up, part post-mortem. Speakers get the
+                  stage to be honest, funny, and a little vulnerable about the
+                  times things went sideways.
+                </p>
+                <p>
+                  Because failure isn&rsquo;t the opposite of learning. We just
+                  don&rsquo;t usually talk about it out loud.
+                </p>
+              </div>
             </div>
-
-            <div className="paste rv cta-card">
-              <span
-                  className="tape"
-                  style={{ top: "-15px", right: "30px", transform: "rotate(5deg)" }}
-              />
-              <a
-                  className="btn"
-                  href="https://www.zeffy.com/en-US/ticketing/screwup-nights-september--2026"
-                  target="_blank"
-                  rel="noopener noreferrer"
-              >
-                Buy tickets →
-              </a>
-              <a className="btn alt" href="mailto:screwupnights@inspirecolumbia.org">
-                Contact us
-              </a>
-            </div>
+            <ol className="pillars">
+              {PILLARS.map(([title, text], i) => (
+                <li key={title}>
+                  <span className="mono">{String(i + 1).padStart(2, "0")}</span>
+                  <h3>{title}</h3>
+                  <p>{text}</p>
+                </li>
+              ))}
+            </ol>
           </div>
-        </div>
-      </section>
+        </section>
 
-      <section>
-        <div className="wrap">
-          <div className="pull rv">
-            <span
-              className="stamp"
-              style={{ position: "absolute", top: "-18px", left: "30px" }}
+        <section className="pictures" id="photos" aria-labelledby="photos-title">
+          <div className="wrap">
+            <div className="sec-head">
+              <h2 id="photos-title" className="display sec-title">
+                {`${EVENT.past.label}, `}
+                <em className="pink">in pictures.</em>
+              </h2>
+              <p className="mono">{`${EVENT.past.when} · ${EVENT.past.venue}`}</p>
+            </div>
+            <ul className="mosaic">
+              {PHOTOS.map((p, i) => (
+                <li key={p.src} className={`tile tile-${i + 1}`}>
+                  <figure>
+                    <Image
+                      src={p.src}
+                      alt={p.alt}
+                      fill
+                      sizes={
+                        i === 0
+                          ? "(max-width: 760px) 100vw, 560px"
+                          : "(max-width: 760px) 100vw, 480px"
+                      }
+                    />
+                    <figcaption className="mono">{p.caption}</figcaption>
+                  </figure>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </section>
+
+        <section className="lineup" id="speakers" aria-labelledby="lineup-title">
+          <div className="wrap">
+            <div className="sec-head">
+              <h2 id="lineup-title" className="display sec-title">
+                {`${EVENT.volume} `}
+                <em className="lime">lineup.</em>
+              </h2>
+              <p className="mono">Announcing soon</p>
+            </div>
+            <ul className="lineup-grid">
+              {LINEUP.map((s, i) => (
+                <li key={s.hair}>
+                  <span className="mono">{String(i + 1).padStart(2, "0")}</span>
+                  <div className="portrait">
+                    <Silhouette hair={s.hair} />
+                    <span className="soon">Speaker coming soon</span>
+                  </div>
+                  <h3>Speaker TBA</h3>
+                  <p>{s.teaser}</p>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </section>
+
+        <section className="band" aria-labelledby="band-title">
+          <div className="wrap">
+            <h2 id="band-title" className="display band-title">
+              Come fail <em>in public.</em>
+            </h2>
+            <a
+              className="pill pill-dark"
+              href={onSale ? EVENT.ticketUrl : mailingList}
             >
-              draft
-            </span>
-            <q>
-              I have not failed. I&rsquo;ve just found 10,000 ways that
-              won&rsquo;t work.
-            </q>
-            <div className="by">
-              — Thomas Edison
-            </div>
+              {onSale
+                ? `Get tickets — ${EVENT.price} →`
+                : "Join the mailing list →"}
+            </a>
           </div>
-
-
-        </div>
-      </section>
+        </section>
+      </main>
 
       {/* Sponsors section — hidden until we have sponsors. Uncomment to restore.
       <section className="sponsors">
@@ -314,47 +387,27 @@ export default function Home() {
       </section>
       */}
 
-      <footer>
-        <div className="wrap">
-          <div className="foot">
-            <div className="big rv">
-              <Image
-                src="/InspireWhiteLogo.png"
-                alt="Screwupnights"
-                width={220}
-                height={80}
-                style={{ objectFit: "contain" }}
-              />
-            </div>
-            <div className="errata rv">
-              <b>ERRATA:</b> An earlier version of this life implied that
-              everything would go according to plan. We regret the error.
-              <br />
-              <br />
-              Presented by{" "}
-              <a
-                href="https://inspirecolumbia.org"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <b>Inspire Columbia</b>
-              </a>
-              , the team behind{" "}
-              <a
-                href="https://tedxcongareevista.com"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                TEDxCongaree Vista
-              </a>
-              .
-              <br />
-            </div>
-          </div>
+      <footer className="site-footer">
+        <div className="wrap foot">
+          <a
+            href="https://inspirecolumbia.org"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <Image
+              src="/InspireWhiteLogo.png"
+              alt="Inspire Columbia (opens in a new tab)"
+              width={490}
+              height={192}
+              className="foot-logo"
+            />
+          </a>
+          <p>
+            <b>ERRATA:</b> An earlier version of this life implied that
+            everything would go according to plan. We regret the error.
+          </p>
         </div>
       </footer>
-
-      <ScrollReveal />
     </>
   );
 }
