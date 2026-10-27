@@ -108,12 +108,13 @@ export default async function Home({
 
   const weekday = fmt(EVENT.start, { weekday: "long" });
   const monthDay = fmt(EVENT.start, { month: "short", day: "numeric" });
-  const year = fmt(EVENT.start, { year: "numeric" });
+  const month = fmt(EVENT.start, { month: "short" });
+  const day = fmt(EVENT.start, { day: "numeric" });
   const doorsTime = fmt(EVENT.doors, { hour: "numeric", minute: "2-digit" });
   const mailingList = `mailto:${EVENT.email}?subject=${encodeURIComponent(
     "Add me to the ScrewUp Nights mailing list",
   )}`;
-  const ticketHref = onSale ? "#rsvp" : mailingList;
+  const ticketHref = onSale ? "#next-night" : mailingList;
 
   const tickerItems = [
     "Failure is data",
@@ -260,68 +261,66 @@ export default async function Home({
         <section className="next" id="next-night" aria-labelledby="next-title">
           <div className="wrap">
             <div className="kicker rv">Next screwup night</div>
-            <div className="next-head">
-              <h2 id="next-title" className="sec-title rv">
-                {onSale ? (
-                  <>
-                    {EVENT.volume} is <span className="pink">coming.</span>
-                  </>
-                ) : (
-                  <>
-                    {EVENT.volume} is <span className="pink">brewing.</span>
-                  </>
-                )}
-              </h2>
-              <a className="btn btn-md rv" href={ticketHref}>
-                {onSale ? "Get tickets →" : "Join the list →"}
-              </a>
-            </div>
-            <div className="meta-row">
-              <div className="meta-card paste rv" style={rot("-1.5deg")}>
-                <span
-                  className="tape"
-                  style={{ top: "-14px", left: "24px", transform: "rotate(-5deg)" }}
-                />
-                <div className="k">When</div>
-                <div className="v">
+            <div className="ticket-wrap rv">
+              <div className="ticket">
+                <div className="ticket-main">
+                  <p className="ticket-date" aria-hidden="true">
+                    <span>{onSale ? month : "Date"}</span>
+                    {onSale ? day : "TBA"}
+                  </p>
+                  <div className="ticket-body">
+                    <p className="ticket-kicker">
+                      {onSale
+                        ? `${EVENT.volume} · ${weekday} · placeholder date`
+                        : `${EVENT.volume} · date coming soon`}
+                    </p>
+                    <h2 id="next-title" className="ticket-title">
+                      {`ScrewUp Nights ${EVENT.volume}`}
+                    </h2>
+                    <ul className="ticket-facts">
+                      <li>{`${EVENT.venue}, ${EVENT.city}`}</li>
+                      {onSale && (
+                        <li>
+                          <time dateTime={EVENT.start}>
+                            {`${weekday}, ${monthDay}`}
+                          </time>
+                          {` · Doors ${doorsTime}`}
+                        </li>
+                      )}
+                      <li>Snacks included</li>
+                    </ul>
+                  </div>
+                </div>
+                <div className="ticket-stub">
+                  <p className="ticket-kicker">
+                    {onSale ? "Admit one" : "Be first in line"}
+                  </p>
                   {onSale ? (
                     <>
-                      <time dateTime={EVENT.start}>{monthDay}</time>
-                      <small>
-                        {weekday} · {year} · doors {doorsTime} (placeholder)
-                      </small>
+                      <p className="stub-price">{EVENT.price}</p>
+                      <p className="stub-note">
+                        limited spots · dignity not included
+                      </p>
+                      <a
+                        className="stub-btn"
+                        href={EVENT.ticketUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        Buy tickets →
+                        <span className="sr-only"> (opens in a new tab)</span>
+                      </a>
                     </>
                   ) : (
                     <>
-                      TBA<small>date announced to the list first</small>
+                      <p className="stub-note">
+                        The list hears about the date before tickets go on sale.
+                      </p>
+                      <a className="stub-btn" href={mailingList}>
+                        Join the mailing list →
+                      </a>
                     </>
                   )}
-                </div>
-              </div>
-              <div className="meta-card paste rv" style={rot("1deg")}>
-                <span
-                  className="tape"
-                  style={{ top: "-14px", right: "24px", transform: "rotate(6deg)" }}
-                />
-                <div className="k">Where</div>
-                <div className="v">
-                  {EVENT.venue}
-                  <small>{EVENT.region}</small>
-                </div>
-              </div>
-              <div className="meta-card paste rv" style={rot("-1deg")}>
-                <span
-                  className="tape"
-                  style={{ top: "-14px", left: "40%", transform: "rotate(-3deg)" }}
-                />
-                <div className="k">Tickets</div>
-                <div className="v">
-                  {onSale ? EVENT.price : "Soon"}
-                  <small>
-                    {onSale
-                      ? "limited spots · dignity not included"
-                      : "join the list to hear first"}
-                  </small>
                 </div>
               </div>
             </div>
@@ -378,8 +377,8 @@ export default async function Home({
                 <div className="n">03</div>
                 <h3>Useful lessons</h3>
                 <p>
-                  Every story lands on something you can steal for your own
-                  next screwup.
+                  Every story lands on something you can steal for your own next
+                  screwup.
                 </p>
               </div>
               <div className="mini paste rv" style={rot("1deg")}>
@@ -396,9 +395,7 @@ export default async function Home({
 
         <section className="evidence torn-band" id="photos">
           <div className="wrap">
-            <div className="kicker rv">
-              From the floor · {EVENT.past.label}
-            </div>
+            <div className="kicker rv">From the floor · {EVENT.past.label}</div>
             <h2 className="sec-title rv">Evidence.</h2>
             <ul className="evidence-grid">
               {EVIDENCE.map((p, i) => (
@@ -476,7 +473,11 @@ export default async function Home({
               <div className="paste rv cta-card">
                 <span
                   className="tape"
-                  style={{ top: "-15px", right: "30px", transform: "rotate(5deg)" }}
+                  style={{
+                    top: "-15px",
+                    right: "30px",
+                    transform: "rotate(5deg)",
+                  }}
                 />
                 {onSale ? (
                   <a

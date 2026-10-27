@@ -286,44 +286,6 @@ a {
   padding: 1px 7px;
 }
 
-.meta-row {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 16px;
-  margin-top: 40px;
-}
-.meta-card {
-  padding: 16px 20px;
-  flex: 1;
-  min-width: 190px;
-  position: relative;
-  text-decoration: none;
-}
-.meta-card .k {
-  font-size: 11px;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  color: var(--red);
-  font-weight: 700;
-}
-.meta-card .v {
-  font-family: var(--font-anton), sans-serif;
-  font-size: clamp(22px, 3vw, 30px);
-  text-transform: uppercase;
-  margin-top: 4px;
-  line-height: 1;
-}
-.meta-card .v small {
-  font-family: var(--font-mono), monospace;
-  font-size: 13px;
-  display: block;
-  text-transform: none;
-  letter-spacing: 0;
-  margin-top: 6px;
-  font-weight: 400;
-  color: var(--ink);
-}
-
 /* doodle arrow */
 .doodle {
   position: absolute;
@@ -1169,22 +1131,190 @@ main:focus {
 }
 
 /* ---------- next night ---------- */
-.next-head {
+/* Vintage two-part ticket: scalloped top/bottom edges, round notches where the
+   stub tears off, and a punched-hole tear line. The shadow sits on the wrapper
+   so it follows the cut-out shape. */
+.ticket-wrap {
+  --stub: 260px;
+  --scallop: 5px;
+  --notch: 14px;
+  margin-top: 10px;
+  filter: drop-shadow(6px 8px 0 var(--shadow));
+}
+.ticket {
+  display: grid;
+  grid-template-columns: 1fr var(--stub);
+  border-radius: 6px;
+  --tear: calc(100% - var(--stub));
+  -webkit-mask:
+    radial-gradient(circle var(--scallop) at 50% 0, transparent 98%, #000 100%)
+      0 0 / 14px 100% repeat-x,
+    radial-gradient(circle var(--scallop) at 50% 100%, transparent 98%, #000 100%)
+      0 0 / 14px 100% repeat-x,
+    radial-gradient(circle var(--notch) at var(--tear) 0, transparent 98%, #000 100%),
+    radial-gradient(circle var(--notch) at var(--tear) 100%, transparent 98%, #000 100%);
+  -webkit-mask-composite: source-in;
+  mask:
+    radial-gradient(circle var(--scallop) at 50% 0, transparent 98%, #000 100%)
+      0 0 / 14px 100% repeat-x,
+    radial-gradient(circle var(--scallop) at 50% 100%, transparent 98%, #000 100%)
+      0 0 / 14px 100% repeat-x,
+    radial-gradient(circle var(--notch) at var(--tear) 0, transparent 98%, #000 100%),
+    radial-gradient(circle var(--notch) at var(--tear) 100%, transparent 98%, #000 100%);
+  mask-composite: intersect;
+}
+.ticket-main,
+.ticket-stub {
+  position: relative;
+}
+/* inner dashed rule, like an old printed ticket */
+.ticket-main::before,
+.ticket-stub::before {
+  content: "";
+  position: absolute;
+  inset: 14px;
+  border: 1.5px dashed currentColor;
+  opacity: 0.45;
+  pointer-events: none;
+}
+.ticket-main {
+  background: #fbd3e3;
+  color: var(--ink);
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  padding: 36px 40px;
+}
+.ticket-main :focus-visible {
+  outline-color: var(--ink);
+}
+.ticket-date {
+  font-family: var(--font-anton), sans-serif;
+  font-size: clamp(64px, 7vw, 96px);
+  line-height: 0.9;
+  text-align: center;
+  padding-right: 28px;
+  border-right: 2px solid currentColor;
+}
+.ticket-date span {
+  display: block;
+  font-size: 22px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+.ticket-kicker {
+  font-size: 12px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+}
+.ticket-title {
+  font-family: var(--font-anton), sans-serif;
+  font-weight: 400;
+  font-size: clamp(30px, 4vw, 54px);
+  text-transform: uppercase;
+  line-height: 0.95;
+  margin: 8px 0 14px;
+}
+.ticket-facts {
+  list-style: none;
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
-  align-items: flex-end;
-  gap: 16px 24px;
-  margin-bottom: 26px;
+  gap: 6px 22px;
+  font-size: 14px;
+  font-weight: 700;
 }
-.next-head .sec-title {
-  margin-bottom: 0;
+.ticket-facts li::before {
+  content: "◆ ";
 }
-.next .meta-row {
-  margin-top: 10px;
+.ticket-stub {
+  background: var(--hi);
+  color: var(--ink);
+  padding: 36px 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  /* punched holes along the tear line */
+  -webkit-mask:
+    radial-gradient(circle 3px at 0 50%, transparent 98%, #000 100%) 0 0 / 100% 12px
+      repeat-y;
+  mask:
+    radial-gradient(circle 3px at 0 50%, transparent 98%, #000 100%) 0 0 / 100% 12px
+      repeat-y;
 }
-.meta-card .v small {
-  line-height: 1.4;
+.ticket-stub .ticket-kicker,
+.stub-note {
+  opacity: 0.8;
+}
+.stub-price {
+  font-family: var(--font-anton), sans-serif;
+  font-size: 56px;
+  line-height: 1;
+}
+.stub-note {
+  font-size: 13px;
+}
+.stub-btn {
+  margin-top: auto;
+  display: block;
+  text-align: center;
+  text-decoration: none;
+  font-family: var(--font-anton), sans-serif;
+  text-transform: uppercase;
+  font-size: 20px;
+  letter-spacing: 1px;
+  background: var(--ink);
+  color: var(--paper);
+  border-radius: 999px;
+  padding: 14px 20px;
+  transition: transform 0.08s;
+}
+.stub-btn:hover {
+  transform: translateY(-2px);
+}
+.stub-btn:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 3px;
+}
+@media (max-width: 860px) {
+  .ticket {
+    grid-template-columns: 1fr;
+    /* stacked: scallops run down the sides instead */
+    -webkit-mask:
+      radial-gradient(circle var(--scallop) at 0 50%, transparent 98%, #000 100%)
+        0 0 / 100% 14px repeat-y,
+      radial-gradient(circle var(--scallop) at 100% 50%, transparent 98%, #000 100%)
+        0 0 / 100% 14px repeat-y;
+    -webkit-mask-composite: source-in;
+    mask:
+      radial-gradient(circle var(--scallop) at 0 50%, transparent 98%, #000 100%)
+        0 0 / 100% 14px repeat-y,
+      radial-gradient(circle var(--scallop) at 100% 50%, transparent 98%, #000 100%)
+        0 0 / 100% 14px repeat-y;
+    mask-composite: intersect;
+  }
+  .ticket-main {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+    padding: 32px 30px;
+  }
+  .ticket-date {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    border-right: 0;
+    padding-right: 0;
+  }
+  .ticket-stub {
+    padding: 32px 30px;
+    -webkit-mask:
+      radial-gradient(circle 3px at 50% 0, transparent 98%, #000 100%) 0 0 / 12px 100%
+        repeat-x;
+    mask:
+      radial-gradient(circle 3px at 50% 0, transparent 98%, #000 100%) 0 0 / 12px 100%
+        repeat-x;
+  }
 }
 
 /* ---------- torn-edged bands ---------- */
