@@ -317,8 +317,21 @@ h3 {
   align-items: center;
 }
 @media (min-width: 900px) {
+  /* The photo spans the full height of the text column: its top lines up with
+     the logo and its caption with the last line on the left. */
   .hero-grid {
     grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+    align-items: stretch;
+  }
+  .hero-photo {
+    display: flex;
+    flex-direction: column;
+  }
+  .hero-photo img {
+    flex: 1 1 0;
+    min-height: 0;
+    aspect-ratio: auto;
+    object-position: 55% 50%;
   }
 }
 .hero-copy {
@@ -330,6 +343,22 @@ h3 {
 .hero-logo {
   width: clamp(240px, 30vw, 380px);
   margin-bottom: 6px;
+  /* flies over the sticky nav on its way to the nav slot (see logo-dock.tsx) */
+  position: relative;
+  z-index: 30;
+  transform-origin: top left;
+  will-change: transform;
+}
+/* Only while the scroll animation can run: the nav logo waits for the hero
+   logo to arrive, then takes over. Without scripts or with reduced motion,
+   both logos simply show. */
+@media (scripting: enabled) and (prefers-reduced-motion: no-preference) {
+  html:not(.logo-docked) .topbar-logo img {
+    opacity: 0;
+  }
+  html.logo-docked .hero-logo {
+    opacity: 0;
+  }
 }
 .hero-lede {
   font-size: clamp(19px, 1.7vw, 21px);

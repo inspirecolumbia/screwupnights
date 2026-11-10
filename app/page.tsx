@@ -1,4 +1,5 @@
 import Image from "next/image";
+import LogoDock from "./logo-dock";
 import Menu from "./menu";
 import ScrollReveal from "./scroll-reveal";
 
@@ -395,6 +396,7 @@ export default async function Home({
       </footer>
 
       <ScrollReveal />
+      <LogoDock />
     </>
   );
 }
