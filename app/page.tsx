@@ -68,15 +68,6 @@ const EVIDENCE = [
     tape: "lime",
   },
   {
-    src: "/proto/n01-nobody-left-early.jpg",
-    w: 1400,
-    h: 933,
-    alt: "A wide view of the stage with a speaker mid-story and the audience watching.",
-    caption: "nobody left early",
-    r: "1.5deg",
-    tape: "pink",
-  },
-  {
     src: "/proto/n01-bar-crowd.jpg",
     w: 1600,
     h: 1066,
@@ -354,7 +345,7 @@ export default async function Home({
                       alt={p.alt}
                       width={p.w}
                       height={p.h}
-                      sizes="(max-width: 760px) 90vw, 420px"
+                      sizes="(max-width: 760px) 90vw, 560px"
                     />
                     <figcaption>{p.caption}</figcaption>
                   </figure>

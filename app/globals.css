@@ -1348,20 +1348,26 @@ main:focus {
   gap: 28px 22px;
   align-items: start;
 }
-.ev-1 { grid-column: 1 / 6; }
-.ev-2 { grid-column: 6 / 9; margin-top: 18px; }
-.ev-3 { grid-column: 9 / 13; }
-.ev-4 { grid-column: 2 / 7; margin-top: -40px; }
-.ev-5 { grid-column: 7 / 12; }
-.ev-1 img,
-.ev-3 img,
-.ev-4 img,
-.ev-5 img {
+/* One lead portrait on the left, the stage shot wide on top of the right
+   column, two crowd shots under it. */
+.ev-1 { grid-column: 6 / 13; grid-row: 1; }
+.ev-2 { grid-column: 1 / 6; grid-row: 1 / 3; }
+.ev-3 { grid-column: 6 / 10; grid-row: 2; }
+.ev-4 { grid-column: 10 / 13; grid-row: 2; }
+.ev-1 img {
+  /* tighter than the 3:2 original so the speaker fills more of the frame,
+     and lifted because the stage was shot in near darkness */
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  object-position: 50% 70%;
+  filter: brightness(1.3) contrast(0.96);
+}
+.ev-3 img {
   aspect-ratio: 3 / 2;
   object-fit: cover;
 }
-.ev-2 img {
-  aspect-ratio: 4 / 5;
+.ev-4 img {
+  aspect-ratio: 4 / 3;
   object-fit: cover;
 }
 @media (max-width: 760px) {
@@ -1370,18 +1376,24 @@ main:focus {
     gap: 26px 16px;
   }
   .ev-1,
-  .ev-4,
-  .ev-5 {
-    grid-column: span 2;
-    margin-top: 0;
-  }
   .ev-2,
-  .ev-3 {
-    grid-column: auto;
-    margin-top: 0;
+  .ev-3,
+  .ev-4 {
+    grid-row: auto;
   }
-  .ev-3 {
-    margin-top: 40px;
+  .ev-2 {
+    grid-column: span 2;
+    order: -1;
+  }
+  .ev-1 {
+    grid-column: span 2;
+  }
+  .ev-3,
+  .ev-4 {
+    grid-column: auto;
+  }
+  .ev-4 img {
+    aspect-ratio: 3 / 2;
   }
 }
 
