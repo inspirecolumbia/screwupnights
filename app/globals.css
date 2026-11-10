@@ -6,6 +6,15 @@
   --hi: #c6e23a;
   --shadow: rgba(42, 26, 62, 0.24);
   --r: 0deg;
+  /* Live type: Anton for short headings; Arial for prose and UI.
+     Keep the root size user-controlled so rem roles enlarge with preferences. */
+  --font-body: Arial, sans-serif;
+  --type-display: clamp(2.5rem, 2rem + 2vw, 4rem);
+  --type-section: clamp(2rem, 1.75rem + 1.25vw, 3rem);
+  --type-subheading: 1.5rem;
+  --type-body: 1.125rem;
+  --type-ui: 1rem;
+  --type-secondary: 0.875rem;
 }
 
 * {
@@ -17,11 +26,12 @@ html {
   scroll-behavior: smooth;
 }
 body {
-  font-family: var(--font-mono), monospace;
+  font-family: var(--font-body);
   background: var(--paper);
   color: var(--ink);
-  overflow-x: hidden;
-  line-height: 1.5;
+  font-size: var(--type-body);
+  line-height: 1.6;
+  overflow-wrap: anywhere;
 }
 /* paper grain */
 body::before {
@@ -102,25 +112,25 @@ a {
   border: 1.5px solid var(--ink);
 }
 .stamp {
-  font-family: var(--font-marker), cursive;
+  font-family: var(--font-body);
   color: var(--red);
   border: 3px solid var(--red);
   border-radius: 6px;
   padding: 4px 12px;
   display: inline-block;
   transform: rotate(-7deg);
-  letter-spacing: 1px;
+  letter-spacing: normal;
   opacity: 0.85;
 }
 .marker {
-  font-family: var(--font-marker), cursive;
+  font-family: var(--font-body);
 }
 .serif {
-  font-family: var(--font-serif), serif;
+  font-family: var(--font-body);
 }
 .anton {
   font-family: var(--font-anton), sans-serif;
-  letter-spacing: 0.5px;
+  letter-spacing: normal;
 }
 
 /* reveal */
@@ -142,10 +152,10 @@ a {
   z-index: 10;
   background: var(--ink);
   color: var(--paper);
-  font-family: var(--font-mono), monospace;
-  font-size: 13px;
-  letter-spacing: 2px;
-  text-transform: uppercase;
+  font-family: var(--font-body);
+  font-size: var(--type-ui);
+  letter-spacing: normal;
+  text-transform: none;
   white-space: nowrap;
   overflow: hidden;
   border-bottom: 2px solid var(--ink);
@@ -187,7 +197,7 @@ a {
 .hero-title {
   position: relative;
   margin: 26px 0 10px;
-  line-height: 0.82;
+  line-height: 1.2;
 }
 .hero-title .hero-logo {
   display: block;
@@ -202,18 +212,18 @@ a {
 }
 .hero-title .l1 {
   font-family: var(--font-anton), sans-serif;
-  font-size: clamp(72px, 15vw, 188px);
-  text-transform: uppercase;
+  font-size: var(--type-display);
+  text-transform: none;
   color: var(--ink);
   display: block;
-  letter-spacing: 1px;
+  letter-spacing: normal;
 }
 .hero-title .l2 {
   font-family: var(--font-anton), sans-serif;
-  font-size: clamp(72px, 15vw, 188px);
-  text-transform: uppercase;
+  font-size: var(--type-display);
+  text-transform: none;
   display: block;
-  letter-spacing: 1px;
+  letter-spacing: normal;
   color: var(--paper);
   -webkit-text-stroke: 3px var(--ink);
   position: relative;
@@ -243,12 +253,12 @@ a {
   transform: rotate(-3deg);
 }
 .hero-sub {
-  font-family: var(--font-serif), serif;
-  font-style: italic;
-  font-size: clamp(20px, 3.2vw, 34px);
+  font-family: var(--font-body);
+  font-style: normal;
+  font-size: var(--type-subheading);
   max-width: 660px;
   margin-top: 22px;
-  line-height: 1.25;
+  line-height: 1.2;
 }
 .hero-sub b {
   font-style: normal;
@@ -256,16 +266,16 @@ a {
   padding: 0 6px;
 }
 .scribble {
-  font-family: var(--font-marker), cursive;
+  font-family: var(--font-body);
   color: var(--red);
-  font-size: 18px;
+  font-size: var(--type-body);
   display: inline-block;
   transform: rotate(-4deg);
 }
 .presented {
-  font-family: var(--font-mono), monospace;
-  font-size: 13px;
-  letter-spacing: 1px;
+  font-family: var(--font-body);
+  font-size: var(--type-ui);
+  letter-spacing: normal;
   margin-top: 18px;
   color: var(--ink);
 }
@@ -278,9 +288,9 @@ a {
 /* doodle arrow */
 .doodle {
   position: absolute;
-  font-family: var(--font-marker), cursive;
+  font-family: var(--font-body);
   color: var(--red);
-  font-size: 16px;
+  font-size: var(--type-ui);
 }
 
 /* ---------- about ---------- */
@@ -289,10 +299,10 @@ section {
   padding: 64px 0;
 }
 .kicker {
-  font-family: var(--font-mono), monospace;
-  font-size: 13px;
-  letter-spacing: 4px;
-  text-transform: uppercase;
+  font-family: var(--font-body);
+  font-size: var(--type-ui);
+  letter-spacing: normal;
+  text-transform: none;
   color: var(--red);
   margin-bottom: 14px;
 }
@@ -301,14 +311,14 @@ section {
 }
 .sec-title {
   font-family: var(--font-anton), sans-serif;
-  text-transform: uppercase;
-  font-size: clamp(40px, 7vw, 82px);
-  line-height: 0.92;
+  text-transform: none;
+  font-size: var(--type-display);
+  line-height: 1.2;
   margin-bottom: 30px;
 }
 .sec-title em {
-  font-family: var(--font-serif), serif;
-  font-style: italic;
+  font-family: inherit;
+  font-style: normal;
   text-transform: none;
   color: var(--red);
 }
@@ -325,13 +335,13 @@ section {
   }
 }
 .about-lead {
-  font-family: var(--font-serif), serif;
-  font-size: clamp(22px, 3vw, 30px);
-  line-height: 1.3;
+  font-family: var(--font-body);
+  font-size: var(--type-subheading);
+  line-height: 1.2;
 }
 .about-body p {
   margin-bottom: 16px;
-  font-size: 15px;
+  font-size: var(--type-body);
 }
 .about-body p + p {
   margin-top: 0;
@@ -350,9 +360,6 @@ section {
   .mini {
     padding: 14px;
   }
-  .mini .n {
-    font-size: 34px;
-  }
 }
 .mini {
   padding: 20px;
@@ -360,18 +367,18 @@ section {
 }
 .mini .n {
   font-family: var(--font-anton), sans-serif;
-  font-size: 46px;
+  font-size: var(--type-display);
   color: var(--red);
-  line-height: 1;
+  line-height: 1.2;
 }
 .mini h3 {
   font-family: var(--font-anton), sans-serif;
-  text-transform: uppercase;
-  font-size: 18px;
+  text-transform: none;
+  font-size: var(--type-subheading);
   margin: 6px 0 6px;
 }
 .mini p {
-  font-size: 13px;
+  font-size: var(--type-body);
 }
 
 .pull {
@@ -384,17 +391,17 @@ section {
   position: relative;
 }
 .pull q {
-  font-family: var(--font-serif), serif;
-  font-style: italic;
-  font-size: clamp(24px, 4vw, 42px);
-  line-height: 1.15;
+  font-family: var(--font-body);
+  font-style: normal;
+  font-size: var(--type-subheading);
+  line-height: 1.2;
   quotes: none;
 }
 .pull .by {
-  font-family: var(--font-mono), monospace;
-  font-size: 12px;
-  letter-spacing: 2px;
-  text-transform: uppercase;
+  font-family: var(--font-body);
+  font-size: var(--type-secondary);
+  letter-spacing: normal;
+  text-transform: none;
   color: var(--hi);
   margin-top: 18px;
 }
@@ -425,23 +432,23 @@ form {
 }
 label {
   display: block;
-  font-size: 11px;
-  letter-spacing: 2px;
-  text-transform: uppercase;
+  font-size: var(--type-ui);
+  letter-spacing: normal;
+  text-transform: none;
   font-weight: 700;
   margin-bottom: 7px;
 }
 label .opt {
   color: var(--red);
   text-transform: none;
-  letter-spacing: 0;
+  letter-spacing: normal;
   font-weight: 400;
 }
 input,
 textarea {
   width: 100%;
-  font-family: var(--font-mono), monospace;
-  font-size: 15px;
+  font-family: var(--font-body);
+  font-size: var(--type-ui);
   padding: 13px 14px;
   background: var(--paper);
   border: 1.5px solid var(--ink);
@@ -466,7 +473,7 @@ textarea {
 }
 .errmsg {
   color: var(--red);
-  font-size: 12px;
+  font-size: var(--type-ui);
   margin-top: 5px;
   display: none;
 }
@@ -474,10 +481,11 @@ textarea {
   display: block;
 }
 .btn {
-  font-family: var(--font-anton), sans-serif;
-  text-transform: uppercase;
-  font-size: 22px;
-  letter-spacing: 1px;
+  font-family: var(--font-body);
+  font-weight: 700;
+  text-transform: none;
+  font-size: var(--type-subheading);
+  letter-spacing: normal;
   background: var(--hi);
   color: var(--ink);
   border: 1.5px solid var(--ink);
@@ -520,19 +528,19 @@ textarea {
   display: block;
 }
 .success .stamp {
-  font-size: 30px;
+  font-size: var(--type-section);
   margin-bottom: 14px;
 }
 .rsvp-copy h2 {
   font-family: var(--font-anton), sans-serif;
-  text-transform: uppercase;
-  font-size: clamp(30px, 5vw, 54px);
-  line-height: 0.95;
+  text-transform: none;
+  font-size: var(--type-section);
+  line-height: 1.2;
 }
 .rsvp-copy .free {
-  font-family: var(--font-marker), cursive;
+  font-family: var(--font-body);
   color: var(--red);
-  font-size: 24px;
+  font-size: var(--type-subheading);
   display: inline-block;
   transform: rotate(-3deg);
   margin-top: 8px;
@@ -544,7 +552,7 @@ textarea {
 .rsvp-copy li {
   padding: 8px 0;
   border-bottom: 1px dashed var(--ink);
-  font-size: 14px;
+  font-size: var(--type-ui);
   display: flex;
   gap: 10px;
 }
@@ -559,9 +567,9 @@ textarea {
   text-align: center;
 }
 .sponsor-note {
-  font-family: var(--font-serif), serif;
-  font-style: italic;
-  font-size: 18px;
+  font-family: var(--font-body);
+  font-style: normal;
+  font-size: var(--type-body);
   max-width: 520px;
   margin: 0 auto 34px;
 }
@@ -581,10 +589,10 @@ textarea {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: var(--font-mono), monospace;
-  font-size: 11px;
-  letter-spacing: 1px;
-  text-transform: uppercase;
+  font-family: var(--font-body);
+  font-size: var(--type-ui);
+  letter-spacing: normal;
+  text-transform: none;
   color: var(--ink);
   background: repeating-linear-gradient(
     45deg,
@@ -598,11 +606,11 @@ textarea {
   margin-top: 30px;
 }
 .become a {
-  font-family: var(--font-mono), monospace;
+  font-family: var(--font-body);
   font-weight: 700;
-  text-transform: uppercase;
-  font-size: 13px;
-  letter-spacing: 1px;
+  text-transform: none;
+  font-size: var(--type-ui);
+  letter-spacing: normal;
   border-bottom: 3px solid var(--red);
   padding-bottom: 2px;
   text-decoration: none;
@@ -624,16 +632,16 @@ footer {
 }
 .foot .big {
   font-family: var(--font-anton), sans-serif;
-  text-transform: uppercase;
-  font-size: clamp(34px, 6vw, 68px);
-  line-height: 0.9;
+  text-transform: none;
+  font-size: var(--type-display);
+  line-height: 1.2;
 }
 .foot .big span {
   color: var(--red);
 }
 .errata {
-  font-family: var(--font-mono), monospace;
-  font-size: 11px;
+  font-family: var(--font-body);
+  font-size: var(--type-secondary);
   color: rgba(245, 240, 232, 0.6);
   max-width: 320px;
   line-height: 1.6;
@@ -701,9 +709,9 @@ main:focus {
 }
 .nav-links a,
 .menu a {
-  font-size: 12px;
-  letter-spacing: 2px;
-  text-transform: uppercase;
+  font-size: var(--type-ui);
+  letter-spacing: normal;
+  text-transform: none;
   font-weight: 700;
   text-decoration: none;
   border-bottom: 2px solid transparent;
@@ -715,13 +723,13 @@ main:focus {
 }
 .btn-sm {
   width: auto;
-  font-size: 16px;
+  font-size: var(--type-ui);
   padding: 9px 14px;
   box-shadow: 3px 4px 0 var(--ink);
 }
 .btn-md {
   width: auto;
-  font-size: 20px;
+  font-size: var(--type-body);
   padding: 12px 20px;
   box-shadow: 4px 5px 0 var(--ink);
 }
@@ -812,10 +820,10 @@ main:focus {
   bottom: 44px;
   background: var(--paper);
   border: 1.5px solid var(--ink);
-  font-size: 11px;
+  font-size: var(--type-ui);
   font-weight: 700;
-  letter-spacing: 2px;
-  text-transform: uppercase;
+  letter-spacing: normal;
+  text-transform: none;
   padding: 5px 10px;
   transform: rotate(-2deg);
 }
@@ -824,8 +832,8 @@ main:focus {
   z-index: 3;
   right: calc(max(28px, 6vw) + 230px);
   bottom: 76px;
-  font-size: 18px;
-  line-height: 1.1;
+  font-size: var(--type-body);
+  line-height: 1.2;
   color: var(--paper);
   text-shadow: 0 2px 6px rgba(0, 0, 0, 0.6);
   transform: rotate(-6deg);
@@ -978,30 +986,30 @@ main:focus {
 }
 .ticket-date {
   font-family: var(--font-anton), sans-serif;
-  font-size: clamp(64px, 7vw, 96px);
-  line-height: 0.9;
+  font-size: var(--type-display);
+  line-height: 1.2;
   text-align: center;
   padding-right: 28px;
   border-right: 2px solid currentColor;
 }
 .ticket-date span {
   display: block;
-  font-size: 22px;
-  letter-spacing: 1px;
-  text-transform: uppercase;
+  font-size: var(--type-subheading);
+  letter-spacing: normal;
+  text-transform: none;
   margin-bottom: 6px;
 }
 .ticket-kicker {
-  font-size: 12px;
-  letter-spacing: 3px;
-  text-transform: uppercase;
+  font-size: var(--type-ui);
+  letter-spacing: normal;
+  text-transform: none;
 }
 .ticket-title {
   font-family: var(--font-anton), sans-serif;
   font-weight: 400;
-  font-size: clamp(30px, 4vw, 54px);
-  text-transform: uppercase;
-  line-height: 0.95;
+  font-size: var(--type-section);
+  text-transform: none;
+  line-height: 1.2;
   margin: 8px 0 14px;
 }
 .ticket-facts {
@@ -1009,7 +1017,7 @@ main:focus {
   display: flex;
   flex-wrap: wrap;
   gap: 6px 22px;
-  font-size: 14px;
+  font-size: var(--type-ui);
   font-weight: 700;
 }
 .ticket-facts li::before {
@@ -1036,21 +1044,22 @@ main:focus {
 }
 .stub-price {
   font-family: var(--font-anton), sans-serif;
-  font-size: 56px;
-  line-height: 1;
+  font-size: var(--type-display);
+  line-height: 1.2;
 }
 .stub-note {
-  font-size: 13px;
+  font-size: var(--type-ui);
 }
 .stub-btn {
   margin-top: auto;
   display: block;
   text-align: center;
   text-decoration: none;
-  font-family: var(--font-anton), sans-serif;
-  text-transform: uppercase;
-  font-size: 20px;
-  letter-spacing: 1px;
+  font-family: var(--font-body);
+  font-weight: 700;
+  text-transform: none;
+  font-size: var(--type-body);
+  letter-spacing: normal;
   background: var(--ink);
   color: var(--paper);
   border-radius: 999px;
@@ -1212,8 +1221,8 @@ main:focus {
   height: auto;
 }
 .polaroid figcaption {
-  font-family: var(--font-marker), cursive;
-  font-size: 14px;
+  font-family: var(--font-body);
+  font-size: var(--type-ui);
   margin-top: 8px;
   color: var(--ink);
 }
@@ -1313,10 +1322,11 @@ main:focus {
   background: var(--hi);
   border: 1.5px solid var(--ink);
   color: var(--ink);
-  font-family: var(--font-anton), sans-serif;
-  text-transform: uppercase;
-  font-size: 13px;
-  line-height: 1.1;
+  font-family: var(--font-body);
+  font-weight: 700;
+  text-transform: none;
+  font-size: var(--type-ui);
+  line-height: 1.2;
   padding: 5px 8px;
   text-align: center;
   max-width: 96px;
@@ -1325,7 +1335,7 @@ main:focus {
 .speakers-note {
   margin-top: 26px;
   text-align: right;
-  font-size: 17px;
+  font-size: var(--type-body);
   color: var(--hi);
 }
 @media (max-width: 1000px) {
@@ -1346,7 +1356,7 @@ main:focus {
 /* ---------- rsvp + quote + footer ---------- */
 .rsvp-line {
   margin-top: 16px;
-  font-size: 14px;
+  font-size: var(--type-body);
   max-width: 44ch;
 }
 .quote {
@@ -1356,15 +1366,15 @@ main:focus {
   text-align: center;
 }
 .quote p {
-  font-family: var(--font-serif), serif;
-  font-size: clamp(22px, 3vw, 32px);
+  font-family: var(--font-body);
+  font-size: var(--type-subheading);
   line-height: 1.2;
 }
 .quote figcaption {
   margin-top: 14px;
-  font-size: 12px;
-  letter-spacing: 2px;
-  text-transform: uppercase;
+  font-size: var(--type-secondary);
+  letter-spacing: normal;
+  text-transform: none;
 }
 .foot {
   align-items: center;
@@ -1382,4 +1392,38 @@ main:focus {
   .rv {
     transition: none;
   }
+}
+
+/* Text-fit safeguards: preserve the collage while allowing enlarged text to wrap. */
+p { max-width: 65ch; }
+.about-lead, .hero-sub, .quote p, .pull q { line-height: 1.5; }
+.quote p { margin-inline: auto; }
+.sec-title, .ticket-title, .rsvp-copy h2, .mini h3 {
+  font-weight: 400;
+}
+.hero-title .hero-logo { max-width: 100%; }
+.topbar-inner, .nav-links, .ticket-main, .ticket-date { flex-wrap: wrap; }
+.topbar-inner { padding-block: 12px; }
+.nav-links { gap: 12px 20px; }
+.ticket-body, .ticket-main, .ticket-stub,
+.about-grid > *, .speakers-grid > *, .speaker-list > * { min-width: 0; }
+.ticket-date { flex-shrink: 0; }
+.ticket-body { flex: 1 1 12rem; }
+.cards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.photo-tag { max-width: calc(100% - 56px); }
+.btn, .stub-btn { line-height: 1.5; }
+.soon {
+  position: relative;
+  right: auto;
+  bottom: auto;
+  display: block;
+  max-width: 100%;
+  margin-top: -20px;
+  line-height: 1.4;
+}
+@media (max-width: 520px) {
+  .mini { padding: 14px; }
+  .ticket-main, .ticket-stub { padding-inline: 24px; }
+  .cta-card { padding-inline: 20px; }
+  .btn, .stub-btn { padding-inline: 12px; }
 }
