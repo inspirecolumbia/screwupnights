@@ -89,12 +89,8 @@ const EVIDENCE = [
   },
 ];
 
-const SPEAKERS = [
-  { hair: "short", r: "-3deg" },
-  { hair: "long", r: "2deg" },
-  { hair: "bun", r: "-1.5deg" },
-  { hair: "crop", r: "2.5deg" },
-] as const;
+// Placeholder slots until speakers are announced; r is each polaroid's tilt.
+const SPEAKERS = [{ r: "-3deg" }, { r: "2deg" }, { r: "-1.5deg" }, { r: "2.5deg" }];
 
 export default async function Home({
   searchParams,
@@ -188,9 +184,20 @@ export default async function Home({
 
       <main id="main" tabIndex={-1}>
         <section className="hero" id="top" aria-label="ScrewUp Nights">
+          {/* Full-bleed photo behind the copy. A paper wash in CSS keeps the
+              logo and text on near-solid paper: from the left on desktop,
+              from the top on phones. */}
+          <div className="hero-bg">
+            <Image
+              src="/proto/n01-patio-dusk.jpg"
+              alt="The audience seated on the TLC Sports Bar patio at dusk, under string lights."
+              fill
+              preload
+              sizes="100vw"
+            />
+          </div>
           <div className="wrap">
             <div className="hero-copy">
-              <span className="vol rv">{`${EVENT.volume} — Live & in person`}</span>
               <h1 className="hero-title">
                 <Image
                   className="hero-logo rv"
@@ -202,26 +209,6 @@ export default async function Home({
                   style={rot("-1deg")}
                 />
               </h1>
-
-              {/* Desktop: torn-paper panel bleeding off the right edge.
-                  Mobile: full-width torn strip under the logo. */}
-              <figure className="hero-photo">
-                <span className="tape tape-pink hero-tape" aria-hidden="true" />
-                <div className="torn">
-                  <div className="torn-img">
-                    <Image
-                      src="/proto/n01-patio-dusk.jpg"
-                      alt="The audience seated on the TLC Sports Bar patio at dusk, under string lights."
-                      fill
-                      preload
-                      sizes="(max-width: 760px) 100vw, 52vw"
-                    />
-                  </div>
-                </div>
-                <figcaption className="photo-tag">
-                  {EVENT.past.label} · {EVENT.past.when} · {EVENT.past.venue}
-                </figcaption>
-              </figure>
 
               <p className="hero-sub rv">
                 A celebration of <span className="struck">success</span>{" "}
@@ -247,15 +234,18 @@ export default async function Home({
                 </a>
                 .
               </p>
-              <p className="proof-note marker rv" aria-hidden="true">
-                proof it
-                <br />
-                actually
-                <br />
-                happened ↘
-              </p>
             </div>
           </div>
+          <p className="proof-note marker" aria-hidden="true">
+            proof it
+            <br />
+            actually
+            <br />
+            happened ↘
+          </p>
+          <p className="photo-tag">
+            {EVENT.past.label} · {EVENT.past.when} · {EVENT.past.venue}
+          </p>
         </section>
 
         <section className="next" id="next-night" aria-labelledby="next-title">
@@ -439,7 +429,7 @@ export default async function Home({
                 {SPEAKERS.map((s, i) => (
                   <li key={i} className="polaroid speaker rv" style={rot(s.r)}>
                     <span className="tape tape-pink" aria-hidden="true" />
-                    <Silhouette hair={s.hair} />
+                    <Silhouette />
                     <span className="soon">Speaker coming soon</span>
                   </li>
                 ))}
