@@ -40,41 +40,6 @@ a {
   position: relative;
 }
 
-/* ---------- margin shapes ---------- */
-/* Pinned to the viewport (not a specific section) so the shapes stay
-   visible across the whole page height as you scroll, instead of
-   scrolling away with any one section. */
-.margin-shapes {
-  position: fixed;
-  inset: 0;
-  z-index: -1;
-  pointer-events: none;
-}
-.margin-shapes-col {
-  /* Clamp the gutter itself so shape reach is bounded by a fixed-ish width,
-     not by however wide the leftover margin happens to be on huge screens —
-     and never wider than the margin actually available. */
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  width: min(calc((100vw - 1080px) / 2), clamp(180px, 12vw, 320px));
-  overflow: hidden;
-}
-.margin-shapes-col.left {
-  left: 0;
-}
-.margin-shapes-col.right {
-  right: 0;
-}
-.margin-shape {
-  position: absolute;
-}
-@media (max-width: 1300px) {
-  .margin-shapes {
-    display: none;
-  }
-}
-
 /* ---------- shared zine bits ---------- */
 .tape {
   position: absolute;
@@ -162,11 +127,8 @@ a {
   padding: 9px 0;
 }
 .ticker span {
-  padding: 0 26px;
+  padding: 0 40px;
   white-space: nowrap;
-}
-.ticker .dot {
-  color: var(--red);
 }
 @keyframes scroll {
   from {
@@ -181,17 +143,6 @@ a {
 .hero {
   position: relative;
   padding: 56px 0 70px;
-}
-.vol {
-  font-family: var(--font-mono), monospace;
-  font-size: 13px;
-  letter-spacing: 3px;
-  text-transform: uppercase;
-  display: inline-block;
-  border: 1.5px solid var(--ink);
-  padding: 5px 12px;
-  background: var(--paper);
-  transform: rotate(-2deg);
 }
 .hero-title {
   position: relative;
@@ -1168,11 +1119,6 @@ main:focus {
   text-transform: uppercase;
   margin-bottom: 6px;
 }
-.ticket-kicker {
-  font-size: 12px;
-  letter-spacing: 3px;
-  text-transform: uppercase;
-}
 .ticket-title {
   font-family: var(--font-anton), sans-serif;
   font-weight: 400;
@@ -1190,9 +1136,6 @@ main:focus {
   font-size: 14px;
   font-weight: 700;
 }
-.ticket-facts li::before {
-  content: "◆ ";
-}
 .ticket-stub {
   background: var(--hi);
   color: var(--ink);
@@ -1208,7 +1151,6 @@ main:focus {
     radial-gradient(circle 3px at 0 50%, transparent 98%, #000 100%) 0 0 / 100% 12px
       repeat-y;
 }
-.ticket-stub .ticket-kicker,
 .stub-note {
   opacity: 0.8;
 }

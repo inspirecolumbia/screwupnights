@@ -1,7 +1,6 @@
 import type { CSSProperties } from "react";
 import Image from "next/image";
 import ScrollReveal from "./scroll-reveal";
-import MarginShapes from "./margin-shapes";
 
 type ShowState = "on-sale" | "none";
 
@@ -121,15 +120,12 @@ export default async function Home({
       <a className="skip" href="#main">
         Skip to content
       </a>
-      <MarginShapes />
       <div className="ticker" aria-hidden="true">
         <div className="ticker-track">
           {[0, 1].map((g) => (
             <div className="ticker-group" key={g}>
               {[...tickerItems, ...tickerItems].map((item, i) => (
-                <span key={i}>
-                  {item} <span className="dot">●</span>
-                </span>
+                <span key={i}>{item}</span>
               ))}
             </div>
           ))}
@@ -182,11 +178,6 @@ export default async function Home({
         <section className="hero" id="top" aria-label="ScrewUp Nights">
           <div className="wrap">
             <div className="hero-copy">
-              <span className="vol rv">
-                {onSale
-                  ? `${EVENT.volume} — Live & in person`
-                  : "Next show — date coming soon"}
-              </span>
               <h1 className="hero-title">
                 <Image
                   className="hero-logo rv"
@@ -219,12 +210,12 @@ export default async function Home({
                 </figcaption>
               </figure>
 
-              <p className="hero-sub rv">
+              <p className="hero-sub">
                 A celebration of <span className="struck">success</span>{" "}
                 <b>failure</b> and everything it quietly taught us.
               </p>
-              <p className="scribble rv">yes, on purpose.</p>
-              <p className="presented rv">
+              <p className="scribble">yes, on purpose.</p>
+              <p className="presented">
                 Presented by{" "}
                 <a
                   href="https://inspirecolumbia.org"
@@ -232,8 +223,8 @@ export default async function Home({
                   rel="noopener noreferrer"
                 >
                   Inspire Columbia
-                </a>{" "}
-                — the team behind{" "}
+                </a>
+                , the team behind{" "}
                 <a
                   href="https://tedxcongareevista.com"
                   target="_blank"
@@ -243,7 +234,7 @@ export default async function Home({
                 </a>
                 .
               </p>
-              <p className="proof-note marker rv" aria-hidden="true">
+              <p className="proof-note marker" aria-hidden="true">
                 proof it
                 <br />
                 actually
@@ -256,7 +247,7 @@ export default async function Home({
 
         <section className="next" id="next-night" aria-labelledby="next-title">
           <div className="wrap">
-            <div className="ticket-wrap rv">
+            <div className="ticket-wrap">
               <div className="ticket">
                 <div className="ticket-main">
                   <p className="ticket-date" aria-hidden="true">
@@ -264,11 +255,6 @@ export default async function Home({
                     {onSale ? day : "TBA"}
                   </p>
                   <div className="ticket-body">
-                    <p className="ticket-kicker">
-                      {onSale
-                        ? `${EVENT.volume} · ${weekday}`
-                        : `${EVENT.volume} · date coming soon`}
-                    </p>
                     <h2 id="next-title" className="ticket-title">
                       {`ScrewUp Nights ${EVENT.volume}`}
                     </h2>
@@ -287,9 +273,6 @@ export default async function Home({
                   </div>
                 </div>
                 <div className="ticket-stub">
-                  <p className="ticket-kicker">
-                    {onSale ? "Admit one" : "Be first in line"}
-                  </p>
                   {onSale ? (
                     <>
                       <p className="stub-price">{EVENT.price}</p>
@@ -329,13 +312,13 @@ export default async function Home({
               <em>landfill</em> of failures.
             </h2>
             <div className="about-grid">
-              <div className="about-lead rv">
+              <div className="about-lead">
                 ScrewUp Nights is a live storytelling show where real people
                 take the mic and walk us through their most spectacular flops:
                 the launches that tanked, the relationships that imploded, the
                 decisions that looked great until they very much didn&rsquo;t.
               </div>
-              <div className="about-body rv">
+              <div className="about-body">
                 <p>
                   It&rsquo;s part stand-up, part post-mortem. Speakers get the
                   stage to be honest, funny, and a little vulnerable about the
@@ -343,9 +326,8 @@ export default async function Home({
                   differently.
                 </p>
                 <p>
-                  Because failure isn&rsquo;t the opposite of learning.
-                  It&rsquo;s actually the best kind of learning. We just
-                  don&rsquo;t usually talk about it out loud.
+                  Failure is the best kind of learning, and we rarely talk
+                  about it out loud.
                 </p>
               </div>
             </div>
@@ -385,8 +367,8 @@ export default async function Home({
         <section className="rsvp" id="rsvp">
           <div className="wrap">
             <div className="rsvp-grid">
-              <div className="rsvp-copy rv">
-                <h2>
+              <div className="rsvp-copy">
+                <h2 className="rv">
                   Come fail
                   <br />
                   in public.
@@ -394,11 +376,11 @@ export default async function Home({
                 <p className="rsvp-line">
                   {onSale
                     ? `${EVENT.price} a seat · spots are limited → snacks included, drinks available.`
-                    : "No date yet — join the list and you'll hear before tickets go on sale."}
+                    : "No date yet. Join the list and you'll hear before tickets go on sale."}
                 </p>
               </div>
 
-              <div className="paste rv cta-card">
+              <div className="paste cta-card">
                 <span
                   className="tape"
                   style={{
