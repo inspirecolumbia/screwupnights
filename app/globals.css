@@ -114,17 +114,24 @@ a {
   letter-spacing: 0.5px;
 }
 
-/* reveal */
+/* reveal: only hidden when scripts run, so the page stays readable without JS.
+   No blur here (the skill's 4px) because .ticket-wrap.rv already owns `filter`
+   for its drop shadow. */
 .rv {
-  opacity: 0;
-  transform: translateY(34px) rotate(var(--r, 0deg));
-  transition:
-    opacity 0.7s ease,
-    transform 0.7s cubic-bezier(0.2, 0.8, 0.2, 1);
+  transform: rotate(var(--r, 0deg));
 }
-.rv.in {
-  opacity: 1;
-  transform: translateY(0) rotate(var(--r, 0deg));
+@media (scripting: enabled) {
+  .rv {
+    opacity: 0;
+    transform: translateY(12px) rotate(var(--r, 0deg));
+    transition-property: opacity, transform;
+    transition-duration: 0.3s;
+    transition-timing-function: ease-out;
+  }
+  .rv.in {
+    opacity: 1;
+    transform: translateY(0) rotate(var(--r, 0deg));
+  }
 }
 
 /* ---------- top ticker ---------- */
@@ -447,9 +454,11 @@ textarea {
   text-align: center;
   text-decoration: none;
 }
-.btn:hover {
-  transform: translate(-2px, -2px);
-  box-shadow: 8px 9px 0 var(--shadow);
+@media (hover: hover) {
+  .btn:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 8px 9px 0 var(--shadow);
+  }
 }
 .btn:active {
   transform: translate(2px, 3px);
@@ -458,6 +467,11 @@ textarea {
 .btn.alt {
   background: var(--paper);
   color: var(--ink);
+}
+.btn,
+.stub-btn {
+  /* they draw their own pressed state */
+  -webkit-tap-highlight-color: transparent;
 }
 @media (max-width: 420px) {
   .btn {
@@ -669,9 +683,11 @@ main:focus {
   border-bottom: 2px solid transparent;
   padding: 4px 0;
 }
-.nav-links a:hover,
-.menu a:hover {
-  border-bottom-color: var(--red);
+@media (hover: hover) {
+  .nav-links a:hover,
+  .menu a:hover {
+    border-bottom-color: var(--red);
+  }
 }
 .btn-sm {
   width: auto;
@@ -1219,8 +1235,10 @@ main:focus {
   padding: 14px 20px;
   transition: transform 0.08s;
 }
-.stub-btn:hover {
-  transform: translateY(-2px);
+@media (hover: hover) {
+  .stub-btn:hover {
+    transform: translateY(-2px);
+  }
 }
 .stub-btn:focus-visible {
   outline: 2px solid var(--ink);
@@ -1365,6 +1383,8 @@ main:focus {
 .polaroid img {
   width: 100%;
   height: auto;
+  outline: 1px solid oklch(0 0 0 / 0.1);
+  outline-offset: -1px;
 }
 .polaroid figcaption {
   font-family: var(--font-marker), cursive;
@@ -1453,7 +1473,12 @@ main:focus {
   .ticker-track {
     animation: none;
   }
+  /* cross-fade only: no travel, content still arrives */
+  .rv,
+  .rv.in {
+    transform: rotate(var(--r, 0deg));
+  }
   .rv {
-    transition: none;
+    transition-property: opacity;
   }
 }
