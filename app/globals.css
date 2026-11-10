@@ -570,8 +570,6 @@ figcaption {
 }
 .photo figure {
   height: 100%;
-  display: grid;
-  grid-template-rows: minmax(0, 1fr) auto;
 }
 .photo img {
   width: 100%;

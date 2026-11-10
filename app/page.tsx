@@ -48,7 +48,6 @@ const PHOTOS = [
     w: 866,
     h: 1300,
     alt: "A speaker with a microphone on stage under a row of pennant flags, audience in the foreground.",
-    caption: "Mid-story on the TLC stage",
     sizes: "(max-width: 899px) 100vw, 460px",
   },
   {
@@ -56,7 +55,6 @@ const PHOTOS = [
     w: 1400,
     h: 933,
     alt: "A speaker telling a story on the lit outdoor stage at night.",
-    caption: "Taking the mic under the pennants",
     sizes: "(max-width: 899px) 100vw, 640px",
     dark: true,
   },
@@ -65,7 +63,6 @@ const PHOTOS = [
     w: 1440,
     h: 960,
     alt: "A full patio audience at TLC Sports Bar watching the show at dusk.",
-    caption: "The patio crowd at dusk",
     sizes: "(max-width: 899px) 50vw, 380px",
   },
   {
@@ -73,7 +70,6 @@ const PHOTOS = [
     w: 1600,
     h: 1066,
     alt: "Audience members standing and sitting by the bar, listening to a story.",
-    caption: "Listening from the bar",
     sizes: "(max-width: 899px) 50vw, 300px",
   },
 ];
@@ -319,7 +315,6 @@ export default async function Home({
                       height={p.h}
                       sizes={p.sizes}
                     />
-                    <figcaption>{p.caption}</figcaption>
                   </figure>
                 </li>
               ))}
