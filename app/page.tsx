@@ -11,7 +11,7 @@ import Silhouette from "./silhouette";
 type ShowState = "on-sale" | "none";
 
 // Single source of truth for show details. Everything on the page that
-// mentions a date, venue or price reads from here.
+// mentions a date, venue or price reads from here.g
 // PROTOTYPE: the Vol. 02 date, times and ticket link are placeholders, not a
 // confirmed show. Preview either state with ?show=on-sale or ?show=none.
 const EVENT = {
