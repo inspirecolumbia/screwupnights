@@ -2,16 +2,16 @@ import type { CSSProperties } from "react";
 import Image from "next/image";
 import ScrollReveal from "./scroll-reveal";
 import MarginShapes from "./margin-shapes";
-import Silhouette from "./silhouette";
 
 type ShowState = "on-sale" | "none";
 
 // Single source of truth for show details. Everything on the page that
 // mentions a date, venue or price reads from here.
-// PROTOTYPE: the Vol. 02 date, times and ticket link are placeholders, not a
-// confirmed show. Preview either state with ?show=on-sale or ?show=none.
+// The Vol. 02 date is not confirmed, so the page defaults to "none" (date TBA,
+// mailing list). The on-sale fields below are placeholders for when it is.
+// Preview either state with ?show=on-sale or ?show=none.
 const EVENT = {
-  state: "on-sale" as ShowState,
+  state: "none" as ShowState,
   volume: "Vol. 02",
   start: "2026-11-12T20:00:00-05:00",
   doors: "2026-11-12T19:30:00-05:00",
@@ -38,7 +38,6 @@ const NAV = [
   { href: "#about", label: "About" },
   { href: "#next-night", label: "Next night" },
   { href: "#photos", label: "Photos" },
-  { href: "#speakers", label: "Speakers" },
 ];
 
 const EVIDENCE = [
@@ -88,13 +87,6 @@ const EVIDENCE = [
     tape: "lime",
   },
 ];
-
-const SPEAKERS = [
-  { hair: "short", r: "-3deg" },
-  { hair: "long", r: "2deg" },
-  { hair: "bun", r: "-1.5deg" },
-  { hair: "crop", r: "2.5deg" },
-] as const;
 
 export default async function Home({
   searchParams,
@@ -190,7 +182,11 @@ export default async function Home({
         <section className="hero" id="top" aria-label="ScrewUp Nights">
           <div className="wrap">
             <div className="hero-copy">
-              <span className="vol rv">{`${EVENT.volume} — Live & in person`}</span>
+              <span className="vol rv">
+                {onSale
+                  ? `${EVENT.volume} — Live & in person`
+                  : "Next show — date coming soon"}
+              </span>
               <h1 className="hero-title">
                 <Image
                   className="hero-logo rv"
@@ -260,7 +256,6 @@ export default async function Home({
 
         <section className="next" id="next-night" aria-labelledby="next-title">
           <div className="wrap">
-            <div className="kicker rv">Next screwup night</div>
             <div className="ticket-wrap rv">
               <div className="ticket">
                 <div className="ticket-main">
@@ -271,7 +266,7 @@ export default async function Home({
                   <div className="ticket-body">
                     <p className="ticket-kicker">
                       {onSale
-                        ? `${EVENT.volume} · ${weekday} · placeholder date`
+                        ? `${EVENT.volume} · ${weekday}`
                         : `${EVENT.volume} · date coming soon`}
                     </p>
                     <h2 id="next-title" className="ticket-title">
@@ -307,7 +302,7 @@ export default async function Home({
                         target="_blank"
                         rel="noopener noreferrer"
                       >
-                        Buy tickets →
+                        Buy tickets&nbsp;→
                         <span className="sr-only"> (opens in a new tab)</span>
                       </a>
                     </>
@@ -317,7 +312,7 @@ export default async function Home({
                         The list hears about the date before tickets go on sale.
                       </p>
                       <a className="stub-btn" href={mailingList}>
-                        Join the mailing list →
+                        Join the mailing list&nbsp;→
                       </a>
                     </>
                   )}
@@ -329,7 +324,6 @@ export default async function Home({
 
         <section className="about" id="about">
           <div className="wrap">
-            <div className="kicker rv">The premise</div>
             <h2 className="sec-title rv">
               Every win is built on a<br />
               <em>landfill</em> of failures.
@@ -355,47 +349,11 @@ export default async function Home({
                 </p>
               </div>
             </div>
-
-            <div className="cards">
-              <div className="mini paste rv" style={rot("-1deg")}>
-                <div className="n">01</div>
-                <h3>Real stories</h3>
-                <p>
-                  No sanitized LinkedIn versions. The actual, embarrassing,
-                  instructive truth.
-                </p>
-              </div>
-              <div className="mini paste rv" style={rot("1deg")}>
-                <div className="n">02</div>
-                <h3>Actual laughs</h3>
-                <p>
-                  Our speakers learned to laugh at themselves. Now you can laugh
-                  at them too.
-                </p>
-              </div>
-              <div className="mini paste rv" style={rot("-0.5deg")}>
-                <div className="n">03</div>
-                <h3>Useful lessons</h3>
-                <p>
-                  Every story lands on something you can steal for your own next
-                  screwup.
-                </p>
-              </div>
-              <div className="mini paste rv" style={rot("1deg")}>
-                <div className="n">04</div>
-                <h3>Good company</h3>
-                <p>
-                  A room full of people who&rsquo;ve also blown it. Wildly
-                  underrated medicine.
-                </p>
-              </div>
-            </div>
           </div>
         </section>
 
         <section className="evidence torn-band" id="photos">
           <div className="wrap">
-            <div className="kicker rv">From the floor · {EVENT.past.label}</div>
             <h2 className="sec-title rv">Evidence.</h2>
             <ul className="evidence-grid">
               {EVIDENCE.map((p, i) => (
@@ -424,40 +382,10 @@ export default async function Home({
           </div>
         </section>
 
-        <section className="speakers torn-band" id="speakers">
-          <div className="wrap speakers-grid">
-            <div>
-              <div className="kicker rv">The screwups</div>
-              <h2 className="sec-title rv">
-                Speaker
-                <br />
-                lineup
-              </h2>
-            </div>
-            <div>
-              <ul className="speaker-list">
-                {SPEAKERS.map((s, i) => (
-                  <li key={i} className="polaroid speaker rv" style={rot(s.r)}>
-                    <span className="tape tape-pink" aria-hidden="true" />
-                    <Silhouette hair={s.hair} />
-                    <span className="soon">Speaker coming soon</span>
-                  </li>
-                ))}
-              </ul>
-              <p className="speakers-note marker rv">
-                some amazing screwups on the way ☺
-              </p>
-            </div>
-          </div>
-        </section>
-
         <section className="rsvp" id="rsvp">
           <div className="wrap">
             <div className="rsvp-grid">
               <div className="rsvp-copy rv">
-                <div className="kicker">
-                  {onSale ? "Save your seat" : "Next show"}
-                </div>
                 <h2>
                   Come fail
                   <br />
@@ -486,12 +414,12 @@ export default async function Home({
                     target="_blank"
                     rel="noopener noreferrer"
                   >
-                    Buy tickets →
+                    Buy tickets&nbsp;→
                     <span className="sr-only"> (opens in a new tab)</span>
                   </a>
                 ) : (
                   <a className="btn" href={mailingList}>
-                    Join the mailing list →
+                    Join the mailing list&nbsp;→
                   </a>
                 )}
                 <a className="btn alt" href={`mailto:${EVENT.email}`}>
@@ -502,19 +430,6 @@ export default async function Home({
           </div>
         </section>
 
-        <section>
-          <div className="wrap">
-            <figure className="quote rv">
-              <blockquote>
-                <p>
-                  &ldquo;I have not failed. I&rsquo;ve just found 10,000 ways
-                  that won&rsquo;t work.&rdquo;
-                </p>
-              </blockquote>
-              <figcaption>— Thomas Edison</figcaption>
-            </figure>
-          </div>
-        </section>
       </main>
 
       {/* Sponsors section — hidden until we have sponsors. Uncomment to restore.
@@ -580,10 +495,15 @@ export default async function Home({
                 style={{ width: "160px", height: "auto" }}
               />
             </a>
-            <p className="errata">
-              <b>ERRATA:</b> An earlier version of this life implied that
-              everything would go according to plan. We regret the error.
-            </p>
+            <div className="foot-info">
+              <p className="errata">
+                <b>ERRATA:</b> An earlier version of this life implied that
+                everything would go according to plan. We regret the error.
+              </p>
+              <a className="foot-mail" href={`mailto:${EVENT.email}`}>
+                {EVENT.email}
+              </a>
+            </div>
           </div>
         </div>
       </footer>
