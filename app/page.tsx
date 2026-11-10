@@ -4,6 +4,10 @@ import ScrollReveal from "./scroll-reveal";
 import MarginShapes from "./margin-shapes";
 import Silhouette from "./silhouette";
 
+/* 
+   This
+*/
+
 type ShowState = "on-sale" | "none";
 
 // Single source of truth for show details. Everything on the page that
