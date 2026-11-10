@@ -115,7 +115,7 @@ export default async function Home({
             <span className="hide-sm">{` · ${EVENT.venue}, ${EVENT.city}`}</span>
           </p>
           <a href={primary.href}>
-            {onSale ? "Get tickets" : "Join the list"}&nbsp;→
+            {onSale ? "Get tickets" : "Join the list"}&nbsp;<span className="arrow" aria-hidden="true">→</span>
           </a>
         </div>
       </div>
@@ -174,7 +174,7 @@ export default async function Home({
               </p>
               <div className="actions">
                 <a className="btn btn-accent" href={primary.href}>
-                  {primary.label}&nbsp;→
+                  {primary.label}&nbsp;<span className="arrow" aria-hidden="true">→</span>
                 </a>
                 <a className="btn btn-secondary" href={speak}>
                   Speak at a night
@@ -251,7 +251,7 @@ export default async function Home({
                         target="_blank"
                         rel="noopener noreferrer"
                       >
-                        Buy tickets&nbsp;→
+                        Buy tickets&nbsp;<span className="arrow" aria-hidden="true">→</span>
                         <span className="sr-only"> (opens in a new tab)</span>
                       </a>
                     </>
@@ -262,7 +262,7 @@ export default async function Home({
                         first.
                       </p>
                       <a className="stub-btn" href={mailingList}>
-                        Join the list&nbsp;→
+                        Join the list&nbsp;<span className="arrow" aria-hidden="true">→</span>
                       </a>
                     </>
                   )}
@@ -338,7 +338,7 @@ export default async function Home({
             <div className="speak-actions">
               <div className="actions">
                 <a className="btn btn-primary" href={speak}>
-                  Speak at a night&nbsp;→
+                  Speak at a night&nbsp;<span className="arrow" aria-hidden="true">→</span>
                 </a>
                 <a className="btn btn-secondary" href={primary.href}>
                   {primary.label}
