@@ -2,21 +2,24 @@ import type { CSSProperties } from "react";
 import Image from "next/image";
 import ScrollReveal from "./scroll-reveal";
 
-type ShowState = "on-sale" | "none";
+type ShowState = "on-sale" | "soon";
 
 // Single source of truth for show details. Everything on the page that
 // mentions a date, venue or price reads from here.
-// The Vol. 02 date is not confirmed, so the page defaults to "none" (date TBA,
-// mailing list). The on-sale fields below are placeholders for when it is.
-// Preview either state with ?show=on-sale or ?show=none.
+// Vol. 02 is on Dec 2 but tickets are not on sale yet, so the page defaults to
+// "soon" (date shown, mailing list). Switch to "on-sale" once ticketUrl and
+// price are real. Preview either state with ?show=on-sale or ?show=soon.
 const EVENT = {
-  state: "none" as ShowState,
+  state: "soon" as ShowState,
   volume: "Vol. 02",
-  start: "2026-11-12T20:00:00-05:00",
-  doors: "2026-11-12T19:30:00-05:00",
+  // Start time not announced yet. Noon keeps the date right in Eastern time.
+  start: "2026-12-02T12:00:00-05:00",
+  // Doors time not announced yet. Set an ISO time here to show it.
+  doors: null as string | null,
   venue: "TLC Sports Bar",
   city: "Columbia, SC",
   region: "Columbia, South Carolina",
+  // Placeholders until the updated ticket link and prices are ready.
   price: "$15",
   ticketUrl: "https://www.zeffy.com/",
   email: "screwupnights@inspirecolumbia.org",
@@ -85,14 +88,16 @@ export default async function Home({
 }) {
   const { show } = await searchParams;
   const state: ShowState =
-    show === "on-sale" || show === "none" ? show : EVENT.state;
+    show === "on-sale" || show === "soon" ? show : EVENT.state;
   const onSale = state === "on-sale";
 
   const weekday = fmt(EVENT.start, { weekday: "long" });
   const monthDay = fmt(EVENT.start, { month: "short", day: "numeric" });
   const month = fmt(EVENT.start, { month: "short" });
   const day = fmt(EVENT.start, { day: "numeric" });
-  const doorsTime = fmt(EVENT.doors, { hour: "numeric", minute: "2-digit" });
+  const doorsTime = EVENT.doors
+    ? fmt(EVENT.doors, { hour: "numeric", minute: "2-digit" })
+    : null;
   const mailingList = `mailto:${EVENT.email}?subject=${encodeURIComponent(
     "Add me to the ScrewUp Nights mailing list",
   )}`;
@@ -101,7 +106,7 @@ export default async function Home({
   const tickerItems = [
     "Failure is data",
     "Bring your worst",
-    `Next: ${EVENT.volume}`,
+    `Next: ${monthDay}`,
     EVENT.city,
     "A celebration of screwing up",
   ];
@@ -242,23 +247,21 @@ export default async function Home({
               <div className="ticket">
                 <div className="ticket-main">
                   <p className="ticket-date" aria-hidden="true">
-                    <span>{onSale ? month : "Date"}</span>
-                    {onSale ? day : "TBA"}
+                    <span>{month}</span>
+                    {day}
                   </p>
                   <div className="ticket-body">
                     <h2 id="next-title" className="ticket-title">
                       {`ScrewUp Nights ${EVENT.volume}`}
                     </h2>
                     <ul className="ticket-facts">
+                      <li>
+                        <time dateTime={EVENT.start.slice(0, 10)}>
+                          {`${weekday}, ${monthDay}`}
+                        </time>
+                        {doorsTime && ` · Doors ${doorsTime}`}
+                      </li>
                       <li>{`${EVENT.venue}, ${EVENT.city}`}</li>
-                      {onSale && (
-                        <li>
-                          <time dateTime={EVENT.start}>
-                            {`${weekday}, ${monthDay}`}
-                          </time>
-                          {` · Doors ${doorsTime}`}
-                        </li>
-                      )}
                       <li>Snacks included</li>
                     </ul>
                   </div>
@@ -283,7 +286,8 @@ export default async function Home({
                   ) : (
                     <>
                       <p className="stub-note">
-                        The list hears about the date before tickets go on sale.
+                        Tickets and prices are coming soon. The list hears
+                        first.
                       </p>
                       <a className="stub-btn" href={mailingList}>
                         Join the mailing list&nbsp;→
@@ -367,7 +371,7 @@ export default async function Home({
                 <p className="rsvp-line">
                   {onSale
                     ? `${EVENT.price} a seat · spots are limited → snacks included, drinks available.`
-                    : "No date yet. Join the list and you'll hear before tickets go on sale."}
+                    : `${weekday}, ${monthDay} at ${EVENT.venue}. Tickets go on sale soon, and the list hears first.`}
                 </p>
               </div>
 
