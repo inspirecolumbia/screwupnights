@@ -383,10 +383,24 @@ html.logo-docked .topbar {
 /* The whole patio photo sits behind the hero under an even dark purple tint,
    a little stronger behind the text and deepening toward the bottom like a
    vignette. Text on top is light. */
+:root {
+  /* how far the ticket rides up over the bottom of the hero */
+  --overlap: clamp(80px, 9vw, 120px);
+  /* announce bar plus sticky nav */
+  --chrome: 115px;
+}
+@media (max-width: 640px) {
+  :root {
+    --chrome: 143px;
+  }
+}
 .hero {
   position: relative;
+  display: grid;
+  align-items: center;
+  min-height: calc(100svh - var(--chrome));
   color: var(--paper);
-  padding-block: clamp(56px, 8vw, 120px) clamp(72px, 9vw, 136px);
+  padding-block: clamp(32px, 4vw, 64px) calc(var(--overlap) + 64px);
 }
 .hero-bg {
   position: absolute;
@@ -400,6 +414,15 @@ html.logo-docked .topbar {
 .hero-bg img {
   object-fit: cover;
   object-position: 60% 45%;
+}
+@keyframes hero-drift {
+  from { transform: scale(1); }
+  to { transform: scale(1.08) translateX(-1.5%); }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .hero-bg img {
+    animation: hero-drift 24s ease-in-out infinite alternate;
+  }
 }
 .hero-bg::after {
   content: "";
@@ -452,7 +475,7 @@ html.logo-docked .topbar {
   max-width: 600px;
 }
 .hero-logo {
-  width: clamp(240px, 30vw, 380px);
+  width: clamp(240px, 26vw, 340px);
   margin-bottom: 6px;
 }
 /* the fixed copy that flies into the nav (see logo-dock.tsx); it never takes
@@ -496,9 +519,85 @@ html.logo-docked .topbar {
   color: #ff9fca; /* lighter pink, readable on the dark hero */
 }
 .hero-when {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 14px;
+  margin-top: 4px;
+  padding: 10px 18px;
+  border: 1px solid rgb(241 234 217 / 0.35);
+  border-radius: 999px;
+  background: rgb(241 234 217 / 0.1);
+  backdrop-filter: blur(6px);
   font-weight: 700;
-  font-size: 18px;
-  padding-top: 4px;
+  font-size: 16px;
+}
+.hero-date {
+  font-family: var(--display);
+  font-weight: 400;
+  font-size: 22px;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: var(--lime);
+}
+.hero-venue {
+  color: var(--paper);
+}
+.hero-countdown {
+  color: #ff9fca;
+}
+.hero-countdown::before {
+  content: "·";
+  margin-right: 14px;
+  color: rgb(241 234 217 / 0.5);
+}
+/* narrow screens: date on its own line, venue and countdown under it */
+@media (max-width: 480px) {
+  .hero-when {
+    border-radius: 16px;
+  }
+  .hero-date {
+    flex-basis: 100%;
+  }
+}
+
+/* scroll cue: a chevron above where the ticket starts */
+.hero-cue {
+  position: absolute;
+  left: 50%;
+  bottom: calc(var(--overlap) + 10px);
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  margin-left: -22px;
+  border-radius: 50%;
+  color: var(--paper);
+  opacity: 0.8;
+  transition: opacity 0.15s ease-out;
+}
+.hero-cue svg {
+  width: 26px;
+  height: 26px;
+}
+@keyframes cue-bob {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(6px); }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .hero-cue svg {
+    animation: cue-bob 2.2s ease-in-out infinite;
+  }
+}
+@media (hover: hover) {
+  .hero-cue:hover {
+    opacity: 1;
+  }
+}
+@media (max-height: 640px) {
+  .hero-cue {
+    display: none;
+  }
 }
 .presented {
   font-size: 15px;
@@ -514,7 +613,10 @@ html.logo-docked .topbar {
 /* Scalloped edges, round notches where the stub tears off, a dashed inner rule.
    The shadow sits on the wrapper so it follows the cut-out shape. */
 .next {
-  padding-block: clamp(56px, 7vw, 96px) var(--section);
+  position: relative;
+  z-index: 2;
+  margin-top: calc(-1 * var(--overlap));
+  padding-block: 0 var(--section);
 }
 .ticket-wrap {
   --stub: 270px;
@@ -1065,13 +1167,22 @@ html.logo-docked .topbar {
   padding-block: 56px 32px;
   font-size: 15px;
 }
-.footer-grid {
+.footer-inner {
+  display: grid;
+  gap: 36px;
+}
+.footer-top {
   display: grid;
   gap: 32px;
 }
 @media (min-width: 900px) {
-  .footer-grid {
-    grid-template-columns: 1.4fr 0.8fr 1.4fr;
+  .footer-top {
+    grid-template-columns: 1fr auto;
+    align-items: start;
+  }
+  .footer-contact {
+    text-align: right;
+    justify-items: end;
   }
 }
 .footer-brand {
@@ -1086,9 +1197,11 @@ html.logo-docked .topbar {
   width: 150px;
 }
 .footer-links {
-  display: grid;
-  gap: 6px;
-  align-content: start;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 28px;
+  padding-block: 18px;
+  border-block: 1px solid rgb(241 234 217 / 0.18);
 }
 .footer-contact {
   display: grid;
@@ -1178,12 +1291,22 @@ html.logo-docked .topbar {
     opacity: 1;
   }
 }
-.footer-legal {
-  grid-column: 1 / -1;
-  padding-top: 20px;
-  border-top: 1px solid rgba(241, 234, 217, 0.18);
-  color: rgba(241, 234, 217, 0.72);
+.footer-bottom {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 12px 24px;
+  color: rgb(241 234 217 / 0.72);
   font-size: 14px;
+}
+.footer-bottom a {
+  color: var(--paper);
+  font-weight: 700;
+}
+@media (hover: hover) {
+  .footer-bottom a:hover {
+    color: var(--lime);
+  }
 }
 
 /* ---------- 404 ---------- */

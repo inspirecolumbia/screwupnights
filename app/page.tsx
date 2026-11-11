@@ -91,6 +91,7 @@ export default async function Home({
   const onSale = state === "on-sale";
 
   const weekday = fmt(EVENT.start, { weekday: "long" });
+  const weekdayShort = fmt(EVENT.start, { weekday: "short" });
   const monthDay = fmt(EVENT.start, { month: "short", day: "numeric" });
   const month = fmt(EVENT.start, { month: "short" });
   const day = fmt(EVENT.start, { day: "numeric" });
@@ -184,10 +185,20 @@ export default async function Home({
               <p className="hero-tagline">
                 A celebration of failure and everything it taught us.
               </p>
+              {/* The key facts as one bold badge: date, venue, countdown. */}
               <p className="hero-when">
-                <time dateTime={EVENT.start.slice(0, 10)}>{when}</time>
-                {doorsTime && ` · Doors ${doorsTime}`}
-                {` · ${EVENT.venue}, ${EVENT.city}`}
+                <time className="hero-date" dateTime={EVENT.start.slice(0, 10)}>
+                  {`${weekdayShort}, ${monthDay}`}
+                </time>
+                <span className="hero-venue">
+                  {EVENT.venue}
+                  {doorsTime && ` · Doors ${doorsTime}`}
+                </span>
+                <Countdown
+                  day={eventDay}
+                  initial={daysUntil(eventDay, new Date())}
+                  inline
+                />
               </p>
               <div className="actions">
                 <a className="btn btn-accent" href={primary.href}>
@@ -220,6 +231,11 @@ export default async function Home({
               </p>
             </div>
           </div>
+          <a className="hero-cue" href="#next-night" aria-label="Scroll to the next night">
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+          </a>
         </section>
 
         <section className="next" id="next-night" aria-labelledby="next-title">
@@ -544,7 +560,9 @@ export default async function Home({
       </main>
 
       <footer className="footer">
-        <div className="wrap footer-grid">
+        <div className="wrap footer-inner">
+          {/* Row 1: who runs it on the left, how to reach us on the right. */}
+          <div className="footer-top">
           <div className="footer-brand">
             <a
               className="footer-logo-link"
@@ -570,6 +588,14 @@ export default async function Home({
               TEDxCongaree Vista.
             </p>
           </div>
+          <div className="footer-contact">
+            <a href={`mailto:${EVENT.email}`}>{EVENT.email}</a>
+            <p className="footer-next">
+              Next show: {when} at {EVENT.venue}
+            </p>
+          </div>
+          </div>
+          {/* Row 2: the page links in one line. */}
           <nav aria-label="Footer">
             <ul className="footer-links">
               {NAV.map((n) => (
@@ -579,13 +605,12 @@ export default async function Home({
               ))}
             </ul>
           </nav>
-          <div className="footer-contact">
-            <a href={`mailto:${EVENT.email}`}>{EVENT.email}</a>
-            <p className="footer-next">
-              Next show: {when} at {EVENT.venue}
-            </p>
+          <div className="footer-bottom">
+            <p>© 2026 Inspire Columbia</p>
+            <a href="#top">
+              Back to top <span aria-hidden="true">↑</span>
+            </a>
           </div>
-          <p className="footer-legal">© 2026 Inspire Columbia</p>
         </div>
       </footer>
 
