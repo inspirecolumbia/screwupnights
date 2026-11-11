@@ -26,6 +26,8 @@
   padding: 0;
 }
 html {
+  /* lets <details> answers animate to their natural height */
+  interpolate-size: allow-keywords;
   scroll-behavior: smooth;
   scroll-padding-top: 84px; /* clears the sticky nav when jumping to a section */
 }
@@ -133,8 +135,19 @@ h3 {
   transition-duration: 0.15s;
   transition-timing-function: ease-out;
 }
-.btn:active {
-  transform: scale(0.96);
+@media (prefers-reduced-motion: no-preference) {
+  .btn:active,
+  .stub-btn:active,
+  .menu summary:active {
+    transform: scale(0.96);
+  }
+}
+/* the arrow's side looks heavier than the text's, so give it less room */
+.btn:has(> .arrow) {
+  padding-right: 22px;
+}
+.btn-sm:has(> .arrow) {
+  padding-right: 16px;
 }
 /* Arrows nudge forward when their link is hovered. */
 .arrow {
@@ -327,6 +340,32 @@ html.logo-docked .topbar {
 .burger::after {
   top: 6px;
 }
+/* open: the middle bar fades and the outer two cross into an X */
+.burger,
+.burger::before,
+.burger::after {
+  transition-property: background-color, transform, top;
+  transition-duration: 0.2s;
+  transition-timing-function: cubic-bezier(0.2, 0, 0, 1);
+}
+.menu[open] .burger {
+  background-color: transparent;
+}
+.menu[open] .burger::before {
+  top: 0;
+  transform: rotate(45deg);
+}
+.menu[open] .burger::after {
+  top: 0;
+  transform: rotate(-45deg);
+}
+@media (prefers-reduced-motion: reduce) {
+  .burger,
+  .burger::before,
+  .burger::after {
+    transition-duration: 0s;
+  }
+}
 .menu ul {
   color: var(--ink);
   position: absolute;
@@ -337,9 +376,33 @@ html.logo-docked .topbar {
   gap: 4px;
   padding: 12px;
   background: var(--paper);
-  border: 1px solid var(--line);
-  border-radius: 12px;
-  box-shadow: 0 12px 32px rgba(42, 26, 62, 0.18);
+  /* 8px link corners + 12px padding + 1px border */
+  border: 1px solid transparent;
+  border-radius: 21px;
+  box-shadow:
+    0 0 0 1px rgb(42 26 62 / 0.08),
+    0 4px 8px rgb(42 26 62 / 0.08),
+    0 16px 40px rgb(42 26 62 / 0.2);
+  /* short landscape phones: scroll inside the menu, not the page */
+  max-height: calc(100svh - 96px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  transform-origin: top right;
+  transition-property: opacity, transform;
+  transition-duration: 0.2s;
+  transition-timing-function: ease-out;
+}
+@starting-style {
+  .menu[open] ul {
+    opacity: 0;
+  }
+}
+@media (prefers-reduced-motion: no-preference) {
+  @starting-style {
+    .menu[open] ul {
+      transform: translateY(-6px) scale(0.98);
+    }
+  }
 }
 .menu a {
   display: block;
@@ -356,7 +419,9 @@ html.logo-docked .topbar {
 .menu summary,
 .menu a {
   -webkit-tap-highlight-color: transparent;
-  transition: background-color 0.15s ease-out;
+  transition-property: background-color, transform;
+  transition-duration: 0.15s;
+  transition-timing-function: ease-out;
 }
 @media (hover: hover) {
   .menu summary:hover {
@@ -726,9 +791,6 @@ html.logo-docked .topbar {
   transition-duration: 0.15s;
   transition-timing-function: ease-out;
 }
-.stub-btn:active {
-  transform: scale(0.96);
-}
 @media (hover: hover) {
   .stub-btn:hover {
     background: #47336a;
@@ -1066,10 +1128,25 @@ html.logo-docked .topbar {
   height: 14px;
   background: currentColor;
   clip-path: polygon(40% 0, 60% 0, 60% 40%, 100% 40%, 100% 60%, 60% 60%, 60% 100%, 40% 100%, 40% 60%, 0 60%, 0 40%, 40% 40%);
-  transition: transform 0.2s ease-out;
 }
 .faq-list details[open] summary::after {
   transform: rotate(45deg);
+}
+@media (prefers-reduced-motion: no-preference) {
+  .faq-list summary::after {
+    transition: transform 0.2s ease-out;
+  }
+  .faq-list details::details-content {
+    block-size: 0;
+    overflow: hidden;
+    transition-property: block-size, content-visibility;
+    transition-duration: 0.3s;
+    transition-timing-function: cubic-bezier(0.2, 0, 0, 1);
+    transition-behavior: allow-discrete;
+  }
+  .faq-list details[open]::details-content {
+    block-size: auto;
+  }
 }
 .faq-list details p {
   padding-bottom: 22px;
