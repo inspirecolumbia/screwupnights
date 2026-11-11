@@ -1,12 +1,13 @@
-// Placeholder speaker portrait: the generic flat profile icon (round head,
-// rounded shoulders) in brand ink on a warm paper backdrop.
+// Placeholder speaker portrait from proto/zine-torn: a flat profile icon
+// (round head, rounded shoulders) in brand ink on a warm paper backdrop.
+// Decorative; the section text says the lineup is still to be announced.
 export default function Silhouette() {
   return (
     <svg
       className="silhouette"
       viewBox="0 0 512 512"
-      role="img"
-      aria-label="Speaker to be announced"
+      aria-hidden="true"
+      focusable="false"
     >
       <rect width="512" height="512" fill="#e6dcc4" />
       <g fill="#2a1a3e" transform="translate(56 64) scale(0.78)">
