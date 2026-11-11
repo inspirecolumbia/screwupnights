@@ -127,7 +127,7 @@ export default async function Home({
         <nav className="wrap topbar-inner" aria-label="Main">
           <a className="topbar-logo" href="#top">
             <Image
-              src="/ScrewupPurple.png"
+              src="/ScrewupLight.png"
               alt="ScrewUp Nights home"
               width={757}
               height={592}
@@ -141,7 +141,7 @@ export default async function Home({
               </li>
             ))}
           </ul>
-          <a className="btn btn-primary btn-sm nav-cta" href={primary.href}>
+          <a className="btn btn-accent btn-sm nav-cta" href={primary.href}>
             {primary.label}
           </a>
           <Menu links={NAV} cta={primary} />
@@ -166,7 +166,7 @@ export default async function Home({
               <h1>
                 <Image
                   className="hero-logo"
-                  src="/ScrewupPurple.png"
+                  src="/ScrewupLight.png"
                   alt="ScrewUp Nights"
                   width={757}
                   height={592}
