@@ -189,9 +189,11 @@ h3 {
 }
 
 /* ---------- announcement bar ---------- */
+/* pink, so it reads as its own strip above the dark nav; white text passes
+   AA on this pink (5.3:1), cream does not */
 .announce {
-  background: var(--ink);
-  color: var(--paper);
+  background: var(--pink);
+  color: #fff;
   font-size: 15px;
 }
 .announce-inner {
@@ -204,19 +206,17 @@ h3 {
   text-align: center;
 }
 .announce a {
-  color: var(--lime);
   font-weight: 700;
-  transition: color 0.15s ease-out;
+  text-decoration-thickness: 1.5px;
+  transition: text-decoration-color 0.15s ease-out;
 }
 @media (hover: hover) {
   .announce a:hover {
-    color: #e0f27a;
+    text-decoration-color: transparent;
   }
 }
-@media (max-width: 640px) {
-  .hide-sm {
-    display: none;
-  }
+.announce :focus-visible {
+  outline-color: #fff;
 }
 
 /* ---------- top bar ---------- */
@@ -398,7 +398,7 @@ html.logo-docked .topbar {
   position: relative;
   display: grid;
   align-items: center;
-  min-height: calc(100svh - var(--chrome));
+  min-height: calc(100svh - var(--chrome) + var(--overlap));
   color: var(--paper);
   padding-block: clamp(32px, 4vw, 64px) calc(var(--overlap) + 64px);
 }
@@ -460,8 +460,7 @@ html.logo-docked .topbar {
   border-color: var(--paper);
 }
 .hero :focus-visible,
-.topbar :focus-visible,
-.announce :focus-visible {
+.topbar :focus-visible {
   outline-color: var(--lime);
 }
 @media (hover: hover) {
@@ -548,29 +547,12 @@ html.logo-docked .topbar {
 .hero-venue {
   color: var(--paper);
 }
-.hero-countdown {
-  color: #ff9fca;
-}
-.hero-countdown::before {
-  content: "·";
-  margin-right: 14px;
-  color: rgb(241 234 217 / 0.5);
-}
-/* narrow screens: date on its own line, venue and countdown under it */
-@media (max-width: 480px) {
-  .hero-when {
-    border-radius: 16px;
-  }
-  .hero-date {
-    flex-basis: 100%;
-  }
-}
 
 /* scroll cue: a chevron above where the ticket starts */
 .hero-cue {
   position: absolute;
   left: 50%;
-  bottom: calc(var(--overlap) + 10px);
+  bottom: calc(var(--overlap) + 16px);
   display: grid;
   place-items: center;
   width: 44px;
@@ -603,15 +585,6 @@ html.logo-docked .topbar {
   .hero-cue {
     display: none;
   }
-}
-.presented {
-  font-size: 15px;
-  color: rgb(241 234 217 / 0.85);
-  max-width: 44ch;
-}
-.presented a {
-  font-weight: 700;
-  color: var(--paper);
 }
 
 /* ---------- next night: the vintage ticket ---------- */

@@ -117,9 +117,9 @@ export default async function Home({
       <div className="announce">
         <div className="wrap announce-inner">
           <p>
+            {/* the date lives in the hero, so this just says what's new */}
             <strong>{`ScrewUp Nights ${EVENT.volume}`}</strong>
-            {` · ${when}`}
-            <span className="hide-sm">{` · ${EVENT.venue}, ${EVENT.city}`}</span>
+            {onSale ? " tickets are on sale now" : " tickets are coming soon"}
           </p>
           <a href={primary.href}>
             {onSale ? "Get tickets" : "Join the list"}&nbsp;<span className="arrow" aria-hidden="true">→</span>
@@ -185,20 +185,15 @@ export default async function Home({
               <p className="hero-tagline">
                 A celebration of failure and everything it taught us.
               </p>
-              {/* The key facts as one bold badge: date, venue, countdown. */}
+              {/* The key facts as one bold badge. The countdown is on the ticket. */}
               <p className="hero-when">
-                <time className="hero-date" dateTime={EVENT.start.slice(0, 10)}>
+                <time className="hero-date" dateTime={eventDay}>
                   {`${weekdayShort}, ${monthDay}`}
                 </time>
                 <span className="hero-venue">
                   {EVENT.venue}
                   {doorsTime && ` · Doors ${doorsTime}`}
                 </span>
-                <Countdown
-                  day={eventDay}
-                  initial={daysUntil(eventDay, new Date())}
-                  inline
-                />
               </p>
               <div className="actions">
                 <a className="btn btn-accent" href={primary.href}>
@@ -208,27 +203,6 @@ export default async function Home({
                   Speak at a night
                 </a>
               </div>
-              <p className="presented">
-                Presented by{" "}
-                <a
-                  href="https://inspirecolumbia.org"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  Inspire Columbia
-                  <span className="sr-only"> (opens in a new tab)</span>
-                </a>
-                , the team behind{" "}
-                <a
-                  href="https://tedxcongareevista.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  TEDxCongaree Vista
-                  <span className="sr-only"> (opens in a new tab)</span>
-                </a>
-                .
-              </p>
             </div>
           </div>
           <a className="hero-cue" href="#next-night" aria-label="Scroll to the next night">
