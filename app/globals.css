@@ -378,48 +378,63 @@ html.logo-docked .topbar {
 }
 
 /* ---------- hero ---------- */
-/* The patio photo fills the hero behind the text. A cream scrim keeps the dark
-   logo and text readable on the left, lets the photo show on the right, and
-   fades it into the page at the bottom. */
+/* Phones and tablets: the patio photo is a clear full-width band under the
+   text. Large screens: the photo fills the hero behind the text, solid cream
+   where the text sits and fully clear beyond it, fading into the page below. */
 .hero {
   position: relative;
-  padding-block: clamp(48px, 7vw, 104px) clamp(88px, 11vw, 160px);
+  display: flex;
+  flex-direction: column;
+  padding-block: clamp(48px, 7vw, 104px) clamp(48px, 8vw, 72px);
+}
+/* auto side margins on a flex child would shrink it to its content */
+.hero > .wrap {
+  width: 100%;
 }
 .hero-bg {
-  position: absolute;
-  inset: 0;
-  /* no z-index or isolation on .hero, so the docking logo can still pass over
-     the sticky nav */
-  z-index: -1;
-  overflow: hidden;
+  order: 2;
+  position: relative;
+  height: clamp(220px, 56vw, 460px);
+  margin-top: 40px;
 }
 .hero-bg img {
   object-fit: cover;
-  object-position: 60% 45%;
+  object-position: 55% 50%;
 }
-.hero-bg::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background:
-    linear-gradient(to bottom, rgb(241 234 217 / 0) 60%, var(--paper) 100%),
-    linear-gradient(
-      to right,
-      rgb(241 234 217 / 0.95) 0%,
-      rgb(241 234 217 / 0.9) 42%,
-      rgb(241 234 217 / 0.5) 72%,
-      rgb(241 234 217 / 0.2) 100%
-    );
-}
-@media (max-width: 899px) {
-  /* text spans the full width on smaller screens, so the scrim is even */
+@media (min-width: 1200px) {
+  .hero {
+    display: block;
+    padding-block: clamp(48px, 7vw, 104px) clamp(96px, 9vw, 140px);
+  }
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    height: auto;
+    margin: 0;
+    /* no z-index or isolation on .hero, so the docking logo can still pass
+       over the sticky nav */
+    z-index: -1;
+    overflow: hidden;
+  }
+  .hero-bg img {
+    object-position: 70% 45%;
+  }
   .hero-bg::after {
-    background: linear-gradient(
-      to bottom,
-      rgb(241 234 217 / 0.84) 0%,
-      rgb(241 234 217 / 0.88) 70%,
-      var(--paper) 100%
+    /* where the text column ends: the page margin plus the 600px copy width */
+    --copy-end: calc(
+      max(var(--gutter), (100vw - var(--wrap)) / 2 + var(--gutter)) + 600px
     );
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(to bottom, rgb(241 234 217 / 0) 78%, var(--paper) 100%),
+      linear-gradient(
+        to right,
+        var(--paper) 0,
+        var(--paper) calc(var(--copy-end) + 24px),
+        rgb(241 234 217 / 0) calc(var(--copy-end) + 260px)
+      );
   }
 }
 .hero-copy {
