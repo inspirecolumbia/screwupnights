@@ -369,7 +369,7 @@ html.logo-docked .topbar {
     background: #b5d128;
   }
 }
-@media (max-width: 860px) {
+@media (max-width: 1060px) {
   .nav-links,
   .nav-cta {
     display: none;
@@ -699,6 +699,64 @@ html.logo-docked .topbar {
   }
 }
 
+/* ---------- speakers ---------- */
+/* A dark band right after the ticket: the lineup for the next night, with
+   placeholder portraits until speakers are confirmed. */
+.speakers {
+  background: var(--ink);
+  color: var(--paper);
+}
+.speakers-head {
+  display: grid;
+  gap: 12px;
+  margin-bottom: 36px;
+}
+.speakers-head p {
+  font-size: 19px;
+  color: rgb(241 234 217 / 0.82);
+}
+.speaker-list {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 20px;
+}
+.speaker-card {
+  display: grid;
+  gap: 12px;
+}
+.silhouette {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.speaker-card span {
+  font-size: 15px;
+  font-weight: 600;
+  color: rgb(241 234 217 / 0.78);
+}
+.speakers-cta {
+  margin-top: 32px;
+  font-size: 17px;
+}
+.speakers-cta a {
+  color: var(--lime);
+  font-weight: 700;
+}
+.speakers :focus-visible {
+  outline-color: var(--lime);
+}
+@media (hover: hover) {
+  .speakers-cta a:hover {
+    color: #e0f27a;
+  }
+}
+@media (max-width: 699px) {
+  .speaker-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+  }
+}
+
 /* ---------- about ---------- */
 .about {
   background: var(--paper-2);
@@ -811,6 +869,69 @@ html.logo-docked .topbar {
   }
   .photo img {
     aspect-ratio: auto;
+  }
+}
+
+/* ---------- FAQ ---------- */
+/* Native <details> rows: they open and close without scripts and work with
+   the keyboard. A plus turns into a cross when a row is open. */
+.faq {
+  background: var(--paper-2);
+}
+.faq-grid {
+  display: grid;
+  gap: 28px 64px;
+}
+@media (min-width: 900px) {
+  .faq-grid {
+    grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+    align-items: start;
+  }
+}
+.faq-intro {
+  display: grid;
+  gap: 16px;
+}
+.faq-list {
+  border-top: 1px solid var(--line);
+}
+.faq-list details {
+  border-bottom: 1px solid var(--line);
+}
+.faq-list summary {
+  list-style: none;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  padding-block: 20px;
+  font-size: 19px;
+  font-weight: 700;
+  transition: color 0.15s ease-out;
+}
+.faq-list summary::-webkit-details-marker {
+  display: none;
+}
+.faq-list summary::after {
+  content: "";
+  flex: none;
+  width: 14px;
+  height: 14px;
+  background: currentColor;
+  clip-path: polygon(40% 0, 60% 0, 60% 40%, 100% 40%, 100% 60%, 60% 60%, 60% 100%, 40% 100%, 40% 60%, 0 60%, 0 40%, 40% 40%);
+  transition: transform 0.2s ease-out;
+}
+.faq-list details[open] summary::after {
+  transform: rotate(45deg);
+}
+.faq-list details p {
+  padding-bottom: 22px;
+  max-width: 60ch;
+}
+@media (hover: hover) {
+  .faq-list summary:hover {
+    color: var(--pink-text);
   }
 }
 

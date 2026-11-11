@@ -4,6 +4,7 @@ import { daysUntil } from "./days-until";
 import LogoDock from "./logo-dock";
 import Menu from "./menu";
 import ScrollReveal from "./scroll-reveal";
+import Silhouette from "./silhouette";
 
 type ShowState = "on-sale" | "soon";
 
@@ -39,8 +40,10 @@ const mailto = (subject: string) =>
 // In page order.
 const NAV = [
   { href: "#next-night", label: "Next night" },
+  { href: "#speakers", label: "Speakers" },
   { href: "#about", label: "About" },
   { href: "#photos", label: "Photos" },
+  { href: "#faq", label: "FAQ" },
   { href: "#speak", label: "Speak" },
 ];
 
@@ -278,6 +281,36 @@ export default async function Home({
           </div>
         </section>
 
+        <section
+          className="speakers"
+          id="speakers"
+          aria-labelledby="speakers-title"
+        >
+          <div className="wrap">
+            <div className="speakers-head">
+              <h2 className="h2" id="speakers-title">
+                Speakers
+              </h2>
+              <p>The {EVENT.volume} lineup will be announced soon.</p>
+            </div>
+            {/* Placeholders until the lineup is confirmed. */}
+            <ul className="speaker-list">
+              {[1, 2, 3, 4].map((n) => (
+                <li key={n} className="speaker-card">
+                  <Silhouette />
+                  <span>To be announced</span>
+                </li>
+              ))}
+            </ul>
+            <p className="speakers-cta">
+              Have a story to tell?{" "}
+              <a href={speak}>
+                Speak at a night&nbsp;<span className="arrow" aria-hidden="true">→</span>
+              </a>
+            </p>
+          </div>
+        </section>
+
         <section className="about" id="about">
           <div className="wrap about-grid">
             <div className="about-side">
@@ -389,6 +422,83 @@ export default async function Home({
                 </li>
               ))}
             </ul>
+          </div>
+        </section>
+
+        <section className="faq" id="faq" aria-labelledby="faq-title">
+          <div className="wrap faq-grid">
+            <div className="faq-intro">
+              <h2 className="h2" id="faq-title">
+                Frequently asked questions
+              </h2>
+              <p className="muted">
+                Something else on your mind? Email{" "}
+                <a href={`mailto:${EVENT.email}`}>{EVENT.email}</a>
+              </p>
+            </div>
+            <div className="faq-list">
+              <details open>
+                <summary>Do I have to tell a story?</summary>
+                <p>
+                  No. Come to listen to the speakers, laugh, and take it all
+                  in. Attending is not signing up to speak.
+                </p>
+              </details>
+              <details>
+                <summary>When and where is the next night?</summary>
+                <p>
+                  {`${when} at ${EVENT.venue}, ${EVENT.city}. `}
+                  {doorsTime
+                    ? `Doors open at ${doorsTime}.`
+                    : "The start time hasn’t been announced yet."}
+                </p>
+              </details>
+              <details>
+                <summary>
+                  {onSale ? "How do I buy a ticket?" : "Are tickets available?"}
+                </summary>
+                <p>
+                  {onSale ? (
+                    "Use any Buy tickets button on this page to go to our Zeffy checkout."
+                  ) : (
+                    <>
+                      Not yet. Tickets and updated prices are coming soon.{" "}
+                      <a href={mailingList}>Join the mailing list</a> to hear
+                      first.
+                    </>
+                  )}
+                </p>
+              </details>
+              <details>
+                <summary>Is there food?</summary>
+                <p>Yes, snacks are included.</p>
+              </details>
+              <details>
+                <summary>Who’s behind ScrewUp Nights?</summary>
+                <p>
+                  We’re presented by{" "}
+                  <a
+                    href="https://inspirecolumbia.org"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Inspire Columbia
+                    <span className="sr-only"> (opens in a new tab)</span>
+                  </a>
+                  , the team behind{" "}
+                  <a
+                    href="https://tedxcongareevista.com"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    TEDxCongaree Vista
+                    <span className="sr-only"> (opens in a new tab)</span>
+                  </a>
+                  . Same curiosity about people, with a little more room for
+                  things going wrong.
+                </p>
+              </details>
+            </div>
           </div>
         </section>
 
