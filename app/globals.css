@@ -707,7 +707,7 @@ html.logo-docked .topbar {
   align-content: start;
 }
 .about-mic {
-  width: clamp(150px, 15vw, 210px);
+  width: clamp(200px, 20vw, 270px);
   height: auto;
 }
 @media (max-width: 899px) {
@@ -814,10 +814,29 @@ html.logo-docked .topbar {
 .speak-grid .lead {
   max-width: 34ch;
 }
+/* the two ways in, as one card: equal full-width buttons, contact underneath */
 .speak-actions {
   display: grid;
-  gap: 16px;
-  justify-items: start;
+  gap: 18px;
+  padding: clamp(24px, 3vw, 36px);
+  background: var(--paper);
+  border-radius: 20px;
+  box-shadow: 0 12px 32px rgb(42 26 62 / 0.12);
+}
+.speak-actions .actions {
+  flex-direction: column;
+  gap: 12px;
+}
+.speak-actions .btn {
+  width: 100%;
+  min-height: 56px;
+  font-size: 17px;
+}
+.speak-actions .muted {
+  padding-top: 16px;
+  border-top: 1px solid var(--line);
+  font-size: 15px;
+  text-align: center;
 }
 @media (min-width: 900px) {
   .speak-grid {

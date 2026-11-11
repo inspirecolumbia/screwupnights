@@ -285,36 +285,56 @@ export default async function Home({
               {/* Brand mark: a handheld mic, for "take the mic". */}
               <svg
                 className="about-mic"
-                viewBox="0 0 200 240"
+                viewBox="0 0 260 300"
                 aria-hidden="true"
                 focusable="false"
               >
                 <defs>
-                  <clipPath id="mic-head">
-                    <rect x="60" y="14" width="80" height="104" rx="40" />
-                  </clipPath>
+                  <pattern
+                    id="mic-mesh"
+                    width="11"
+                    height="11"
+                    patternUnits="userSpaceOnUse"
+                  >
+                    <circle cx="5.5" cy="5.5" r="2.3" fill="var(--paper)" fillOpacity="0.32" />
+                  </pattern>
                 </defs>
-                <g transform="rotate(-14 100 120)">
-                  <rect x="60" y="14" width="80" height="104" rx="40" fill="var(--ink)" />
-                  <g clipPath="url(#mic-head)" stroke="var(--paper)" strokeOpacity="0.35" strokeWidth="4">
-                    <line x1="56" y1="38" x2="144" y2="38" />
-                    <line x1="56" y1="54" x2="144" y2="54" />
-                    <line x1="56" y1="70" x2="144" y2="70" />
-                    <line x1="56" y1="86" x2="144" y2="86" />
-                    <line x1="80" y1="10" x2="80" y2="118" />
-                    <line x1="100" y1="10" x2="100" y2="118" />
-                    <line x1="120" y1="10" x2="120" y2="118" />
-                  </g>
-                  <rect x="54" y="104" width="92" height="18" rx="7" fill="var(--pink)" />
-                  <path d="M70 122 H130 L116 214 Q100 226 84 214 Z" fill="var(--ink)" />
-                  <rect x="93" y="146" width="14" height="26" rx="5" fill="var(--lime)" />
+                {/* spotlight the mic stands in */}
+                <circle cx="130" cy="150" r="124" fill="var(--paper)" />
+                {/* sound waves */}
+                <g fill="none" strokeLinecap="round">
+                  <path d="M158.6 39.6 A74 74 0 0 1 158.6 124.4" stroke="var(--pink)" strokeWidth="7" />
+                  <path d="M181.1 34 A96 96 0 0 1 181.1 130" stroke="var(--pink)" strokeWidth="7" strokeOpacity="0.45" />
+                  <path d="M37.4 39.6 A74 74 0 0 0 37.4 124.4" stroke="var(--lime)" strokeWidth="7" />
                 </g>
-                <g strokeWidth="7" strokeLinecap="round" fill="none">
-                  <path d="M160 40 L182 26" stroke="var(--pink)" />
-                  <path d="M166 70 L192 70" stroke="var(--pink)" />
-                  <path d="M160 100 L182 114" stroke="var(--pink)" />
-                  <path d="M38 52 L18 40" stroke="var(--lime)" />
-                  <path d="M32 82 L8 82" stroke="var(--lime)" />
+                <g transform="rotate(-18 120 150)">
+                  {/* cable */}
+                  <path
+                    d="M120 264 C120 300 168 298 184 278 C196 262 214 274 206 300"
+                    fill="none"
+                    stroke="var(--pink)"
+                    strokeWidth="6"
+                    strokeLinecap="round"
+                  />
+                  {/* handle, with a shine down one side and an inset switch */}
+                  <path d="M74 140 H166 L146 256 Q120 272 94 256 Z" fill="var(--ink)" />
+                  <path d="M88 150 L104 250" stroke="var(--ink-2)" strokeWidth="6" strokeLinecap="round" />
+                  <rect x="108" y="172" width="24" height="42" rx="9" fill="#1d1230" />
+                  <rect x="112" y="178" width="16" height="17" rx="5" fill="var(--lime)" />
+                  {/* metal ring between head and handle */}
+                  <rect x="64" y="118" width="112" height="26" rx="10" fill="var(--pink)" />
+                  <rect x="64" y="128" width="112" height="5" fill="var(--pink-text)" />
+                  {/* mesh head */}
+                  <circle cx="120" cy="76" r="54" fill="var(--ink)" />
+                  <circle cx="120" cy="76" r="49" fill="url(#mic-mesh)" />
+                  <path
+                    d="M82 59 A42 42 0 0 1 109 35"
+                    fill="none"
+                    stroke="var(--paper)"
+                    strokeOpacity="0.55"
+                    strokeWidth="6"
+                    strokeLinecap="round"
+                  />
                 </g>
               </svg>
             </div>
