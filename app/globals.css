@@ -229,6 +229,11 @@ h3 {
   transition: box-shadow 0.2s ease-out;
 }
 /* a soft lift once the logo has docked, i.e. once the page is scrolled */
+/* the open mobile menu must sit above the hero logo, which is layered over the
+   nav so it can dock into it */
+.topbar:has(.menu[open]) {
+  z-index: 40;
+}
 html.logo-docked .topbar {
   box-shadow: 0 6px 18px rgba(42, 26, 62, 0.08);
 }
@@ -373,37 +378,55 @@ html.logo-docked .topbar {
 }
 
 /* ---------- hero ---------- */
+/* The patio photo fills the hero behind the text. A cream scrim keeps the dark
+   logo and text readable on the left, lets the photo show on the right, and
+   fades it into the page at the bottom. */
 .hero {
-  padding-block: clamp(40px, 6vw, 88px);
+  position: relative;
+  padding-block: clamp(48px, 7vw, 104px) clamp(88px, 11vw, 160px);
 }
-.hero-grid {
-  display: grid;
-  gap: clamp(32px, 5vw, 64px);
-  align-items: center;
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  /* no z-index or isolation on .hero, so the docking logo can still pass over
+     the sticky nav */
+  z-index: -1;
+  overflow: hidden;
 }
-@media (min-width: 900px) {
-  /* The photo spans the full height of the text column: its top lines up with
-     the logo and its caption with the last line on the left. */
-  .hero-grid {
-    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
-    align-items: stretch;
-  }
-  .hero-photo {
-    display: flex;
-    flex-direction: column;
-  }
-  .hero-photo img {
-    flex: 1 1 0;
-    min-height: 0;
-    aspect-ratio: auto;
-    object-position: 55% 50%;
+.hero-bg img {
+  object-fit: cover;
+  object-position: 60% 45%;
+}
+.hero-bg::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(to bottom, rgb(241 234 217 / 0) 60%, var(--paper) 100%),
+    linear-gradient(
+      to right,
+      rgb(241 234 217 / 0.95) 0%,
+      rgb(241 234 217 / 0.9) 42%,
+      rgb(241 234 217 / 0.5) 72%,
+      rgb(241 234 217 / 0.2) 100%
+    );
+}
+@media (max-width: 899px) {
+  /* text spans the full width on smaller screens, so the scrim is even */
+  .hero-bg::after {
+    background: linear-gradient(
+      to bottom,
+      rgb(241 234 217 / 0.84) 0%,
+      rgb(241 234 217 / 0.88) 70%,
+      var(--paper) 100%
+    );
   }
 }
 .hero-copy {
   display: grid;
   justify-items: start;
   gap: 18px;
-  min-width: 0;
+  max-width: 600px;
 }
 .hero-logo {
   width: clamp(240px, 30vw, 380px);
@@ -450,16 +473,6 @@ html.logo-docked .topbar {
 .presented a {
   font-weight: 700;
   color: var(--ink);
-}
-.hero-photo img {
-  width: 100%;
-  aspect-ratio: 4 / 3;
-  object-fit: cover;
-}
-figcaption {
-  margin-top: 10px;
-  font-size: 14px;
-  color: var(--ink-2);
 }
 
 /* ---------- next night: the vintage ticket ---------- */
@@ -560,6 +573,19 @@ figcaption {
     0 0 / 100% 12px repeat-y;
   mask: radial-gradient(circle 3px at 0 50%, transparent 98%, #000 100%) 0 0 /
     100% 12px repeat-y;
+}
+.countdown {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  font-size: 15px;
+  font-weight: 700;
+}
+.countdown-num {
+  font-family: var(--display);
+  font-size: 44px;
+  font-weight: 400;
+  line-height: 1;
 }
 .stub-price {
   font-family: var(--display);
@@ -685,8 +711,7 @@ figcaption {
   }
 }
 /* hairline edge so dark photos don't bleed into the page */
-.photo img,
-.hero-photo img {
+.photo img {
   outline: 1px solid oklch(0 0 0 / 0.1);
   outline-offset: -1px;
 }

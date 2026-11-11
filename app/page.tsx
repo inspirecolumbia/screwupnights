@@ -1,4 +1,6 @@
 import Image from "next/image";
+import Countdown from "./countdown";
+import { daysUntil } from "./days-until";
 import LogoDock from "./logo-dock";
 import Menu from "./menu";
 import ScrollReveal from "./scroll-reveal";
@@ -93,6 +95,7 @@ export default async function Home({
     ? fmt(EVENT.doors, { hour: "numeric", minute: "2-digit" })
     : null;
   const when = `${weekday}, ${monthDay}`;
+  const eventDay = EVENT.start.slice(0, 10);
 
   const mailingList = mailto("Add me to the ScrewUp Nights mailing list");
   const speak = mailto("I'd like to speak at ScrewUp Nights");
@@ -147,7 +150,18 @@ export default async function Home({
 
       <main id="main" tabIndex={-1}>
         <section className="hero" id="top" aria-label="ScrewUp Nights">
-          <div className="wrap hero-grid">
+          {/* Full-width photo behind the hero, tinted so the text reads and
+              faded into the page at the bottom. */}
+          <div className="hero-bg">
+            <Image
+              src="/proto/n01-patio-dusk.jpg"
+              alt="The audience seated on the TLC Sports Bar patio at dusk, under string lights."
+              fill
+              sizes="100vw"
+              preload
+            />
+          </div>
+          <div className="wrap">
             <div className="hero-copy">
               <h1>
                 <Image
@@ -202,18 +216,6 @@ export default async function Home({
                 .
               </p>
             </div>
-
-            <figure className="hero-photo">
-              <Image
-                src="/proto/n01-patio-dusk.jpg"
-                alt="The audience seated on the TLC Sports Bar patio at dusk, under string lights."
-                width={1600}
-                height={1066}
-                sizes="(max-width: 899px) 100vw, 620px"
-                preload
-              />
-              <figcaption>Night 01, September 2026, at TLC Sports Bar</figcaption>
-            </figure>
           </div>
         </section>
 
@@ -241,6 +243,10 @@ export default async function Home({
                   </div>
                 </div>
                 <div className="ticket-stub">
+                  <Countdown
+                    day={eventDay}
+                    initial={daysUntil(eventDay, new Date())}
+                  />
                   {onSale ? (
                     <>
                       <p className="stub-price">{EVENT.price}</p>
