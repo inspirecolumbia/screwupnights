@@ -697,23 +697,26 @@ html.logo-docked .topbar {
 }
 @media (min-width: 900px) {
   .about-grid {
-    grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
-    align-items: start;
+    /* mic on the left, centered against the heading and text on the right */
+    grid-template-columns: minmax(0, 0.75fr) minmax(0, 1.25fr);
+    align-items: center;
   }
 }
 .about-side {
   display: grid;
-  gap: 40px;
-  align-content: start;
+  justify-items: center;
 }
 .about-mic {
-  width: clamp(200px, 20vw, 270px);
+  width: clamp(240px, 24vw, 330px);
   height: auto;
 }
 @media (max-width: 899px) {
   .about-mic {
     display: none;
   }
+}
+.about-text .h2 {
+  margin-bottom: 8px;
 }
 .about-text {
   display: grid;
@@ -888,12 +891,63 @@ html.logo-docked .topbar {
     color: #e0f27a;
   }
 }
-.errata {
-  color: rgba(241, 234, 217, 0.82);
-  max-width: 44ch;
+.footer-next {
+  color: rgb(241 234 217 / 0.82);
 }
-.errata b {
-  color: var(--lime);
+
+/* Inspire logo: four-point sparkles twinkle around it on hover and focus.
+   Cream, lime and a light blue that echoes the star in the Inspire mark. */
+.footer-logo-link {
+  position: relative;
+  display: inline-block;
+  width: fit-content;
+}
+.footer-logo {
+  transition: transform 0.25s ease-out;
+}
+.sparkle {
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  background: var(--paper);
+  clip-path: polygon(50% 0, 62% 38%, 100% 50%, 62% 62%, 50% 100%, 38% 62%, 0 50%, 38% 38%);
+  opacity: 0;
+  transform: scale(0);
+  pointer-events: none;
+}
+.sparkle-1 { top: -10px; left: -12px; width: 16px; height: 16px; background: #8fd3ff; }
+.sparkle-2 { top: -14px; left: 46%; width: 11px; height: 11px; background: var(--lime); animation-delay: 0.2s; }
+.sparkle-3 { top: 2px; right: -18px; width: 15px; height: 15px; animation-delay: 0.45s; }
+.sparkle-4 { bottom: -8px; right: 8px; width: 10px; height: 10px; background: #8fd3ff; animation-delay: 0.7s; }
+.sparkle-5 { bottom: 4px; left: -18px; width: 12px; height: 12px; background: var(--lime); animation-delay: 0.95s; }
+@keyframes twinkle {
+  0% { opacity: 0; transform: scale(0) rotate(0deg); }
+  35% { opacity: 1; transform: scale(1) rotate(45deg); }
+  70% { opacity: 0.9; transform: scale(0.85) rotate(70deg); }
+  100% { opacity: 0; transform: scale(0.2) rotate(90deg); }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .footer-logo-link:focus-visible .sparkle {
+    animation: twinkle 1.4s ease-out infinite;
+  }
+}
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .footer-logo-link:hover .sparkle {
+    animation: twinkle 1.4s ease-out infinite;
+  }
+  .footer-logo-link:hover .footer-logo {
+    transform: translateY(-2px);
+  }
+}
+/* reduced motion: the sparkles simply appear, no movement */
+@media (prefers-reduced-motion: reduce) {
+  .sparkle {
+    transform: none;
+    transition: opacity 0.2s ease-out;
+  }
+  .footer-logo-link:is(:hover, :focus-visible) .sparkle {
+    opacity: 1;
+  }
 }
 .footer-legal {
   grid-column: 1 / -1;

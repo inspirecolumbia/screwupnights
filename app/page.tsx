@@ -281,11 +281,10 @@ export default async function Home({
         <section className="about" id="about">
           <div className="wrap about-grid">
             <div className="about-side">
-              <h2 className="h2">What is ScrewUp Nights?</h2>
               {/* Brand mark: a handheld mic, for "take the mic". */}
               <svg
                 className="about-mic"
-                viewBox="0 0 260 300"
+                viewBox="0 -14 260 314"
                 aria-hidden="true"
                 focusable="false"
               >
@@ -301,13 +300,17 @@ export default async function Home({
                 </defs>
                 {/* spotlight the mic stands in */}
                 <circle cx="130" cy="150" r="124" fill="var(--paper)" />
-                {/* sound waves */}
-                <g fill="none" strokeLinecap="round">
-                  <path d="M158.6 39.6 A74 74 0 0 1 158.6 124.4" stroke="var(--pink)" strokeWidth="7" />
-                  <path d="M181.1 34 A96 96 0 0 1 181.1 130" stroke="var(--pink)" strokeWidth="7" strokeOpacity="0.45" />
-                  <path d="M37.4 39.6 A74 74 0 0 0 37.4 124.4" stroke="var(--lime)" strokeWidth="7" />
-                </g>
                 <g transform="rotate(-18 120 150)">
+                  {/* sound waves: matching pairs centered on the head, tilted
+                      with the mic and clear of the ring */}
+                  <g fill="none" stroke="var(--pink)" strokeWidth="7" strokeLinecap="round">
+                    <path d="M166.3 20.8 A72 72 0 0 1 191.7 82.3" />
+                    <path d="M73.7 20.8 A72 72 0 0 0 48.3 82.3" />
+                    <g strokeOpacity="0.45">
+                      <path d="M183.9 9.8 A92 92 0 0 1 211.9 79.2" />
+                      <path d="M56.1 9.8 A92 92 0 0 0 28.1 79.2" />
+                    </g>
+                  </g>
                   {/* cable */}
                   <path
                     d="M120 264 C120 300 168 298 184 278 C196 262 214 274 206 300"
@@ -319,7 +322,7 @@ export default async function Home({
                   {/* handle, with a shine down one side and an inset switch */}
                   <path d="M74 140 H166 L146 256 Q120 272 94 256 Z" fill="var(--ink)" />
                   <path d="M88 150 L104 250" stroke="var(--ink-2)" strokeWidth="6" strokeLinecap="round" />
-                  <rect x="108" y="172" width="24" height="42" rx="9" fill="#1d1230" />
+                  <rect x="108" y="172" width="24" height="42" rx="9" fill="var(--ink-2)" />
                   <rect x="112" y="178" width="16" height="17" rx="5" fill="var(--lime)" />
                   {/* metal ring between head and handle */}
                   <rect x="64" y="118" width="112" height="26" rx="10" fill="var(--pink)" />
@@ -339,12 +342,15 @@ export default async function Home({
               </svg>
             </div>
             <div className="about-text">
+              <h2 className="h2">What is ScrewUp Nights?</h2>
               <p className="lead">
-                Every win is built on a landfill of failures. ScrewUp Nights is
-                a live storytelling show where real people take the mic and
-                walk us through their most spectacular flops: the launches that
-                tanked, the relationships that imploded, the decisions that
-                looked great until they very much didn&rsquo;t.
+                Every win is built on a landfill of failures.
+              </p>
+              <p>
+                ScrewUp Nights is a live storytelling show where real people
+                take the mic and walk us through their most spectacular flops:
+                the launches that tanked, the relationships that imploded, the
+                decisions that looked great until they very much didn&rsquo;t.
               </p>
               <p>
                 It&rsquo;s part stand-up, part post-mortem. Speakers get the
@@ -420,6 +426,7 @@ export default async function Home({
         <div className="wrap footer-grid">
           <div className="footer-brand">
             <a
+              className="footer-logo-link"
               href="https://inspirecolumbia.org"
               target="_blank"
               rel="noopener noreferrer"
@@ -432,6 +439,10 @@ export default async function Home({
                 sizes="160px"
                 className="footer-logo"
               />
+              {/* sparkles that twinkle on hover and focus */}
+              {[1, 2, 3, 4, 5].map((n) => (
+                <span key={n} className={`sparkle sparkle-${n}`} aria-hidden="true" />
+              ))}
             </a>
             <p>
               ScrewUp Nights is presented by Inspire Columbia, the team behind
@@ -449,9 +460,8 @@ export default async function Home({
           </nav>
           <div className="footer-contact">
             <a href={`mailto:${EVENT.email}`}>{EVENT.email}</a>
-            <p className="errata">
-              <b>Errata:</b> An earlier version of this life implied that
-              everything would go according to plan. We regret the error.
+            <p className="footer-next">
+              Next show: {when} at {EVENT.venue}
             </p>
           </div>
           <p className="footer-legal">© 2026 Inspire Columbia</p>
