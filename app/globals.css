@@ -1000,6 +1000,9 @@ html.logo-docked .topbar {
   display: grid;
   gap: 14px;
   max-width: 36ch;
+  /* keep rows at their content height, so the logo link hugs the logo and
+     the sparkles stay around it */
+  align-content: start;
 }
 .footer-logo {
   width: 150px;
