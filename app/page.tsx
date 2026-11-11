@@ -281,33 +281,44 @@ export default async function Home({
           </div>
         </section>
 
+        {/* The speaker lineup as designed on proto/zine-torn: a torn-edged
+            dark band, taped polaroid portraits and "coming soon" stickers. */}
         <section
-          className="speakers"
+          className="speakers torn-band"
           id="speakers"
           aria-labelledby="speakers-title"
         >
-          <div className="wrap">
-            <div className="speakers-head">
-              <h2 className="h2" id="speakers-title">
-                Speakers
+          <div className="wrap speakers-grid">
+            <div>
+              <p className="speakers-kicker">The screwups</p>
+              <h2 className="speakers-title" id="speakers-title">
+                Speaker
+                <br />
+                lineup
               </h2>
-              <p>The {EVENT.volume} lineup will be announced soon.</p>
             </div>
-            {/* Placeholders until the lineup is confirmed. */}
-            <ul className="speaker-list">
-              {[1, 2, 3, 4].map((n) => (
-                <li key={n} className="speaker-card">
-                  <Silhouette />
-                  <span>To be announced</span>
-                </li>
-              ))}
-            </ul>
-            <p className="speakers-cta">
-              Have a story to tell?{" "}
-              <a href={speak}>
-                Speak at a night&nbsp;<span className="arrow" aria-hidden="true">→</span>
-              </a>
-            </p>
+            <div>
+              <p className="sr-only">
+                The {EVENT.volume} lineup will be announced soon.
+              </p>
+              <ul className="speaker-list">
+                {["-3deg", "2deg", "-1.5deg", "2.5deg"].map((tilt) => (
+                  <li
+                    key={tilt}
+                    className="speaker"
+                    style={{ transform: `rotate(${tilt})` }}
+                  >
+                    <span className="speaker-tape" aria-hidden="true" />
+                    <Silhouette />
+                    <span className="soon">Speaker coming soon</span>
+                  </li>
+                ))}
+              </ul>
+              <p className="speakers-note">
+                some amazing screwups on the way{" "}
+                <span aria-hidden="true">☺</span>
+              </p>
+            </div>
           </div>
         </section>
 
