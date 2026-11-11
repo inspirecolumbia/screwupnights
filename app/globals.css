@@ -454,11 +454,20 @@ html.logo-docked .topbar {
 .hero-logo {
   width: clamp(240px, 30vw, 380px);
   margin-bottom: 6px;
-  /* flies over the sticky nav on its way to the nav slot (see logo-dock.tsx) */
-  position: relative;
+}
+/* the fixed copy that flies into the nav (see logo-dock.tsx); it never takes
+   clicks, so the nav logo link underneath always works */
+.logo-fly {
+  position: fixed;
   z-index: 30;
+  height: auto;
   transform-origin: top left;
   will-change: transform;
+  pointer-events: none;
+  transition: opacity 0.15s ease-out;
+}
+.topbar-logo img {
+  transition: opacity 0.15s ease-out;
 }
 /* Only while the scroll animation can run: the nav logo waits for the hero
    logo to arrive, then takes over. Without scripts or with reduced motion,
@@ -467,7 +476,10 @@ html.logo-docked .topbar {
   html:not(.logo-docked) .topbar-logo img {
     opacity: 0;
   }
-  html.logo-docked .hero-logo {
+  html.logo-flying .hero-logo {
+    visibility: hidden;
+  }
+  html.logo-docked .logo-fly {
     opacity: 0;
   }
 }
@@ -895,54 +907,69 @@ html.logo-docked .topbar {
   color: rgb(241 234 217 / 0.82);
 }
 
-/* Inspire logo: four-point sparkles twinkle around it on hover and focus.
-   Cream, lime and a light blue that echoes the star in the Inspire mark. */
+/* Inspire logo: a burst of soft four-point stars twinkles around it on hover
+   and focus, in the blue of the Inspire star and cream, and the logo lifts
+   with a faint blue glow. */
 .footer-logo-link {
   position: relative;
   display: inline-block;
   width: fit-content;
 }
 .footer-logo {
-  transition: transform 0.25s ease-out;
+  transition-property: transform, filter;
+  transition-duration: 0.3s;
+  transition-timing-function: ease-out;
 }
 .sparkle {
+  --s: 0.6;
   position: absolute;
-  width: 14px;
-  height: 14px;
-  background: var(--paper);
-  clip-path: polygon(50% 0, 62% 38%, 100% 50%, 62% 62%, 50% 100%, 38% 62%, 0 50%, 38% 38%);
+  width: 24px;
+  height: 24px;
+  background: #9ad7ff;
+  clip-path: path("M12 0C13 8 16 11 24 12C16 13 13 16 12 24C11 16 8 13 0 12C8 11 11 8 12 0Z");
+  filter: drop-shadow(0 0 4px rgb(154 215 255 / 0.9));
   opacity: 0;
   transform: scale(0);
   pointer-events: none;
 }
-.sparkle-1 { top: -10px; left: -12px; width: 16px; height: 16px; background: #8fd3ff; }
-.sparkle-2 { top: -14px; left: 46%; width: 11px; height: 11px; background: var(--lime); animation-delay: 0.2s; }
-.sparkle-3 { top: 2px; right: -18px; width: 15px; height: 15px; animation-delay: 0.45s; }
-.sparkle-4 { bottom: -8px; right: 8px; width: 10px; height: 10px; background: #8fd3ff; animation-delay: 0.7s; }
-.sparkle-5 { bottom: 4px; left: -18px; width: 12px; height: 12px; background: var(--lime); animation-delay: 0.95s; }
+.sparkle-1 { --s: 0.95; top: -16px; left: -16px; }
+.sparkle-2 { --s: 0.55; top: -20px; left: 44%; background: var(--paper); animation-delay: 0.15s; }
+.sparkle-3 { --s: 0.8; top: -8px; right: -22px; animation-delay: 0.3s; }
+.sparkle-4 { --s: 0.5; bottom: -16px; right: -4px; background: var(--paper); animation-delay: 0.45s; }
+.sparkle-5 { --s: 0.42; bottom: -12px; left: 32%; animation-delay: 0.6s; }
+.sparkle-6 { --s: 0.48; top: 38%; left: -28px; background: var(--paper); animation-delay: 0.75s; }
 @keyframes twinkle {
   0% { opacity: 0; transform: scale(0) rotate(0deg); }
-  35% { opacity: 1; transform: scale(1) rotate(45deg); }
-  70% { opacity: 0.9; transform: scale(0.85) rotate(70deg); }
-  100% { opacity: 0; transform: scale(0.2) rotate(90deg); }
+  30% { opacity: 1; transform: scale(var(--s)) rotate(30deg); }
+  60% { opacity: 1; transform: scale(calc(var(--s) * 0.8)) rotate(50deg); }
+  100% { opacity: 0; transform: scale(0) rotate(90deg); }
 }
 @media (prefers-reduced-motion: no-preference) {
   .footer-logo-link:focus-visible .sparkle {
-    animation: twinkle 1.4s ease-out infinite;
+    /* longhands, so each star keeps its own animation-delay */
+    animation-name: twinkle;
+    animation-duration: 1.6s;
+    animation-timing-function: ease-in-out;
+    animation-iteration-count: infinite;
   }
 }
 @media (hover: hover) and (prefers-reduced-motion: no-preference) {
   .footer-logo-link:hover .sparkle {
-    animation: twinkle 1.4s ease-out infinite;
+    /* longhands, so each star keeps its own animation-delay */
+    animation-name: twinkle;
+    animation-duration: 1.6s;
+    animation-timing-function: ease-in-out;
+    animation-iteration-count: infinite;
   }
   .footer-logo-link:hover .footer-logo {
     transform: translateY(-2px);
+    filter: drop-shadow(0 0 14px rgb(154 215 255 / 0.35));
   }
 }
-/* reduced motion: the sparkles simply appear, no movement */
+/* reduced motion: the stars simply appear, no movement */
 @media (prefers-reduced-motion: reduce) {
   .sparkle {
-    transform: none;
+    transform: scale(var(--s));
     transition: opacity 0.2s ease-out;
   }
   .footer-logo-link:is(:hover, :focus-visible) .sparkle {

@@ -440,7 +440,7 @@ export default async function Home({
                 className="footer-logo"
               />
               {/* sparkles that twinkle on hover and focus */}
-              {[1, 2, 3, 4, 5].map((n) => (
+              {[1, 2, 3, 4, 5, 6].map((n) => (
                 <span key={n} className={`sparkle sparkle-${n}`} aria-hidden="true" />
               ))}
             </a>
