@@ -280,7 +280,44 @@ export default async function Home({
 
         <section className="about" id="about">
           <div className="wrap about-grid">
-            <h2 className="h2">What is ScrewUp Nights?</h2>
+            <div className="about-side">
+              <h2 className="h2">What is ScrewUp Nights?</h2>
+              {/* Brand mark: a handheld mic, for "take the mic". */}
+              <svg
+                className="about-mic"
+                viewBox="0 0 200 240"
+                aria-hidden="true"
+                focusable="false"
+              >
+                <defs>
+                  <clipPath id="mic-head">
+                    <rect x="60" y="14" width="80" height="104" rx="40" />
+                  </clipPath>
+                </defs>
+                <g transform="rotate(-14 100 120)">
+                  <rect x="60" y="14" width="80" height="104" rx="40" fill="var(--ink)" />
+                  <g clipPath="url(#mic-head)" stroke="var(--paper)" strokeOpacity="0.35" strokeWidth="4">
+                    <line x1="56" y1="38" x2="144" y2="38" />
+                    <line x1="56" y1="54" x2="144" y2="54" />
+                    <line x1="56" y1="70" x2="144" y2="70" />
+                    <line x1="56" y1="86" x2="144" y2="86" />
+                    <line x1="80" y1="10" x2="80" y2="118" />
+                    <line x1="100" y1="10" x2="100" y2="118" />
+                    <line x1="120" y1="10" x2="120" y2="118" />
+                  </g>
+                  <rect x="54" y="104" width="92" height="18" rx="7" fill="var(--pink)" />
+                  <path d="M70 122 H130 L116 214 Q100 226 84 214 Z" fill="var(--ink)" />
+                  <rect x="93" y="146" width="14" height="26" rx="5" fill="var(--lime)" />
+                </g>
+                <g strokeWidth="7" strokeLinecap="round" fill="none">
+                  <path d="M160 40 L182 26" stroke="var(--pink)" />
+                  <path d="M166 70 L192 70" stroke="var(--pink)" />
+                  <path d="M160 100 L182 114" stroke="var(--pink)" />
+                  <path d="M38 52 L18 40" stroke="var(--lime)" />
+                  <path d="M32 82 L8 82" stroke="var(--lime)" />
+                </g>
+              </svg>
+            </div>
             <div className="about-text">
               <p className="lead">
                 Every win is built on a landfill of failures. ScrewUp Nights is

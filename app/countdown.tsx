@@ -25,7 +25,7 @@ export default function Countdown({
   return (
     <p className="countdown">
       {days === 0 ? (
-        <span className="countdown-num">Today</span>
+        <span className="countdown-num">TODAY</span>
       ) : (
         <>
           <span className="countdown-num">{days}</span>{" "}

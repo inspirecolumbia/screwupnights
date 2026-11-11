@@ -22,9 +22,14 @@ export default function LogoDock() {
 
     // Untransformed hero logo position, in page coordinates.
     let base = { top: 0, left: 0, width: 1 };
-    // Scroll distance over which the logo travels: until its natural position
-    // reaches the slot's line in the stuck nav.
+    // Scroll distance over which the logo travels. Longer than the distance to
+    // the nav, so the logo visibly lags the page and glides up into the slot
+    // instead of looking like it simply scrolled away.
     let travel = 1;
+    const SLOWER = 1.9;
+    // Ease-out: moves right away (so it never sits on the text scrolling up
+    // beneath it), then settles gently into the slot.
+    const ease = (t: number) => 1 - (1 - t) * (1 - t);
 
     const measure = () => {
       hero.style.transform = "";
@@ -32,12 +37,13 @@ export default function LogoDock() {
       base = { top: h.top + scrollY, left: h.left + scrollX, width: h.width };
       const slotInBar =
         slot.getBoundingClientRect().top - bar.getBoundingClientRect().top;
-      travel = Math.max(1, base.top - slotInBar);
+      travel = Math.max(1, (base.top - slotInBar) * SLOWER);
     };
 
     const update = () => {
       const y = scrollY;
-      const p = Math.min(1, Math.max(0, y / travel));
+      const linear = Math.min(1, Math.max(0, y / travel));
+      const p = ease(linear);
       const n = slot.getBoundingClientRect();
       const startLeft = base.left - scrollX;
       // Viewport position the logo should have now, eased from its spot in the
@@ -46,7 +52,7 @@ export default function LogoDock() {
       const ty = base.top + (n.top - base.top) * p - (base.top - y);
       const s = 1 + (n.width / base.width - 1) * p;
       hero.style.transform = `translate(${tx}px, ${ty}px) scale(${s})`;
-      root.classList.toggle("logo-docked", p >= 1);
+      root.classList.toggle("logo-docked", linear >= 1);
     };
 
     let frame = 0;

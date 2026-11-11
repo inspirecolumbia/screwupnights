@@ -678,6 +678,20 @@ html.logo-docked .topbar {
     align-items: start;
   }
 }
+.about-side {
+  display: grid;
+  gap: 40px;
+  align-content: start;
+}
+.about-mic {
+  width: clamp(150px, 15vw, 210px);
+  height: auto;
+}
+@media (max-width: 899px) {
+  .about-mic {
+    display: none;
+  }
+}
 .about-text {
   display: grid;
   gap: 18px;
