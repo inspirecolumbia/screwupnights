@@ -306,7 +306,6 @@ export default async function Home({
         >
           <div className="wrap speakers-grid">
             <div>
-              <p className="speakers-kicker">The screwups</p>
               <h2 className="speakers-title" id="speakers-title">
                 Speaker
                 <br />

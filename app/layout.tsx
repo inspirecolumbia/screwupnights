@@ -4,7 +4,6 @@ import {
   DM_Serif_Display,
   Figtree,
   Permanent_Marker,
-  Space_Mono,
 } from "next/font/google";
 import "./globals.css";
 
@@ -31,15 +30,7 @@ const figtree = Figtree({
   display: "swap",
 });
 
-// Only for the speaker lineup, which keeps its proto/zine-torn look: the
-// small label (Space Mono) and the handwritten note (Permanent Marker).
-const spaceMono = Space_Mono({
-  weight: "400",
-  subsets: ["latin"],
-  variable: "--font-mono",
-  display: "swap",
-});
-
+// Only for the handwritten note in the speaker lineup.
 const permanentMarker = Permanent_Marker({
   weight: "400",
   subsets: ["latin"],
@@ -73,7 +64,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${anton.variable} ${serifDisplay.variable} ${figtree.variable} ${spaceMono.variable} ${permanentMarker.variable}`}
+      className={`${anton.variable} ${serifDisplay.variable} ${figtree.variable} ${permanentMarker.variable}`}
     >
       <body>{children}</body>
     </html>

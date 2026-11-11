@@ -402,6 +402,11 @@ html.logo-docked .topbar {
   color: var(--paper);
   padding-block: clamp(32px, 4vw, 64px) calc(var(--overlap) + 64px);
 }
+/* a grid item with auto margins shrinks to its content, so stretch the wrap
+   back to full width to keep the copy on the same left edge as the nav */
+.hero > .wrap {
+  width: 100%;
+}
 .hero-bg {
   position: absolute;
   inset: 0;
@@ -849,18 +854,6 @@ html.logo-docked .topbar {
   grid-template-columns: auto 1fr;
   gap: 32px 48px;
   align-items: center;
-}
-.speakers-kicker {
-  font-family: var(--font-mono), ui-monospace, monospace;
-  font-size: 13px;
-  letter-spacing: 4px;
-  text-transform: uppercase;
-  /* lighter than the original pink so it reads on the dark band */
-  color: #ff9fca;
-  margin-bottom: 14px;
-}
-.speakers-kicker::before {
-  content: "// ";
 }
 .speakers-title {
   font-family: var(--display);
