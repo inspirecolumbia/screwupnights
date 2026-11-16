@@ -19,20 +19,22 @@ export default function ScrollReveal() {
 
     const io = new IntersectionObserver(
       (entries) => {
+        // Stagger only the elements that enter together, 100ms apart, capped
+        // at 300ms so a fast scroll never leaves content waiting.
+        let n = 0;
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            entry.target.classList.add("in");
-            io.unobserve(entry.target);
+            const el = entry.target as HTMLElement;
+            el.style.transitionDelay = `${Math.min(n++, 3) * 100}ms`;
+            el.classList.add("in");
+            io.unobserve(el);
           }
         });
       },
       { threshold: 0.12 },
     );
 
-    els.forEach((el, i) => {
-      el.style.transitionDelay = `${(i % 4) * 60}ms`;
-      io.observe(el);
-    });
+    els.forEach((el) => io.observe(el));
 
     return () => io.disconnect();
   }, []);
