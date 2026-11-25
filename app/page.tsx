@@ -38,7 +38,7 @@ const mailto = (subject: string) =>
 
 // In page order.
 const NAV = [
-  { href: "#next-night", label: "Next night" },
+  { href: "#next-night", label: "Tickets" },
   { href: "#speakers", label: "Speakers" },
   { href: "#about", label: "About" },
   { href: "#photos", label: "Photos" },

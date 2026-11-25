@@ -29,7 +29,7 @@ html {
   /* lets <details> answers animate to their natural height */
   interpolate-size: allow-keywords;
   scroll-behavior: smooth;
-  scroll-padding-top: 84px; /* clears the sticky nav when jumping to a section */
+  scroll-padding-top: 40px; /* section padding supplies the rest of the clearance under the 71px sticky nav */
 }
 body {
   font: 400 17px/1.6 var(--sans);
@@ -658,6 +658,8 @@ html.logo-docked .topbar {
 .next {
   position: relative;
   z-index: 2;
+  /* the ticket has no top padding, so land it 24px under the nav (71px tall) */
+  scroll-margin-top: 55px;
   margin-top: calc(-1 * var(--overlap));
   padding-block: 0;
   /* dark from just under the hero photo down, so the ticket sits on the same
