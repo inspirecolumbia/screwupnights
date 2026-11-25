@@ -544,7 +544,7 @@ export default async function Home({
               <details>
                 <summary>Who’s behind ScrewUp Nights?</summary>
                 <p>
-                  We’re presented by{" "}
+                  ScrewUp Nights is presented by{" "}
                   <a
                     href="https://inspirecolumbia.org"
                     target="_blank"
@@ -553,7 +553,9 @@ export default async function Home({
                     Inspire Columbia
                     <span className="sr-only"> (opens in a new tab)</span>
                   </a>
-                  , the team behind{" "}
+                  , a nonprofit that connects students, families, and local
+                  leaders through programs in Columbia, SC. We’re also the team
+                  behind{" "}
                   <a
                     href="https://tedxcongareevista.com"
                     target="_blank"
@@ -562,9 +564,7 @@ export default async function Home({
                     TEDxCongaree Vista
                     <span className="sr-only"> (opens in a new tab)</span>
                   </a>
-                  . We’re a nonprofit that connects students, families, and
-                  local leaders through programs in Columbia, SC. Interested in
-                  joining us?{" "}
+                  . Interested in joining us?{" "}
                   <a
                     href="https://www.inspirecolumbia.org/positions"
                     target="_blank"
