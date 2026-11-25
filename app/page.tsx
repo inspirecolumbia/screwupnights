@@ -527,7 +527,7 @@ export default async function Home({
                 </summary>
                 <p>
                   {onSale ? (
-                    "Use any Buy tickets button on this page to go to our Zeffy checkout."
+                    "Tap any Buy tickets button on this page to check out online."
                   ) : (
                     <>
                       Not yet. Tickets and updated prices are coming soon.{" "}
@@ -562,8 +562,8 @@ export default async function Home({
                     TEDxCongaree Vista
                     <span className="sr-only"> (opens in a new tab)</span>
                   </a>
-                  . Same curiosity about people, with a little more room for
-                  things going wrong.
+                  . ScrewUp Nights is our stage for honest stories about things
+                  that didn’t go to plan.
                 </p>
               </details>
             </div>
