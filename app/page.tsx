@@ -22,8 +22,7 @@ const EVENT = {
   doors: null as string | null,
   venue: "TLC Sports Bar",
   city: "Columbia, SC",
-  // Ticket link is live. The price is still a placeholder until confirmed.
-  price: "$15",
+  // Price is intentionally not shown on the page.
   ticketUrl: "https://www.zeffy.com/en-US/ticketing/screwup-nights-december--2026",
   email: "screwupnights@inspirecolumbia.org",
 };
@@ -242,7 +241,6 @@ export default async function Home({
                   />
                   {onSale ? (
                     <>
-                      <p className="stub-price">{EVENT.price}</p>
                       <p className="stub-note">Limited spots.</p>
                       <a
                         className="stub-btn"
@@ -519,8 +517,13 @@ export default async function Home({
                 <a className="btn btn-primary" href={speak}>
                   Speak at a night&nbsp;<span className="arrow" aria-hidden="true">→</span>
                 </a>
-                <a className="btn btn-secondary" href={primary.href}>
+                <a
+                  className="btn btn-secondary"
+                  href={onSale ? EVENT.ticketUrl : primary.href}
+                  {...(onSale && { target: "_blank", rel: "noopener noreferrer" })}
+                >
                   {primary.label}
+                  {onSale && <span className="sr-only"> (opens in a new tab)</span>}
                 </a>
               </div>
               <p className="muted">
