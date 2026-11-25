@@ -248,32 +248,24 @@ export default async function Home({
                     day={eventDay}
                     initial={daysUntil(eventDay, new Date())}
                   />
-                  {onSale ? (
-                    <>
-                      <p className="stub-note">
-                        Grab yours before they&rsquo;re gone.
-                      </p>
-                      <a
-                        className="stub-btn"
-                        href={EVENT.ticketUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        Buy tickets&nbsp;<span className="arrow" aria-hidden="true">→</span>
-                        <span className="sr-only"> (opens in a new tab)</span>
-                      </a>
-                    </>
-                  ) : (
-                    <>
-                      <p className="stub-note">
-                        Get the link the moment tickets go on sale.
-                      </p>
-                      <a className="stub-btn" href={mailingList}>
-                        Join the list&nbsp;<span className="arrow" aria-hidden="true">→</span>
-                      </a>
-                    </>
-                  )}
+                  <p className="stub-note">
+                    {onSale
+                      ? "Grab yours before they’re gone."
+                      : "Get the link the moment tickets go on sale."}
+                  </p>
+                  {/* Looks like a button. The real link is .stub-hit below. */}
+                  <span className="stub-btn" aria-hidden="true">
+                    {onSale ? "Buy tickets" : "Join the list"}&nbsp;<span className="arrow">→</span>
+                  </span>
                 </div>
+                {/* Invisible link over the stub's resting spot. It never moves,
+                    so the stub can tilt on hover without the pointer losing it. */}
+                <a className="stub-hit" href={primary.href} {...ext}>
+                  <span className="sr-only">
+                    {onSale ? "Buy tickets" : "Join the list"}
+                  </span>
+                  {newTab}
+                </a>
               </div>
             </div>
           </div>

@@ -137,7 +137,7 @@ h3 {
 }
 @media (prefers-reduced-motion: no-preference) {
   .btn:active,
-  .stub-btn:active,
+  .ticket:has(.stub-hit:active) .stub-btn,
   .menu summary:active {
     transform: scale(0.96);
   }
@@ -690,6 +690,15 @@ html.logo-docked .topbar {
 }
 /* The scalloped edges and the tear notches are masked on each half, not on the
    whole ticket, so the stub can tilt away on hover without being clipped. */
+/* main, stub and the stub's link share the grid explicitly so the link can sit
+   exactly on top of the stub */
+.ticket-main {
+  grid-area: 1 / 1;
+}
+.ticket-stub,
+.stub-hit {
+  grid-area: 1 / 2;
+}
 .ticket-main,
 .ticket-stub {
   position: relative;
@@ -795,10 +804,10 @@ html.logo-docked .topbar {
 /* Hovering or focusing the stub's button: the stub peels away at the top, as if
    it's about to tear off. Only where there's a real hover and motion is OK. */
 @media (hover: hover) and (prefers-reduced-motion: no-preference) {
-  .ticket:has(.stub-btn:hover, .stub-btn:focus-visible) .ticket-stub {
+  .ticket:has(.stub-hit:hover, .stub-hit:focus-visible) .ticket-stub {
     transform: rotate(5deg) translateX(5px);
   }
-  .ticket:has(.stub-btn:hover, .stub-btn:focus-visible) .ticket-main {
+  .ticket:has(.stub-hit:hover, .stub-hit:focus-visible) .ticket-main {
     transform: translateX(-2px);
   }
 }
@@ -840,16 +849,27 @@ html.logo-docked .topbar {
   transition-timing-function: ease-out;
 }
 @media (hover: hover) {
-  .stub-btn:hover {
+  .ticket:has(.stub-hit:hover) .stub-btn {
     background: #47336a;
   }
 }
-.stub-btn:focus-visible {
-  outline-color: var(--ink);
+/* The invisible link that covers the stub. It stays put while the stub tilts. */
+.stub-hit {
+  position: relative;
+  z-index: 1;
+  -webkit-tap-highlight-color: transparent;
+}
+.stub-hit:focus-visible {
+  outline: 3px solid var(--ink);
+  outline-offset: -6px;
 }
 @media (max-width: 860px) {
   .ticket {
     grid-template-columns: 1fr;
+  }
+  .ticket-stub,
+  .stub-hit {
+    grid-area: 2 / 1;
   }
   /* stacked: scallops run down the sides instead */
   .ticket-main {
@@ -903,10 +923,10 @@ html.logo-docked .topbar {
     mask-composite: intersect;
   }
   @media (hover: hover) and (prefers-reduced-motion: no-preference) {
-    .ticket:has(.stub-btn:hover, .stub-btn:focus-visible) .ticket-stub {
+    .ticket:has(.stub-hit:hover, .stub-hit:focus-visible) .ticket-stub {
       transform: rotate(-2deg) translateY(4px);
     }
-    .ticket:has(.stub-btn:hover, .stub-btn:focus-visible) .ticket-main {
+    .ticket:has(.stub-hit:hover, .stub-hit:focus-visible) .ticket-main {
       transform: none;
     }
   }
