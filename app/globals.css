@@ -1031,19 +1031,19 @@ html.logo-docked .topbar {
 }
 .soon {
   position: absolute;
-  right: -10px;
-  bottom: 8px;
-  max-width: 96px;
-  padding: 5px 8px;
-  background: var(--lime);
-  border: 1.5px solid var(--ink);
-  color: var(--ink);
+  right: 10px;
+  bottom: 7px;
+  padding: 3px 8px;
+  background: var(--paper);
+  border: 1px solid rgb(42 26 62 / 0.45);
+  color: rgb(42 26 62 / 0.75);
   font-family: var(--display);
-  font-size: 13px;
-  line-height: 1.1;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  line-height: 1.2;
+  white-space: nowrap;
   text-transform: uppercase;
-  text-align: center;
-  transform: rotate(-4deg);
+  transform: rotate(-3deg);
 }
 @media (max-width: 1000px) {
   .speakers-grid {

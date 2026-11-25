@@ -299,7 +299,7 @@ export default async function Home({
                   >
                     <span className="speaker-tape" aria-hidden="true" />
                     <Silhouette />
-                    <span className="soon">Speaker coming soon</span>
+                    <span className="soon">Coming soon</span>
                   </li>
                 ))}
               </ul>
