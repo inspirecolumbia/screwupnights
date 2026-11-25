@@ -10,11 +10,10 @@ type ShowState = "on-sale" | "soon";
 
 // Single source of truth for show details. Everything on the page that
 // mentions a date, venue or price reads from here.
-// Vol. 02 is on Dec 2 but tickets are not on sale yet, so the page defaults to
-// "soon" (date shown, mailing list). Switch to "on-sale" once ticketUrl and
-// price are real. Preview either state with ?show=on-sale or ?show=soon.
+// Tickets are on sale (Zeffy) through the end of the event day, then the page
+// falls back to the mailing list. Preview either state with ?show=on-sale or
+// ?show=soon.
 const EVENT = {
-  state: "soon" as ShowState,
   volume: "Vol. 02",
   // Start time not announced yet. Noon keeps the date right in Eastern time.
   start: "2026-12-02T12:00:00-05:00",
@@ -85,8 +84,13 @@ export default async function Home({
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }) {
   const { show } = await searchParams;
+  const eventDay = EVENT.start.slice(0, 10);
   const state: ShowState =
-    show === "on-sale" || show === "soon" ? show : EVENT.state;
+    show === "on-sale" || show === "soon"
+      ? show
+      : daysUntil(eventDay, new Date()) >= 0
+        ? "on-sale"
+        : "soon";
   const onSale = state === "on-sale";
 
   const weekday = fmt(EVENT.start, { weekday: "long" });
@@ -98,7 +102,6 @@ export default async function Home({
     ? fmt(EVENT.doors, { hour: "numeric", minute: "2-digit" })
     : null;
   const when = `${weekday}, ${monthDay}`;
-  const eventDay = EVENT.start.slice(0, 10);
 
   const mailingList = mailto("Add me to the ScrewUp Nights mailing list");
   const speak = mailto("I'd like to speak at ScrewUp Nights");
