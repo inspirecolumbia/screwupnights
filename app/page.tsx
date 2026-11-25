@@ -138,7 +138,7 @@ export default async function Home({
             {/* the date lives in the hero, so this just says what's new */}
             {ended ? (
               <>
-                <strong>{`Thanks for coming to ScrewUp Nights ${EVENT.volume}.`}</strong>
+                <strong>{`ScrewUp Nights ${EVENT.volume} is over.`}</strong>
                 {" Want to hear about the next one?"}
               </>
             ) : (
@@ -272,7 +272,7 @@ export default async function Home({
                       {ended ? (
                         <>
                           <li>Date and venue to be announced</li>
-                          <li>{`Thanks for coming to ${EVENT.volume}`}</li>
+                          <li>{`${EVENT.volume} was ${when}`}</li>
                         </>
                       ) : (
                         <>
