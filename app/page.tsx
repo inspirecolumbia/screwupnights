@@ -154,7 +154,7 @@ export default async function Home({
             ) : (
               <>
                 <strong>{`ScrewUp Nights ${EVENT.volume}`}</strong>
-                {onSale ? " tickets are on sale now" : " tickets are coming soon"}
+                {onSale ? " tickets are on sale now!" : " tickets are coming soon"}
               </>
             )}
           </p>
@@ -306,7 +306,7 @@ export default async function Home({
                   )}
                   <p className="stub-note">
                     {onSale
-                      ? "Grab yours before they’re gone."
+                      ? "Grab your tickets before they’re gone!"
                       : ended
                         ? "Be the first to know."
                         : "Get the link the moment tickets go on sale."}
