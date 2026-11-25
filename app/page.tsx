@@ -562,8 +562,7 @@ export default async function Home({
                     TEDxCongaree Vista
                     <span className="sr-only"> (opens in a new tab)</span>
                   </a>
-                  . ScrewUp Nights is our stage for honest stories about things
-                  that didn’t go to plan.
+                  .
                 </p>
               </details>
             </div>
