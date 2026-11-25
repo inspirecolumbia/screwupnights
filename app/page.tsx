@@ -22,9 +22,9 @@ const EVENT = {
   doors: null as string | null,
   venue: "TLC Sports Bar",
   city: "Columbia, SC",
-  // Placeholders until the updated ticket link and prices are ready.
+  // Ticket link is live. The price is still a placeholder until confirmed.
   price: "$15",
-  ticketUrl: "https://www.zeffy.com/",
+  ticketUrl: "https://www.zeffy.com/en-US/ticketing/screwup-nights-december--2026",
   email: "screwupnights@inspirecolumbia.org",
 };
 
