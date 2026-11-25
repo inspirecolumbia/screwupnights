@@ -659,7 +659,14 @@ html.logo-docked .topbar {
   position: relative;
   z-index: 2;
   margin-top: calc(-1 * var(--overlap));
-  padding-block: 0 clamp(40px, 5vw, 64px);
+  padding-block: 0;
+  /* dark from just under the hero photo down, so the ticket sits on the same
+     ink as the speaker band instead of a cream strip */
+  background: linear-gradient(
+    to bottom,
+    transparent var(--overlap),
+    var(--ink) var(--overlap)
+  );
 }
 .ticket-wrap {
   --stub: 270px;
@@ -878,6 +885,10 @@ html.logo-docked .topbar {
 }
 .torn-band::before {
   top: -15px;
+}
+/* the ticket section above is already ink, so the top tear would be invisible */
+.speakers.torn-band::before {
+  display: none;
 }
 .torn-band::after {
   bottom: -15px;
