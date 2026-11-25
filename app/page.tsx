@@ -250,7 +250,9 @@ export default async function Home({
                   />
                   {onSale ? (
                     <>
-                      <p className="stub-note">Limited spots.</p>
+                      <p className="stub-note">
+                        {monthDay}. Grab yours before they&rsquo;re gone.
+                      </p>
                       <a
                         className="stub-btn"
                         href={EVENT.ticketUrl}
@@ -264,8 +266,7 @@ export default async function Home({
                   ) : (
                     <>
                       <p className="stub-note">
-                        Tickets and prices are coming soon. The list hears
-                        first.
+                        Get the link the moment tickets go on sale.
                       </p>
                       <a className="stub-btn" href={mailingList}>
                         Join the list&nbsp;<span className="arrow" aria-hidden="true">→</span>
