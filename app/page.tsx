@@ -104,7 +104,7 @@ export default async function Home({
   const speak = mailto("I'd like to speak at ScrewUp Nights");
   // The one action the page pushes: tickets once on sale, the list until then.
   const primary = onSale
-    ? { href: "#next-night", label: "Get tickets" }
+    ? { href: "#next-night", label: "Buy tickets" }
     : { href: mailingList, label: "Join the mailing list" };
 
   return (
@@ -121,7 +121,7 @@ export default async function Home({
             {onSale ? " tickets are on sale now" : " tickets are coming soon"}
           </p>
           <a href={primary.href}>
-            {onSale ? "Get tickets" : "Join the list"}&nbsp;<span className="arrow" aria-hidden="true">→</span>
+            {onSale ? "Buy tickets" : "Join the list"}&nbsp;<span className="arrow" aria-hidden="true">→</span>
           </a>
         </div>
       </div>
