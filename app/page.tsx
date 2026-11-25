@@ -45,6 +45,16 @@ const NAV = [
   { href: "#speak", label: "Speak" },
 ];
 
+// Announced speakers, in lineup order. The remaining polaroids stay as
+// "coming soon" placeholders until their speakers are added here.
+const SPEAKERS = [
+  {
+    name: "Bency Beals",
+    src: "/speakers/bency-beals.webp",
+    alt: "Bency Beals smiling, with a hand resting on her chin.",
+  },
+];
+
 // From Night 01, Sept 2026. The first photo leads the grid.
 const PHOTOS = [
   {
@@ -338,20 +348,39 @@ export default async function Home({
             </div>
             <div>
               <p className="sr-only">
-                The {EVENT.volume} lineup will be announced soon.
+                {`${SPEAKERS.map((x) => x.name).join(", ")} is speaking at ${EVENT.volume}. More speakers will be announced soon.`}
               </p>
               <ul className="speaker-list">
-                {["-3deg", "2deg", "-1.5deg", "2.5deg"].map((tilt) => (
-                  <li
-                    key={tilt}
-                    className="speaker"
-                    style={{ transform: `rotate(${tilt})` }}
-                  >
-                    <span className="speaker-tape" aria-hidden="true" />
-                    <Silhouette />
-                    <span className="soon">Coming soon</span>
-                  </li>
-                ))}
+                {["-3deg", "2deg", "-1.5deg", "2.5deg"].map((tilt, i) => {
+                  const sp = SPEAKERS[i];
+                  return (
+                    <li
+                      key={tilt}
+                      className="speaker"
+                      style={{ transform: `rotate(${tilt})` }}
+                    >
+                      <span className="speaker-tape" aria-hidden="true" />
+                      {sp ? (
+                        <>
+                          <div className="speaker-photo">
+                            <Image
+                              src={sp.src}
+                              alt={sp.alt}
+                              fill
+                              sizes="(max-width: 560px) 45vw, 200px"
+                            />
+                          </div>
+                          <span className="speaker-name">{sp.name}</span>
+                        </>
+                      ) : (
+                        <>
+                          <Silhouette />
+                          <span className="soon">Coming soon</span>
+                        </>
+                      )}
+                    </li>
+                  );
+                })}
               </ul>
             </div>
           </div>

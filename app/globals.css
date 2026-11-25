@@ -1040,6 +1040,29 @@ html.logo-docked .topbar {
   width: 100%;
   height: auto;
 }
+.speaker-photo {
+  position: relative;
+  aspect-ratio: 1;
+  overflow: hidden;
+  background: #e6dcc4;
+}
+.speaker-photo img {
+  object-fit: cover;
+  object-position: 50% 15%;
+}
+.speaker-name {
+  position: absolute;
+  left: 10px;
+  right: 10px;
+  bottom: 6px;
+  text-align: center;
+  font-family: var(--display);
+  font-size: 15px;
+  letter-spacing: 0.06em;
+  line-height: 1.2;
+  text-transform: uppercase;
+  color: var(--ink);
+}
 .soon {
   position: absolute;
   right: 10px;
