@@ -687,28 +687,32 @@ html.logo-docked .topbar {
 .ticket {
   display: grid;
   grid-template-columns: 1fr var(--stub);
-  border-radius: 6px;
-  --tear: calc(100% - var(--stub));
+}
+/* The scalloped edges and the tear notches are masked on each half, not on the
+   whole ticket, so the stub can tilt away on hover without being clipped. */
+.ticket-main,
+.ticket-stub {
+  position: relative;
+  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.ticket-main {
+  border-radius: 6px 0 0 6px;
   -webkit-mask:
     radial-gradient(circle var(--scallop) at 50% 0, transparent 98%, #000 100%)
       0 0 / 14px 100% repeat-x,
     radial-gradient(circle var(--scallop) at 50% 100%, transparent 98%, #000 100%)
       0 0 / 14px 100% repeat-x,
-    radial-gradient(circle var(--notch) at var(--tear) 0, transparent 98%, #000 100%),
-    radial-gradient(circle var(--notch) at var(--tear) 100%, transparent 98%, #000 100%);
+    radial-gradient(circle var(--notch) at 100% 0, transparent 98%, #000 100%),
+    radial-gradient(circle var(--notch) at 100% 100%, transparent 98%, #000 100%);
   -webkit-mask-composite: source-in;
   mask:
     radial-gradient(circle var(--scallop) at 50% 0, transparent 98%, #000 100%)
       0 0 / 14px 100% repeat-x,
     radial-gradient(circle var(--scallop) at 50% 100%, transparent 98%, #000 100%)
       0 0 / 14px 100% repeat-x,
-    radial-gradient(circle var(--notch) at var(--tear) 0, transparent 98%, #000 100%),
-    radial-gradient(circle var(--notch) at var(--tear) 100%, transparent 98%, #000 100%);
+    radial-gradient(circle var(--notch) at 100% 0, transparent 98%, #000 100%),
+    radial-gradient(circle var(--notch) at 100% 100%, transparent 98%, #000 100%);
   mask-composite: intersect;
-}
-.ticket-main,
-.ticket-stub {
-  position: relative;
 }
 .ticket-main::before,
 .ticket-stub::before {
@@ -765,11 +769,38 @@ html.logo-docked .topbar {
   flex-direction: column;
   justify-content: center;
   gap: 14px;
-  /* punched holes along the tear line */
-  -webkit-mask: radial-gradient(circle 3px at 0 50%, transparent 98%, #000 100%)
-    0 0 / 100% 12px repeat-y;
-  mask: radial-gradient(circle 3px at 0 50%, transparent 98%, #000 100%) 0 0 /
-    100% 12px repeat-y;
+  border-radius: 0 6px 6px 0;
+  transform-origin: 0 100%;
+  /* punched holes along the tear line, scalloped top and bottom, half a notch
+     at the tear */
+  -webkit-mask:
+    radial-gradient(circle 3px at 0 50%, transparent 98%, #000 100%) 0 0 / 100% 12px repeat-y,
+    radial-gradient(circle var(--scallop) at 50% 0, transparent 98%, #000 100%)
+      100% 0 / 14px 100% repeat-x,
+    radial-gradient(circle var(--scallop) at 50% 100%, transparent 98%, #000 100%)
+      100% 0 / 14px 100% repeat-x,
+    radial-gradient(circle var(--notch) at 0 0, transparent 98%, #000 100%),
+    radial-gradient(circle var(--notch) at 0 100%, transparent 98%, #000 100%);
+  -webkit-mask-composite: source-in;
+  mask:
+    radial-gradient(circle 3px at 0 50%, transparent 98%, #000 100%) 0 0 / 100% 12px repeat-y,
+    radial-gradient(circle var(--scallop) at 50% 0, transparent 98%, #000 100%)
+      100% 0 / 14px 100% repeat-x,
+    radial-gradient(circle var(--scallop) at 50% 100%, transparent 98%, #000 100%)
+      100% 0 / 14px 100% repeat-x,
+    radial-gradient(circle var(--notch) at 0 0, transparent 98%, #000 100%),
+    radial-gradient(circle var(--notch) at 0 100%, transparent 98%, #000 100%);
+  mask-composite: intersect;
+}
+/* Hovering or focusing the stub's button: the stub peels away at the top, as if
+   it's about to tear off. Only where there's a real hover and motion is OK. */
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .ticket:has(.stub-btn:hover, .stub-btn:focus-visible) .ticket-stub {
+    transform: rotate(5deg) translateX(5px);
+  }
+  .ticket:has(.stub-btn:hover, .stub-btn:focus-visible) .ticket-main {
+    transform: translateX(-2px);
+  }
 }
 .countdown {
   display: flex;
@@ -819,7 +850,10 @@ html.logo-docked .topbar {
 @media (max-width: 860px) {
   .ticket {
     grid-template-columns: 1fr;
-    /* stacked: scallops run down the sides instead */
+  }
+  /* stacked: scallops run down the sides instead */
+  .ticket-main {
+    border-radius: 6px 6px 0 0;
     -webkit-mask:
       radial-gradient(circle var(--scallop) at 0 50%, transparent 98%, #000 100%)
         0 0 / 100% 14px repeat-y,
@@ -832,8 +866,6 @@ html.logo-docked .topbar {
       radial-gradient(circle var(--scallop) at 100% 50%, transparent 98%, #000 100%)
         0 0 / 100% 14px repeat-y;
     mask-composite: intersect;
-  }
-  .ticket-main {
     flex-direction: column;
     align-items: flex-start;
     gap: 16px;
@@ -851,10 +883,32 @@ html.logo-docked .topbar {
   }
   .ticket-stub {
     padding: 32px 30px;
-    -webkit-mask: radial-gradient(circle 3px at 50% 0, transparent 98%, #000 100%)
-      0 0 / 12px 100% repeat-x;
-    mask: radial-gradient(circle 3px at 50% 0, transparent 98%, #000 100%) 0 0 /
-      12px 100% repeat-x;
+    border-radius: 0 0 6px 6px;
+    transform-origin: 0 0;
+    -webkit-mask:
+      radial-gradient(circle 3px at 50% 0, transparent 98%, #000 100%)
+        0 0 / 12px 100% repeat-x,
+      radial-gradient(circle var(--scallop) at 0 50%, transparent 98%, #000 100%)
+        0 0 / 100% 14px repeat-y,
+      radial-gradient(circle var(--scallop) at 100% 50%, transparent 98%, #000 100%)
+        0 0 / 100% 14px repeat-y;
+    -webkit-mask-composite: source-in;
+    mask:
+      radial-gradient(circle 3px at 50% 0, transparent 98%, #000 100%) 0 0 /
+        12px 100% repeat-x,
+      radial-gradient(circle var(--scallop) at 0 50%, transparent 98%, #000 100%)
+        0 0 / 100% 14px repeat-y,
+      radial-gradient(circle var(--scallop) at 100% 50%, transparent 98%, #000 100%)
+        0 0 / 100% 14px repeat-y;
+    mask-composite: intersect;
+  }
+  @media (hover: hover) and (prefers-reduced-motion: no-preference) {
+    .ticket:has(.stub-btn:hover, .stub-btn:focus-visible) .ticket-stub {
+      transform: rotate(-2deg) translateY(4px);
+    }
+    .ticket:has(.stub-btn:hover, .stub-btn:focus-visible) .ticket-main {
+      transform: none;
+    }
   }
 }
 
