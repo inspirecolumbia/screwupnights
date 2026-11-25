@@ -668,7 +668,17 @@ html.logo-docked .topbar {
     var(--ink) var(--overlap)
   );
 }
+/* torn edge where the hero photo meets the dark, drawn behind the ticket */
+.next.torn-band::before {
+  top: calc(var(--overlap) - 15px);
+  background: var(--ink);
+}
+.next.torn-band::after {
+  display: none;
+}
 .ticket-wrap {
+  position: relative;
+  z-index: 1;
   --stub: 270px;
   --scallop: 5px;
   --notch: 14px;

@@ -220,7 +220,7 @@ export default async function Home({
           </a>
         </section>
 
-        <section className="next" id="next-night" aria-labelledby="next-title">
+        <section className="next torn-band" id="next-night" aria-labelledby="next-title">
           <div className="wrap">
             <div className="ticket-wrap">
               <div className="ticket">
