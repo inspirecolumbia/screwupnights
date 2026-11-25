@@ -659,7 +659,7 @@ html.logo-docked .topbar {
   position: relative;
   z-index: 2;
   margin-top: calc(-1 * var(--overlap));
-  padding-block: 0 var(--section);
+  padding-block: 0 clamp(40px, 5vw, 64px);
 }
 .ticket-wrap {
   --stub: 270px;
