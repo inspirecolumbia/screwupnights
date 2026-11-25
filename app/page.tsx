@@ -522,25 +522,6 @@ export default async function Home({
                 </p>
               </details>
               <details>
-                <summary>When and where is the next night?</summary>
-                <p>
-                  {ended ? (
-                    <>
-                      The next night hasn’t been announced yet.{" "}
-                      <a href={mailingList}>Join the mailing list</a> to hear
-                      first.
-                    </>
-                  ) : (
-                    <>
-                      {`${when} at ${EVENT.venue}, ${EVENT.city}. `}
-                      {doorsTime
-                        ? `Doors open at ${doorsTime}.`
-                        : "The start time hasn’t been announced yet."}
-                    </>
-                  )}
-                </p>
-              </details>
-              <details>
                 <summary>
                   {onSale ? "How do I buy a ticket?" : "Are tickets available?"}
                 </summary>
