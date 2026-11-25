@@ -564,15 +564,6 @@ export default async function Home({
                     TEDxCongaree Vista
                     <span className="sr-only"> (opens in a new tab)</span>
                   </a>
-                  . Interested in joining us?{" "}
-                  <a
-                    href="https://www.inspirecolumbia.org/positions"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    See how to get involved
-                    <span className="sr-only"> (opens in a new tab)</span>
-                  </a>
                   .
                 </p>
               </details>
