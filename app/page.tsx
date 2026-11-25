@@ -113,7 +113,12 @@ export default async function Home({
   // The one action the page pushes: tickets once on sale, the list until then.
   const primary = onSale
     ? { href: EVENT.ticketUrl, label: "Buy tickets", external: true }
-    : { href: mailingList, label: "Join the mailing list", external: false };
+    : {
+        href: mailingList,
+        label: ended ? "Get next night updates" : "Join the mailing list",
+        external: false,
+      };
+  const joinLabel = ended ? "Get updates" : "Join the list";
   const ext = primary.external
     ? { target: "_blank", rel: "noopener noreferrer" }
     : {};
@@ -131,15 +136,20 @@ export default async function Home({
         <div className="wrap announce-inner">
           <p>
             {/* the date lives in the hero, so this just says what's new */}
-            <strong>{`ScrewUp Nights ${EVENT.volume}`}</strong>
-            {onSale
-              ? " tickets are on sale now"
-              : ended
-                ? " is a wrap. Thanks for coming"
-                : " tickets are coming soon"}
+            {ended ? (
+              <>
+                <strong>{`Thanks for coming to ScrewUp Nights ${EVENT.volume}.`}</strong>
+                {" Want to hear about the next one?"}
+              </>
+            ) : (
+              <>
+                <strong>{`ScrewUp Nights ${EVENT.volume}`}</strong>
+                {onSale ? " tickets are on sale now" : " tickets are coming soon"}
+              </>
+            )}
           </p>
           <a href={primary.href} {...ext}>
-            {onSale ? "Buy tickets" : "Join the list"}&nbsp;<span className="arrow" aria-hidden="true">→</span>
+            {onSale ? "Buy tickets" : joinLabel}&nbsp;<span className="arrow" aria-hidden="true">→</span>
             {newTab}
           </a>
         </div>
@@ -249,20 +259,31 @@ export default async function Home({
               <div className="ticket">
                 <div className="ticket-main">
                   <p className="ticket-date" aria-hidden="true">
-                    <span>{month}</span>
-                    {day}
+                    <span>{ended ? "Date" : month}</span>
+                    {ended ? "TBA" : day}
                   </p>
                   <div className="ticket-body">
                     <h2 id="next-title" className="ticket-title">
-                      {`ScrewUp Nights ${EVENT.volume}`}
+                      {ended
+                        ? "Next ScrewUp Night"
+                        : `ScrewUp Nights ${EVENT.volume}`}
                     </h2>
                     <ul className="ticket-facts">
-                      <li>
-                        <time dateTime={EVENT.start.slice(0, 10)}>{when}</time>
-                        {doorsTime && ` · Doors ${doorsTime}`}
-                      </li>
-                      <li>{`${EVENT.venue}, ${EVENT.city}`}</li>
-                      <li>{ended ? "That’s a wrap. Thanks for coming." : "Snacks included"}</li>
+                      {ended ? (
+                        <>
+                          <li>Date and venue to be announced</li>
+                          <li>{`Thanks for coming to ${EVENT.volume}`}</li>
+                        </>
+                      ) : (
+                        <>
+                          <li>
+                            <time dateTime={EVENT.start.slice(0, 10)}>{when}</time>
+                            {doorsTime && ` · Doors ${doorsTime}`}
+                          </li>
+                          <li>{`${EVENT.venue}, ${EVENT.city}`}</li>
+                          <li>Snacks included</li>
+                        </>
+                      )}
                     </ul>
                   </div>
                 </div>
@@ -277,19 +298,19 @@ export default async function Home({
                     {onSale
                       ? "Grab yours before they’re gone."
                       : ended
-                        ? "Hear about the next night first."
+                        ? "Be the first to know."
                         : "Get the link the moment tickets go on sale."}
                   </p>
                   {/* Looks like a button. The real link is .stub-hit below. */}
                   <span className="stub-btn" aria-hidden="true">
-                    {onSale ? "Buy tickets" : "Join the list"}&nbsp;<span className="arrow">→</span>
+                    {onSale ? "Buy tickets" : joinLabel}&nbsp;<span className="arrow">→</span>
                   </span>
                 </div>
                 {/* Invisible link over the stub's resting spot. It never moves,
                     so the stub can tilt on hover without the pointer losing it. */}
                 <a className="stub-hit" href={primary.href} {...ext}>
                   <span className="sr-only">
-                    {onSale ? "Buy tickets" : "Join the list"}
+                    {onSale ? "Buy tickets" : joinLabel}
                   </span>
                   {newTab}
                 </a>
