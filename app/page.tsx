@@ -6,13 +6,13 @@ import Menu from "./menu";
 import ScrollReveal from "./scroll-reveal";
 import Silhouette from "./silhouette";
 
-type ShowState = "on-sale" | "soon";
+type ShowState = "on-sale" | "soon" | "ended";
 
 // Single source of truth for show details. Everything on the page that
 // mentions a date, venue or price reads from here.
-// Tickets are on sale (Zeffy) through the end of the event day, then the page
-// falls back to the mailing list. Preview either state with ?show=on-sale or
-// ?show=soon.
+// Tickets are on sale (Zeffy) through the end of the event day. After that the
+// page switches to an "after the show" version that points to the mailing list.
+// Preview a state with ?show=on-sale, ?show=soon or ?show=ended.
 const EVENT = {
   volume: "Vol. 02",
   // Start time not announced yet. Noon keeps the date right in Eastern time.
@@ -86,12 +86,17 @@ export default async function Home({
   const { show } = await searchParams;
   const eventDay = EVENT.start.slice(0, 10);
   const state: ShowState =
-    show === "on-sale" || show === "soon"
+    show === "on-sale" || show === "soon" || show === "ended"
       ? show
       : daysUntil(eventDay, new Date()) >= 0
         ? "on-sale"
-        : "soon";
+        : "ended";
   const onSale = state === "on-sale";
+  const ended = state === "ended";
+  // After the show there is no lineup to tease, and the ticket is for the next night.
+  const nav = NAV.filter((n) => !(ended && n.href === "#speakers")).map((n) =>
+    ended && n.href === "#next-night" ? { ...n, label: "Next night" } : n,
+  );
 
   const weekday = fmt(EVENT.start, { weekday: "long" });
   const weekdayShort = fmt(EVENT.start, { weekday: "short" });
@@ -127,7 +132,11 @@ export default async function Home({
           <p>
             {/* the date lives in the hero, so this just says what's new */}
             <strong>{`ScrewUp Nights ${EVENT.volume}`}</strong>
-            {onSale ? " tickets are on sale now" : " tickets are coming soon"}
+            {onSale
+              ? " tickets are on sale now"
+              : ended
+                ? " is a wrap. Thanks for coming"
+                : " tickets are coming soon"}
           </p>
           <a href={primary.href} {...ext}>
             {onSale ? "Buy tickets" : "Join the list"}&nbsp;<span className="arrow" aria-hidden="true">→</span>
@@ -148,7 +157,7 @@ export default async function Home({
             />
           </a>
           <ul className="nav-links">
-            {NAV.map((n) => (
+            {nav.map((n) => (
               <li key={n.href}>
                 <a href={n.href}>{n.label}</a>
               </li>
@@ -158,7 +167,7 @@ export default async function Home({
             {primary.label}
             {newTab}
           </a>
-          <Menu links={NAV} cta={primary} />
+          <Menu links={nav} cta={primary} />
         </nav>
       </header>
 
@@ -197,13 +206,22 @@ export default async function Home({
               </p>
               {/* The key facts as one bold badge. The countdown is on the ticket. */}
               <p className="hero-when">
-                <time className="hero-date" dateTime={eventDay}>
-                  {`${weekdayShort}, ${monthDay}`}
-                </time>
-                <span className="hero-venue">
-                  {EVENT.venue}
-                  {doorsTime && ` · Doors ${doorsTime}`}
-                </span>
+                {ended ? (
+                  <>
+                    <span className="hero-date">Next night</span>
+                    <span className="hero-venue">Date to be announced</span>
+                  </>
+                ) : (
+                  <>
+                    <time className="hero-date" dateTime={eventDay}>
+                      {`${weekdayShort}, ${monthDay}`}
+                    </time>
+                    <span className="hero-venue">
+                      {EVENT.venue}
+                      {doorsTime && ` · Doors ${doorsTime}`}
+                    </span>
+                  </>
+                )}
               </p>
               <div className="actions">
                 <a className="btn btn-accent" href={primary.href} {...ext}>
@@ -223,7 +241,9 @@ export default async function Home({
           </a>
         </section>
 
-        <section className="next torn-band" id="next-night" aria-labelledby="next-title">
+        <section
+          className={`next torn-band${ended ? " next-ended" : ""}`}
+          id="next-night" aria-labelledby="next-title">
           <div className="wrap">
             <div className="ticket-wrap">
               <div className="ticket">
@@ -242,19 +262,23 @@ export default async function Home({
                         {doorsTime && ` · Doors ${doorsTime}`}
                       </li>
                       <li>{`${EVENT.venue}, ${EVENT.city}`}</li>
-                      <li>Snacks included</li>
+                      <li>{ended ? "That’s a wrap. Thanks for coming." : "Snacks included"}</li>
                     </ul>
                   </div>
                 </div>
                 <div className="ticket-stub">
-                  <Countdown
-                    day={eventDay}
-                    initial={daysUntil(eventDay, new Date())}
-                  />
+                  {!ended && (
+                    <Countdown
+                      day={eventDay}
+                      initial={daysUntil(eventDay, new Date())}
+                    />
+                  )}
                   <p className="stub-note">
                     {onSale
                       ? "Grab yours before they’re gone."
-                      : "Get the link the moment tickets go on sale."}
+                      : ended
+                        ? "Hear about the next night first."
+                        : "Get the link the moment tickets go on sale."}
                   </p>
                   {/* Looks like a button. The real link is .stub-hit below. */}
                   <span className="stub-btn" aria-hidden="true">
@@ -274,6 +298,8 @@ export default async function Home({
           </div>
         </section>
 
+        {!ended && (
+          <>
         {/* The speaker lineup as designed on proto/zine-torn: a torn-edged
             dark band, taped polaroid portraits and "coming soon" stickers. */}
         <section
@@ -309,6 +335,8 @@ export default async function Home({
             </div>
           </div>
         </section>
+          </>
+        )}
 
         <section className="about" id="about">
           <div className="wrap about-grid">
@@ -446,10 +474,20 @@ export default async function Home({
               <details>
                 <summary>When and where is the next night?</summary>
                 <p>
-                  {`${when} at ${EVENT.venue}, ${EVENT.city}. `}
-                  {doorsTime
-                    ? `Doors open at ${doorsTime}.`
-                    : "The start time hasn’t been announced yet."}
+                  {ended ? (
+                    <>
+                      The next night hasn’t been announced yet.{" "}
+                      <a href={mailingList}>Join the mailing list</a> to hear
+                      first.
+                    </>
+                  ) : (
+                    <>
+                      {`${when} at ${EVENT.venue}, ${EVENT.city}. `}
+                      {doorsTime
+                        ? `Doors open at ${doorsTime}.`
+                        : "The start time hasn’t been announced yet."}
+                    </>
+                  )}
                 </p>
               </details>
               <details>
@@ -564,14 +602,16 @@ export default async function Home({
           <div className="footer-contact">
             <a href={`mailto:${EVENT.email}`}>{EVENT.email}</a>
             <p className="footer-next">
-              Next show: {when} at {EVENT.venue}
+              {ended
+                ? "Next show: to be announced"
+                : `Next show: ${when} at ${EVENT.venue}`}
             </p>
           </div>
           </div>
           {/* Row 2: the page links in one line. */}
           <nav aria-label="Footer">
             <ul className="footer-links">
-              {NAV.map((n) => (
+              {nav.map((n) => (
                 <li key={n.href}>
                   <a href={n.href}>{n.label}</a>
                 </li>

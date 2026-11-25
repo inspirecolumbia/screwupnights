@@ -678,6 +678,15 @@ html.logo-docked .topbar {
 .next.torn-band::after {
   display: none;
 }
+/* After the show there is no speaker band under the ticket, so close the dark
+   area with its own space and torn edge above About. */
+.next-ended {
+  padding-bottom: clamp(56px, 7vw, 88px);
+}
+.next.next-ended.torn-band::after {
+  display: block;
+  background: var(--ink);
+}
 .ticket-wrap {
   position: relative;
   z-index: 1;
