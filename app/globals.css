@@ -850,7 +850,6 @@ html.logo-docked .topbar {
   background: var(--ink);
   color: var(--paper);
   padding-block: 80px;
-  margin-block: 0 40px;
 }
 /* torn edges: a strip of the band's own color, ripped, above and below */
 .torn-band::before,
@@ -943,13 +942,6 @@ html.logo-docked .topbar {
   text-align: center;
   transform: rotate(-4deg);
 }
-.speakers-note {
-  margin-top: 26px;
-  text-align: right;
-  font-family: var(--font-marker), cursive;
-  font-size: 17px;
-  color: var(--lime);
-}
 @media (max-width: 1000px) {
   .speakers-grid {
     grid-template-columns: 1fr;
@@ -959,9 +951,6 @@ html.logo-docked .topbar {
   .speaker-list {
     grid-template-columns: 1fr 1fr;
     gap: 26px 18px;
-  }
-  .speakers-note {
-    text-align: left;
   }
 }
 

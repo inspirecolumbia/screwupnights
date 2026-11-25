@@ -310,10 +310,6 @@ export default async function Home({
                   </li>
                 ))}
               </ul>
-              <p className="speakers-note">
-                some amazing screwups on the way{" "}
-                <span aria-hidden="true">☺</span>
-              </p>
             </div>
           </div>
         </section>
