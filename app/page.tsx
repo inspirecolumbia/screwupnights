@@ -251,7 +251,7 @@ export default async function Home({
                   {onSale ? (
                     <>
                       <p className="stub-note">
-                        {monthDay}. Grab yours before they&rsquo;re gone.
+                        Grab yours before they&rsquo;re gone.
                       </p>
                       <a
                         className="stub-btn"
