@@ -104,8 +104,14 @@ export default async function Home({
   const speak = mailto("I'd like to speak at ScrewUp Nights");
   // The one action the page pushes: tickets once on sale, the list until then.
   const primary = onSale
-    ? { href: "#next-night", label: "Buy tickets" }
-    : { href: mailingList, label: "Join the mailing list" };
+    ? { href: EVENT.ticketUrl, label: "Buy tickets", external: true }
+    : { href: mailingList, label: "Join the mailing list", external: false };
+  const ext = primary.external
+    ? { target: "_blank", rel: "noopener noreferrer" }
+    : {};
+  const newTab = primary.external && (
+    <span className="sr-only"> (opens in a new tab)</span>
+  );
 
   return (
     <>
@@ -120,8 +126,9 @@ export default async function Home({
             <strong>{`ScrewUp Nights ${EVENT.volume}`}</strong>
             {onSale ? " tickets are on sale now" : " tickets are coming soon"}
           </p>
-          <a href={primary.href}>
+          <a href={primary.href} {...ext}>
             {onSale ? "Buy tickets" : "Join the list"}&nbsp;<span className="arrow" aria-hidden="true">→</span>
+            {newTab}
           </a>
         </div>
       </div>
@@ -144,8 +151,9 @@ export default async function Home({
               </li>
             ))}
           </ul>
-          <a className="btn btn-accent btn-sm nav-cta" href={primary.href}>
+          <a className="btn btn-accent btn-sm nav-cta" href={primary.href} {...ext}>
             {primary.label}
+            {newTab}
           </a>
           <Menu links={NAV} cta={primary} />
         </nav>
@@ -195,8 +203,9 @@ export default async function Home({
                 </span>
               </p>
               <div className="actions">
-                <a className="btn btn-accent" href={primary.href}>
+                <a className="btn btn-accent" href={primary.href} {...ext}>
                   {primary.label}&nbsp;<span className="arrow" aria-hidden="true">→</span>
+                  {newTab}
                 </a>
                 <a className="btn btn-secondary" href={speak}>
                   Speak at a night
@@ -517,13 +526,9 @@ export default async function Home({
                 <a className="btn btn-primary" href={speak}>
                   Speak at a night&nbsp;<span className="arrow" aria-hidden="true">→</span>
                 </a>
-                <a
-                  className="btn btn-secondary"
-                  href={onSale ? EVENT.ticketUrl : primary.href}
-                  {...(onSale && { target: "_blank", rel: "noopener noreferrer" })}
-                >
+                <a className="btn btn-secondary" href={primary.href} {...ext}>
                   {primary.label}
-                  {onSale && <span className="sr-only"> (opens in a new tab)</span>}
+                  {newTab}
                 </a>
               </div>
               <p className="muted">

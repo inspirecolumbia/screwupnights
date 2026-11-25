@@ -6,7 +6,13 @@ type Link = { href: string; label: string };
 
 // Mobile menu. A native <details> so it still opens without JavaScript; the
 // script only adds closing on link tap, Escape and a tap outside.
-export default function Menu({ links, cta }: { links: Link[]; cta: Link }) {
+export default function Menu({
+  links,
+  cta,
+}: {
+  links: Link[];
+  cta: Link & { external?: boolean };
+}) {
   const ref = useRef<HTMLDetailsElement>(null);
 
   useEffect(() => {
@@ -47,8 +53,13 @@ export default function Menu({ links, cta }: { links: Link[]; cta: Link }) {
           </li>
         ))}
         <li>
-          <a className="menu-cta" href={cta.href}>
+          <a
+            className="menu-cta"
+            href={cta.href}
+            {...(cta.external && { target: "_blank", rel: "noopener noreferrer" })}
+          >
             {cta.label}
+            {cta.external && <span className="sr-only"> (opens in a new tab)</span>}
           </a>
         </li>
       </ul>
