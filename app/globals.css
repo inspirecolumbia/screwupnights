@@ -932,7 +932,7 @@ html.logo-docked .topbar {
   }
   @media (hover: hover) and (prefers-reduced-motion: no-preference) {
     .ticket:has(.stub-hit:hover, .stub-hit:focus-visible) .ticket-stub {
-      transform: rotate(-2deg) translateY(4px);
+      transform: rotate(1.5deg) translateY(4px);
     }
     .ticket:has(.stub-hit:hover, .stub-hit:focus-visible) .ticket-main {
       transform: none;
